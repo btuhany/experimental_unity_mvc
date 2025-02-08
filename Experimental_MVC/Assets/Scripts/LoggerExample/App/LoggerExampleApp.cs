@@ -1,11 +1,20 @@
+using Assets.Scripts.LoggerExample.MVC.Entities.CounterLogger;
 using UnityEngine;
 
 public class LoggerExampleApp : IAppInitializer
 {
-    public bool IsInitialized => throw new System.NotImplementedException();
+    public bool IsInitialized => _isInitialized;
 
+    private bool _isInitialized;
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        if (!_isInitialized)
+        {
+            var counterLogger1 = new CounterLoggerMVCEntity();
+            counterLogger1.Initialize();
+
+
+            _isInitialized = true;
+        }
     }
 }
