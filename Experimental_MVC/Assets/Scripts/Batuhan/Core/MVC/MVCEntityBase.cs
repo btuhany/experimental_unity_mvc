@@ -2,7 +2,7 @@
 
 namespace Batuhan.Core.MVC
 {
-    public abstract class AbstractMVCEntity
+    public abstract class MVCEntityBase
         <TModel,
         TView,
         TController> : IInitializable

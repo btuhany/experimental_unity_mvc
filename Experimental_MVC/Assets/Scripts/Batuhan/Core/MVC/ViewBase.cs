@@ -2,7 +2,7 @@
 
 namespace Batuhan.Core.MVC
 {
-    public abstract class AbstractViewComponent : MonoBehaviour, IUnityView
+    public abstract class ViewBase : MonoBehaviour, IUnityView
     {
         protected bool _isInitialized = false;
         public abstract bool IsInitialized { get; }
