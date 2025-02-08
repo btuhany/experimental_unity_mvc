@@ -343,7 +343,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 392486799}
-  - component: {fileID: 392486800}
   m_Layer: 0
   m_Name: UI_MVC_Controller_Counter
   m_TagString: Untagged
@@ -366,18 +365,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1367740175}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &392486800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 392486798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37ab6b14c4bd265428467b55dfe31746, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -673,7 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76e48a2dad397641b9aedc8a7b7dc40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _counterController: {fileID: 392486800}
   _counterView: {fileID: 665612556}
 --- !u!4 &710986062
 Transform:
