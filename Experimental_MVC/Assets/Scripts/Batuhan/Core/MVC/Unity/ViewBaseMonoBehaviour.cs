@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace Batuhan.Core.MVC
+namespace Batuhan.Core.MVC.Unity
 {
-    public abstract class ViewBase : MonoBehaviour, IUnityView
+    public abstract class ViewBaseMonoBehaviour : MonoBehaviour, IUnityView
     {
         protected bool _isInitialized = false;
         public abstract bool IsInitialized { get; }
