@@ -1,8 +1,8 @@
-﻿using Batuhan.Core.MVC;
+﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
 
 namespace Assets.Scripts.LoggerExample.MVCEntities.CounterLogger
 {
-    internal class CounterLoggerModel : IModel
+    internal class CounterLoggerModel : BaseModel
     {
     }
 }
