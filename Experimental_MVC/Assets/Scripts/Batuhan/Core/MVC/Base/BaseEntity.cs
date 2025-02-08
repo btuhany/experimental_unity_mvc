@@ -1,4 +1,6 @@
-﻿namespace Batuhan.Core.MVC.Base
+﻿using Unity.Android.Gradle.Manifest;
+
+namespace Batuhan.Core.MVC.Base
 {
     public abstract class BaseEntity
         <TModel,
@@ -13,5 +15,9 @@
         public abstract void Initialize();
 
         protected bool _isInitialized;
+
+        protected TController _controller;
+        protected TModel _model;
+        protected TView _view;
     }
 }

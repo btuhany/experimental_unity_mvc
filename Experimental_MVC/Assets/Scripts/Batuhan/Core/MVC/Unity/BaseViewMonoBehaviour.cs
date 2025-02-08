@@ -2,11 +2,20 @@
 
 namespace Batuhan.Core.MVC.Unity
 {
-    public abstract class BaseViewMonoBehaviour : MonoBehaviour, IUnityView
+    public abstract class BaseViewMonoBehaviour : MonoBehaviour, IMonoBehaviourView
     {
+        public bool IsInitialized => _isInitialized;
+        public IContext Context => _context;
+
         protected bool _isInitialized = false;
-        public abstract bool IsInitialized { get; }
-        public abstract IContext Context { get; }
-        public abstract void Initialize(IContext context);
+        private IContext _context;
+        public virtual void Initialize(IContext context)
+        {
+            if (!_isInitialized)
+            {
+                _context = context;
+                _isInitialized = true;
+            }
+        }
     }
 }

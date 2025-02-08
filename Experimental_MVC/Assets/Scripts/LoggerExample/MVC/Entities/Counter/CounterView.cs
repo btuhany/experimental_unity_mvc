@@ -1,14 +1,23 @@
-﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
+﻿using Batuhan.Core.MVC;
+using Batuhan.Core.MVC.Unity;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterView
-        : BaseView
+    internal class CounterView : BaseViewMonoBehaviour
     {
-        private void OnCountChanged(int count)
+        [SerializeField] private TextMeshProUGUI _counterText;
+        public override void Initialize(IContext context)
         {
-            Debug.Log($"Count changed: {count}");
+            base.Initialize(context);
+
+            //TODO MVC Entity Initialized and Ready to Use Event
+            _counterText.text = "-";
+        }
+        public void OnCountChanged(int count)
+        {
+            _counterText.text = count.ToString();
         }
     }
 }

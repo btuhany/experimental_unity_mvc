@@ -2,16 +2,16 @@
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Logger
 {
     internal class LoggerMVCEntity : BaseEntity
-        <CounterLoggerModel, CounterLoggerView, LoggerController>
+        <LoggerModel, LoggerView, LoggerController>
     {
         public override void Initialize()
         {
             if (!_isInitialized)
             {
-                var context = new CounterLoggerContext();
-                var model = new CounterLoggerModel();
-                var view = new CounterLoggerView();
-                var controller = new CounterLoggerController(model, view);
+                var context = new LoggerContext();
+                var model = new LoggerModel();
+                var view = new LoggerView();
+                var controller = new LoggerController(model, view);
 
                 model.Initialize(context);
                 view.Initialize(context);

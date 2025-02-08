@@ -3,9 +3,9 @@ using System.Threading;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Logger
 {
-    internal class LoggerController : BaseController<CounterLoggerModel, CounterLoggerView>
+    internal class LoggerController : BaseController<LoggerModel, LoggerView>
     {
-        public LoggerController(CounterLoggerModel model, CounterLoggerView view) : base(model, view)
+        public LoggerController(LoggerModel model, LoggerView view) : base(model, view)
         {
         }
     }
