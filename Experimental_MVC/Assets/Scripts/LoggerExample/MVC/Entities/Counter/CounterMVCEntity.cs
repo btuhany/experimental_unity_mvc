@@ -9,17 +9,24 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
             _view = view;
             _controller = controller;
         }
+        public CounterMVCEntity(CounterView view)
+        {
+            _view = view;
+        }
         public override void Initialize()
         {
             if (!_isInitialized)
             {
+               
                 var context = new CounterContext();
                 var model = new CounterModel();
 
-                model.Initialize(context);
-                _view.Initialize(context);
+                if (_controller == null)
+                    _controller = new CounterController(model, _view);
 
-                _controller.PreInitialize(model, _view);
+
+                model.Initialize(context);           
+                _view.Initialize(context);
                 _controller.Initialize(context);
             }
 

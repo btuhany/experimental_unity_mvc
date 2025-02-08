@@ -4,7 +4,6 @@ using UnityEngine;
 //TODO: Seperate App Initializer logic which gets a instance of the app (NON-MONOBEHAVIOUR)
 public class LoggerExampleAppInitializer : MonoBehaviour, IAppInitializer
 {
-    [SerializeField] private CounterController _counterController;
     [SerializeField] private CounterView _counterView;
 
     public bool IsInitialized => _isInitialized;
@@ -18,7 +17,7 @@ public class LoggerExampleAppInitializer : MonoBehaviour, IAppInitializer
     {
         if (!_isInitialized)
         {
-            var counter = new CounterMVCEntity(_counterController, _counterView);
+            var counter = new CounterMVCEntity(_counterView);
             counter.Initialize();
 
             //var logger = new LoggerMVCEntity();
