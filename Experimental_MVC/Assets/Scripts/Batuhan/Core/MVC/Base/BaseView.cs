@@ -1,6 +1,6 @@
 ﻿using Batuhan.Core.MVC;
 
-namespace Assets.Scripts.LoggerExample.MVCEntities.Base
+namespace Assets.Scripts.Batuhan.Core.MVC.Base
 {
     public abstract class BaseView : IView
     {

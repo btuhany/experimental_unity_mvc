@@ -1,13 +1,12 @@
-﻿
-using Assets.Scripts.Batuhan.Core.MVC.Base;
+﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
 
-namespace Assets.Scripts.LoggerExample.MVCEntities.CounterLogger
+namespace Assets.Scripts.LoggerExample.MVC.Entities.CounterLogger
 {
     internal class CounterLoggerController : BaseController<CounterLoggerModel, CounterLoggerView>
     {
         public CounterLoggerController(CounterLoggerModel model, CounterLoggerView view) : base(model, view)
         {
-            
+
         }
     }
 }
