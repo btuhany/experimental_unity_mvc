@@ -6,7 +6,7 @@ namespace Assets.Scripts.Batuhan.Core.MVC.Base
         public bool IsInitialized => _isInitialized;
         public IContext Context => _context;
 
-        private bool _isInitialized = false;
+        protected bool _isInitialized = false;
         private IContext _context;
 
         protected readonly TModel _model;

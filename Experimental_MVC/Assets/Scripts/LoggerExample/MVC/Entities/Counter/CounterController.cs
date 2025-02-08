@@ -1,11 +1,17 @@
-﻿using Batuhan.Core.MVC;
+﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
+using Batuhan.Core.MVC;
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterController : BaseControllerMonoBehaviour<CounterModel, CounterView>
+    internal class CounterController : BaseController<CounterModel, CounterView>
     {
+        public CounterController(CounterModel model, CounterView view) : base(model, view)
+        {
+        }
+
         public override void Initialize(IContext context)
         {
             if (!_isInitialized)
@@ -14,11 +20,18 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
                 //TODO MVC Entity Initialized and Ready to Use Event
 
                 _model.OnCountValueChanged += OnCountValueChanged;  //TODO Observer Pattern
-
-                StartCoroutine(CounterCoroutine());
+                ActivateTick().Forget();
             }
         }
-
+        private async UniTaskVoid ActivateTick()
+        {
+            while (true)
+            {
+                var secondsToWait = (float)(1f / _model.CountSpeed);
+                await UniTask.Delay((int)(secondsToWait * 1000));
+                _model.IncreaseCounter();
+            }
+        }
         private void OnDestroy()
         {
             _model.OnCountValueChanged -= OnCountValueChanged;
@@ -26,13 +39,14 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 
         private IEnumerator CounterCoroutine()
         {
-            while(true)
+            while (true)
             {
                 var secondsToWait = (float) (1f / _model.CountSpeed);
                 yield return new WaitForSeconds(secondsToWait);
                 _model.IncreaseCounter();
             }
         }
+
 
         private void OnCountValueChanged(int counterValue)
         {
