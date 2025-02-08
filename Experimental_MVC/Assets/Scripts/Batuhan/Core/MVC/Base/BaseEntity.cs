@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace Batuhan.Core.MVC
+﻿namespace Batuhan.Core.MVC.Base
 {
-    public abstract class MVCEntityBase
+    public abstract class BaseEntity
         <TModel,
         TView,
         TController> : IInitializable

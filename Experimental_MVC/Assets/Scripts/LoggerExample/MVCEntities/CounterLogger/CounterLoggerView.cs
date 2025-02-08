@@ -1,16 +1,8 @@
-﻿using Batuhan.Core.MVC;
+﻿using Assets.Scripts.LoggerExample.MVCEntities.Base;
 
 namespace Assets.Scripts.LoggerExample.MVCEntities.CounterLogger
 {
-    internal class CounterLoggerView : IView
+    internal class CounterLoggerView : BaseView
     {
-        public bool IsInitialized => throw new System.NotImplementedException();
-
-        public IContext Context => throw new System.NotImplementedException();
-
-        public void Initialize(IContext context)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }
