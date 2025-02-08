@@ -21,7 +21,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
                 var context = new CounterContext();
                 var model = new CounterModel();
 
-                if (_controller == null)
+                if (_controller is null)
                     _controller = new CounterController(model, _view);
 
 
