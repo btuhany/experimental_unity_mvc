@@ -1,4 +1,4 @@
-using Assets.Scripts.LoggerExample.MVC.Entities.CounterLogger;
+using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
 using UnityEngine;
 
 public class LoggerExampleApp : IAppInitializer
