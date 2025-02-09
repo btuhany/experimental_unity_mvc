@@ -4,6 +4,7 @@ using Zenject;
 
 public class AppInitializer : MonoBehaviour
 {
+    //TODOby: entry point with event manager
     [Inject] private CounterEntityInitializer _counterInitializer;
 
     private void Start()
