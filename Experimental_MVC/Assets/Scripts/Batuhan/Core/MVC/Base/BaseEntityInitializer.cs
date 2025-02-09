@@ -1,8 +1,8 @@
-﻿using Unity.Android.Gradle.Manifest;
+﻿using Zenject;
 
 namespace Batuhan.Core.MVC.Base
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntityInitializer
         <TModel,
         TView,
         TController> : IInitializable

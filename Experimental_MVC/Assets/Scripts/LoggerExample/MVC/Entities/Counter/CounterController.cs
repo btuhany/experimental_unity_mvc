@@ -3,11 +3,13 @@ using Batuhan.Core.MVC;
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
     internal class CounterController : BaseController<CounterModel, CounterView>
     {
+        [Inject]
         public CounterController(CounterModel model, CounterView view) : base(model, view)
         {
         }
