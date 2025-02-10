@@ -27,8 +27,6 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
                 new object[] { model, view, _circleContext }
             );
 
-            controller.Initialize();
-            
             return controller;
         }
     }
