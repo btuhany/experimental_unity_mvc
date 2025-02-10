@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using UnityEngine;
 using Assets.Scripts.LoggerExample.Installers.ScriptableObjects;
+using Zenject.Asteroids;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
@@ -11,8 +12,8 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
         {
             container.Bind<CounterContext>().AsTransient();
             container.Bind<CounterModel>().AsTransient();
-            container.Bind<CounterController>().AsTransient();
-            container.Bind<CounterEntityInitializer>().AsTransient(); //TODOby
+            container.Bind<CounterController>().AsTransient(); //TODOby Do we need to inject this?
+            container.Bind<IInitializable>().To<CounterController>().FromResolve();
         }
     }
 }

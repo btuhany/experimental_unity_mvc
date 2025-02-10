@@ -24,9 +24,8 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
             }
         }
         public float CounterValue { get => _counterValue; }
-        public override void Initialize(IContext context)
+        public void Initialize()
         {
-            base.Initialize(context);
             _counterValue = 0;
             _countSpeed = 1f;
         }
