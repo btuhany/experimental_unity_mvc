@@ -16,6 +16,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
 
         public override void Initialize()
         {
+            _view.transform.position = UnityEngine.Random.insideUnitCircle * 7;
         }
     }
 }
