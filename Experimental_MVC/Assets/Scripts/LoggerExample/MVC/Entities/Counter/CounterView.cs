@@ -8,10 +8,8 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
     internal class CounterView : BaseViewMonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _counterText;
-        public override void Initialize(IContext context)
+        public void Initialize()
         {
-            base.Initialize(context);
-
             //TODO MVC Entity Initialized and Ready to Use Event
             _counterText.text = "-";
         }

@@ -1,7 +1,7 @@
 ﻿namespace Batuhan.Core.MVC
 {
-    public interface IController : IInitializableWithContext
+    public interface IController : IInitializable
     {
-
+        public IContext Context { get; }
     }
 }

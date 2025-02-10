@@ -1,7 +1,7 @@
 ﻿namespace Batuhan.Core.MVC
 {
-    public interface IView : IInitializableWithContext
+    public interface IView
     {
-
+        public IContext Context { get; }
     }
 }

@@ -3,22 +3,24 @@ using Batuhan.Core.MVC;
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterController : BaseController<CounterModel, CounterView>
+    internal class CounterController : BaseController<CounterModel, CounterView>, Zenject.IInitializable
     {
-        public CounterController(CounterModel model, CounterView view) : base(model, view)
+        //TODOby: A larger scope of a context needed instead of counter context but its okay for now
+        [Inject]
+        public CounterController(CounterModel model, CounterView view, CounterContext context) : base(model, view, context)
         {
         }
-
-        public override void Initialize(IContext context)
+        public override void Initialize()
         {
             if (!_isInitialized)
             {
-                base.Initialize(context);
+                _model.Initialize();
+                _view.Initialize();
                 //TODO MVC Entity Initialized and Ready to Use Event
-
                 _model.OnCountValueChanged += OnCountValueChanged;  //TODO Observer Pattern
                 ActivateTick().Forget();
             }
@@ -53,5 +55,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
             //TODO Command or Event Manager via Context
             _view.OnCountChanged(counterValue);
         }
+
+
     }
 }
