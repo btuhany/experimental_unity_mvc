@@ -12,8 +12,7 @@ namespace Assets.Scripts.LoggerExample.Installers.ScriptableObjects
         {
             container.Bind<CircleView>().FromInstance(_circleViewPrefab).AsSingle();
             container.Bind<CircleContext>().AsTransient();
-            container.BindFactory<CircleController, CircleController.Factory>()
-                .FromFactory<CircleFactory>();
+            container.BindFactory<CircleController, CircleController.Factory>().FromFactory<CircleFactory>();
         }
     }
 }

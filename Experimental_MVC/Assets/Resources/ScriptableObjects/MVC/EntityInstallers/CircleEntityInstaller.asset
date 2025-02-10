@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2ff2f291996deb4a9812fcb3c96ef94, type: 3}
   m_Name: CircleEntityInstaller
   m_EditorClassIdentifier: 
-  _circleViewPrefab: {fileID: 0}
+  _circleViewPrefab: {fileID: -5781852973538215816, guid: adad7fcd94df94b42b60b83c06ea5927, type: 3}

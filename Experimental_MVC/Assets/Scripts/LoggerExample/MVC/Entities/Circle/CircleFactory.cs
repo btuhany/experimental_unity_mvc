@@ -18,19 +18,17 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
         }
         public CircleController Create()
         {
+            //can bind model in install process
             var model = _container.Instantiate<CircleModel>();
 
-            // Prefab'dan view nesnesini instantiate ediyoruz
             var view = _container.InstantiatePrefabForComponent<CircleView>(_circleViewPrefab);
 
-            // Controller'ı model, view ve context ile birlikte instantiate ediyoruz
             var controller = _container.Instantiate<CircleController>(
                 new object[] { model, view, _circleContext }
             );
 
-            // Controller initialize ediliyor
             controller.Initialize();
-
+            
             return controller;
         }
     }

@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
-using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
 using Batuhan.Core.MVC;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
@@ -16,7 +16,8 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
 
         public override void Initialize()
         {
-            _view.transform.position = UnityEngine.Random.insideUnitCircle * 7;
+            _view.transform.position = UnityEngine.Random.insideUnitCircle * 4;
+            Debug.Log("CircleController Initialized");
         }
     }
 }
