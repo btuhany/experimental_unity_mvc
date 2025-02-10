@@ -13,7 +13,8 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
             container.Bind<CounterContext>().AsTransient();
             container.Bind<CounterModel>().AsTransient();
             container.Bind<CounterController>().AsTransient(); //TODOby Do we need to inject this?
-            container.Bind<IInitializable>().To<CounterController>().FromResolve();
+            //container.Bind<IInitializable>().To<CounterController>().FromResolve();
+            container.BindInterfacesTo<CounterController>().FromResolve();
         }
     }
 }
