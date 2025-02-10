@@ -16,7 +16,6 @@ namespace Assets.Scripts.LoggerExample.Installers
                 var viewType = view.GetType();
                 Container.Bind(viewType).FromInstance(view).AsSingle();
             }
-            CounterEntityInstaller.Install(Container);
         }
     }
 }

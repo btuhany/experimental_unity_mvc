@@ -1,3 +1,4 @@
+using Assets.Scripts.LoggerExample.Installers.ScriptableObjects;
 using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
 using UnityEngine;
 using Zenject;
@@ -10,5 +11,6 @@ public class AppInitializer : MonoBehaviour
     private void Start()
     {
         _counterInitializer.Initialize();
+
     }
 }
