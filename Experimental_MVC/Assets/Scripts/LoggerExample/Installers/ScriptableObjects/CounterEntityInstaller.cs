@@ -5,6 +5,7 @@ using Zenject.Asteroids;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
+    //TODOby: Dependency Injection base class?
     [CreateAssetMenu(fileName = "CounterEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CounterEntityInstaller")]
     internal class CounterEntityInstaller : BaseEntityInstallerScriptableObject
     {
