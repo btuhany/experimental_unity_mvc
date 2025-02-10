@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterController : BaseController<CounterModel, CounterView>, Zenject.IInitializable
+    internal class CounterController : BaseController<CounterModel, CounterView>, Zenject.IInitializable //TODOby: IDisposable, Destroying object
     {
         //TODOby: A larger scope of a context needed instead of counter context but its okay for now
         [Inject]

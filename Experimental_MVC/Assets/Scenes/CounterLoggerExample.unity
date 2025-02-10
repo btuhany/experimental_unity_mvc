@@ -148,6 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb201827a2530f4e8259c1164f6d6d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _entityInstallerScriptableObjects:
+  - {fileID: 11400000, guid: d632f68892976d04a8cba8b224ff7db7, type: 2}
 --- !u!4 &18490880
 Transform:
   m_ObjectHideFlags: 0

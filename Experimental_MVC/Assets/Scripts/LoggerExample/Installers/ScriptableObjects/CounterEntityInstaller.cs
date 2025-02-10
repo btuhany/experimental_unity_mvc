@@ -1,7 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
 using Assets.Scripts.LoggerExample.Installers.ScriptableObjects;
-using Zenject.Asteroids;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {

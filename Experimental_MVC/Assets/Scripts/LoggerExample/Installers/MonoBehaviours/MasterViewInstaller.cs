@@ -5,6 +5,7 @@ using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers
 {
+    //TODOBY: Can be merged with MasterEntityInstaller
     public class MasterViewInstaller : MonoInstaller
     {
         [SerializeField] private BaseViewMonoBehaviour[] _views;
