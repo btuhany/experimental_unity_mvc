@@ -14,10 +14,15 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
         //TEMP
         [Inject]
         CircleController.Factory _circleFactory;
+
+        private ICounterContext _context;
+        public override IContext Context => _context;
+
         //TODOby: A larger scope of a context needed instead of counter context but its okay for now
         [Inject]
-        public CounterController(CounterModel model, CounterView view, CounterContext context) : base(model, view, context)
+        public CounterController(CounterModel model, CounterView view, ICounterContext context) : base(model, view)
         {
+            _context = context;
         }
 
         public override void Initialize()

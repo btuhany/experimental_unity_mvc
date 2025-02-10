@@ -10,7 +10,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<CounterContext>().AsTransient();
+            container.Bind<ICounterContext>().To<CounterContext>().AsTransient();
             container.Bind<CounterModel>().AsTransient();
             container.Bind<CounterController>().AsTransient(); //TODOby Do we need to inject this?
             //container.Bind<IInitializable>().To<CounterController>().FromResolve();

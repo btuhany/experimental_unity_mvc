@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
+using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
 using UnityEngine;
 using Zenject;
 
@@ -10,8 +11,9 @@ namespace Assets.Scripts.LoggerExample.Installers.ScriptableObjects
         [SerializeField] private CircleView _circleViewPrefab;
         public override void InstallFrom(DiContainer container)
         {
+            container.Bind<ICircleContext>().To<CircleContext>().AsTransient();
+            container.Bind<CircleModel>().AsTransient();
             container.Bind<CircleView>().FromInstance(_circleViewPrefab).AsSingle();
-            container.Bind<CircleContext>().AsTransient();
             container.BindFactory<CircleController, CircleController.Factory>().FromFactory<CircleFactory>();
         }
     }

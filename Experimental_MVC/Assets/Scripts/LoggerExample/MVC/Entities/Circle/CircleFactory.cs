@@ -7,24 +7,24 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
     {
         readonly DiContainer _container;
         readonly CircleView _circleViewPrefab;
-        readonly CircleContext _circleContext;
 
         [Inject]
-        public CircleFactory(DiContainer container, CircleView circleViewPrefab, CircleContext circleContext)
+        public CircleFactory(DiContainer container, CircleView circleViewPrefab)
         {
             _container = container;
             _circleViewPrefab = circleViewPrefab;
-            _circleContext = circleContext;
         }
         public CircleController Create()
         {
             //can bind model in install process
-            var model = _container.Instantiate<CircleModel>();
+            var model = _container.Resolve<CircleModel>();
+            var context = _container.Resolve<ICircleContext>();
 
             var view = _container.InstantiatePrefabForComponent<CircleView>(_circleViewPrefab);
+            view.SetContext(context);
 
             var controller = _container.Instantiate<CircleController>(
-                new object[] { model, view, _circleContext }
+                new object[] { model, view, context }
             );
 
             return controller;
