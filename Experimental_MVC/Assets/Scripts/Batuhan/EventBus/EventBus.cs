@@ -27,7 +27,13 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
         }
         public void Cleanup()
         {
-            var keysToRemove = _bindings.Where(kvp => kvp.Value.IsEmpty).Select(kvp => kvp.Key).ToList();
+            List<Type> keysToRemove = new();
+            foreach (var kvp in _bindings)
+            {
+                if (kvp.Value.IsEmpty)
+                    keysToRemove.Add(kvp.Key);
+            }
+
             foreach (var key in keysToRemove)
             {
                 _bindings.Remove(key);
@@ -48,7 +54,7 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
             var eventType = typeof(TEvent);
             if (_bindings.TryGetValue(eventType, out var collection))
             {
-                (collection as EventCollection<TEvent>)?.Invoke(eventData);
+                ((EventCollection<TEvent>) collection).Invoke(eventData);
             }
         }
 
@@ -68,7 +74,7 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
                 _bindings[eventType] = collection;
             }
 
-            (collection as EventCollection<TEvent>)?.Add(new EventBinding<TEvent>(callback));
+            ((EventCollection<TEvent>) collection).Add(new EventBinding<TEvent>(callback));
         }
 
         public void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent
@@ -90,7 +96,6 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
                     _bindings.Remove(eventType);
                 }
             }
-
         }
 
         private bool IsCategoryValid(IEvent eventData)
@@ -111,14 +116,14 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
             }
 
             var categoryProperty = type.GetProperty(nameof(IEvent.CategoryID));
-            if (categoryProperty != null && categoryProperty.GetMethod.IsStatic)
+            if (categoryProperty != null && categoryProperty.CanRead)
             {
                 categoryID = (EventCategoryID)categoryProperty.GetValue(null);
                 _categoryCache[type] = categoryID;
                 return categoryID;
             }
 
-            throw new Exception($"Type {type.Name} does not implement IEvent properly.");
+            throw new InvalidOperationException($"Type {type.Name} does not implement IEvent properly.");
         }
     }
 }

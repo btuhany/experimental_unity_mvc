@@ -16,6 +16,6 @@
     }
     public interface IEvent 
     {
-        public static EventCategoryID CategoryID { get; }
+        public EventCategoryID CategoryID { get; }
     }
 }
