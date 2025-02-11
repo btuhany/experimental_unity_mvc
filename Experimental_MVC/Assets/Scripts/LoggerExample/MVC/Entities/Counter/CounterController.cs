@@ -2,6 +2,7 @@
 using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
 using Batuhan.Core.MVC;
 using Cysharp.Threading.Tasks;
+using Events.Category;
 using System;
 using System.Collections;
 using UnityEngine; //TODOBY: Prevent Unity Engine Dependency
@@ -33,19 +34,26 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
                 _view.Initialize();
                 //TODOBY: MVC Entity Initialized and Ready to Use Event
                 _model.OnCountValueChanged += OnCountValueChanged;  //TODO Observer Pattern
-                ActivateTick().Forget();
+                _context.EventBusGlobal.Subscribe<AppInitializedEvent>(HandleOnAppInitialized);
             }
         }
-        //}
+
+        private void HandleOnAppInitialized(AppInitializedEvent eventData)
+        {
+            ActivateTick().Forget();
+        }
 
         public void Dispose()
         {
+            _context.EventBusGlobal.Unsubscribe<AppInitializedEvent>(HandleOnAppInitialized);
             _model.OnCountValueChanged -= OnCountValueChanged;
             Debug.Log("CounterController Disposed");
         }
 
         private async UniTaskVoid ActivateTick()
         {
+            UnityEngine.Debug.Log("Started Ticking...");
+            await UniTask.WaitForSeconds(2.0f);
             while (true)
             {
                 var secondsToWait = (float)(1f / _model.CountSpeed);
