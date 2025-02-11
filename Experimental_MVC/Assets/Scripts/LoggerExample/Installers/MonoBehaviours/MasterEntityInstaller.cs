@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.LoggerExample.Installers.ScriptableObjects;
+using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
 using UnityEngine;
 using Zenject;
 

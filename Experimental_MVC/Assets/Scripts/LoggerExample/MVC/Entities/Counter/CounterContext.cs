@@ -2,7 +2,10 @@
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterContext : IContext
+    internal interface ICounterContext : IContext
+    {
+    }
+    internal class CounterContext : ICounterContext
     {
     }
 }
