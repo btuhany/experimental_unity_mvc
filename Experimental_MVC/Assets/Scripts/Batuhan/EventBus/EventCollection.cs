@@ -10,32 +10,38 @@ namespace Batuhan.EventBus
     }
     public class EventCollection<TEvent> : IEventBindingCollection where TEvent : IEvent
     {
-        private readonly LinkedList<EventBinding<TEvent>> _bindings = new();
-        private readonly Dictionary<Action<TEvent>, LinkedListNode<EventBinding<TEvent>>> _bindingLookUpMap = new();
+        private readonly List<EventBinding<TEvent>> _bindings = new();
+        private readonly Dictionary<Action<TEvent>, int> _bindingLookUpMap = new();
         public bool IsEmpty => _bindings.Count == 0;
 
         public void Add(EventBinding<TEvent> binding)
         {
             if (!_bindingLookUpMap.ContainsKey(binding.OnEvent))
             {
-                var node = _bindings.AddLast(binding);
-                _bindingLookUpMap[binding.OnEvent] = node;
+                _bindingLookUpMap[binding.OnEvent] = _bindings.Count;
+                _bindings.Add(binding);
             }
         }
 
         public void Remove(Action<TEvent> callback)
         {
-            if (_bindingLookUpMap.TryGetValue(callback, out var bindingToRemove))
+            if (_bindingLookUpMap.TryGetValue(callback, out int index))
             {
-                _bindings.Remove(bindingToRemove);
+                // Swap-and-pop removal for O(1) performance
+                int lastIndex = _bindings.Count - 1;
+                _bindings[index] = _bindings[lastIndex];
+                _bindingLookUpMap[_bindings[index].OnEvent] = index; // Update moved element index
+
+                _bindings.RemoveAt(lastIndex);
                 _bindingLookUpMap.Remove(callback);
             }
         }
 
         public void Invoke(TEvent eventData)
         {
-            foreach (var binding in _bindings)
+            for (int i = 0; i < _bindings.Count; i++)
             {
+                EventBinding<TEvent> binding = _bindings[i];
                 try
                 {
                     binding.OnEvent?.Invoke(eventData);
