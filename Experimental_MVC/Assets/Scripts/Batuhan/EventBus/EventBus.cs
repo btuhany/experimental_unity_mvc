@@ -29,6 +29,7 @@ namespace Assets.Scripts.Batuhan.EventBus //TODOBY FIX NAMESPACES
     public class EventBus<TCategory> : IEventBus<TCategory> where TCategory : IEventCategory, IDisposable 
     {
         private readonly Dictionary<Type, IEventBindingCollection> _bindings = new();
+        private static readonly Dictionary<Type, EventCategoryID> _categoryCache = new();
         private TCategory _category;
         public EventBus(TCategory category)
         {
@@ -111,13 +112,22 @@ namespace Assets.Scripts.Batuhan.EventBus //TODOBY FIX NAMESPACES
             return _category.ID == GetCategoryID(eventType);
         }
 
-        //TODOBY not sure about this one's performance. Maybe a cache system at Initialize would be better.
+        //Not sure about the performance of this one.
         private EventCategoryID GetCategoryID(Type type)
         {
-            if (typeof(IEvent).IsAssignableFrom(type))
+            if (_categoryCache.TryGetValue(type, out var categoryID))
             {
-                return ((IEvent)Activator.CreateInstance(type)).CategoryID;
+                return categoryID;
             }
+
+            var categoryProperty = type.GetProperty(nameof(IEvent.CategoryID));
+            if (categoryProperty != null && categoryProperty.GetMethod.IsStatic)
+            {
+                categoryID = (EventCategoryID)categoryProperty.GetValue(null);
+                _categoryCache[type] = categoryID;
+                return categoryID;
+            }
+
             throw new Exception($"Type {type.Name} does not implement IEvent properly.");
         }
     }

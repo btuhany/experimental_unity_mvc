@@ -15,6 +15,6 @@ namespace Assets.Scripts.Batuhan.EventBus
     }
     public interface IEvent 
     {
-        public EventCategoryID CategoryID { get; }
+        public static EventCategoryID CategoryID { get; }
     }
 }
