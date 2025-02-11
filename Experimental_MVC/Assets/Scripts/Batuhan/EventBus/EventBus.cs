@@ -12,20 +12,23 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
     public interface IEventBus<TCategory>
         where TCategory : IEventCategory
     {
+        public TCategory Category { get; }
         void Subscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
         void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
         void Publish<TEvent>(TEvent eventData) where TEvent : IEvent;
+        public void CleanUp();
     }
     public class EventBus<TCategory> : IDisposable, IEventBus<TCategory> where TCategory : IEventCategory
     {
         private readonly Dictionary<Type, IEventBindingCollection> _bindings = new();
-        private static readonly Dictionary<Type, EventCategoryID> _categoryCache = new();
+        private static readonly Dictionary<Type, EventCategoryID> _categoryCache = new(); //TODOBY use a different helper class for caching
         private TCategory _category;
+        public TCategory Category => _category;
         public EventBus(TCategory category)
         {
             _category = category;
         }
-        public void Cleanup()
+        public void CleanUp()
         {
             List<Type> keysToRemove = new();
             foreach (var kvp in _bindings)
@@ -41,7 +44,7 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
         }
         public void Dispose()
         {
-            Cleanup();
+            CleanUp();
             _bindings.Clear();
         }
         public void Publish<TEvent>(TEvent eventData) where TEvent : IEvent
