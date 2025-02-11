@@ -1,9 +1,5 @@
 ﻿using Assets.Scripts.LoggerExample.Installers.Mono;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Batuhan.CommandManager;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers.MonoBehaviours
@@ -16,6 +12,7 @@ namespace Assets.Scripts.LoggerExample.Installers.MonoBehaviours
         public override void InstallBindings()
         {
             EventBusInstaller.Install(Container);
+            Container.Bind<CommandManager>().AsTransient();
         }
     }
 }
