@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Batuhan.CommandManager
 {
+    //TODOBY: Composite command support
     public class CommandManager : ICommandManager
     {
         private readonly Dictionary<Type, List<ICommandBinding>> _commandListeners = new();
@@ -16,6 +18,8 @@ namespace Batuhan.CommandManager
                 _commandListeners[commandType] = new List<ICommandBinding>();
             }
             _commandListeners[commandType].Add(binding);
+
+            SortListeners(commandType);
         }
 
         public void RemoveListener<TCommand>(CommandBinding<TCommand> binding) where TCommand : ICommand
@@ -95,6 +99,10 @@ namespace Batuhan.CommandManager
             _commandListeners.Clear();
             _executedCommands.Clear();
         }
-
+        private void SortListeners(Type type)
+        {
+            var commandList = _commandListeners[type];
+            _commandListeners[type] = commandList.OrderByDescending(binding => binding.Priority).ToList();
+        }
     }
 }

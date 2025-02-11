@@ -5,6 +5,7 @@ namespace Batuhan.CommandManager
     public interface ICommandBinding
     {
         Type CommandType { get; }
+        public int Priority { get; }
         void Execute(ICommand command);
         void Undo(ICommand command);
 
@@ -13,13 +14,17 @@ namespace Batuhan.CommandManager
     {
         public Type CommandType => typeof(TCommand);
 
+        public int Priority => _priority;
+
         private readonly Action<TCommand> _execute;
         private readonly Action<TCommand> _undo;
+        private int _priority;
 
-        public CommandBinding(Action<TCommand> execute, Action<TCommand> undo = null)
+        public CommandBinding(Action<TCommand> execute, Action<TCommand> undo = null, int priority = 0)
         {
             _execute = execute;
             _undo = undo;
+            _priority = priority;
         }
 
         public void Execute(ICommand command)
