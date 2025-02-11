@@ -34,9 +34,18 @@ namespace Assets.Scripts.Batuhan.EventBus //TODOBY FIX NAMESPACES
         {
             _category = category;
         }
+        public void Cleanup()
+        {
+            var keysToRemove = _bindings.Where(kvp => kvp.Value.IsEmpty).Select(kvp => kvp.Key).ToList();
+            foreach (var key in keysToRemove)
+            {
+                _bindings.Remove(key);
+            }
+        }
         public void Dispose()
         {
-            _bindings.Clear();
+            Cleanup();
+            //_bindings.Clear();
         }
         public void Publish<TEvent>(TEvent eventData) where TEvent : IEvent
         {
