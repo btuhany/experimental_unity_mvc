@@ -1,17 +1,18 @@
-﻿
-using System;
-
-namespace Assets.Scripts.Batuhan.EventBus
+﻿namespace Batuhan.EventBus
 {
     //TODOBY flags
     public enum EventCategoryID
     {
         Global = 0,
-        UI = 1, //Notifies view and controller
-        Input = 2, //Notifies controller
-        View = 3, //Notifies view
+        Service = 1, 
+        Input = 2,
+        View = 3,
         Controller = 4,
         Model = 5
+    }
+    public interface IEventCategory
+    {
+        public EventCategoryID ID { get; }
     }
     public interface IEvent 
     {

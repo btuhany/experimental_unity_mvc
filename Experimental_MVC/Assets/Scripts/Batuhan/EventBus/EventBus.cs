@@ -2,30 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-namespace Assets.Scripts.Batuhan.EventBus //TODOBY FIX NAMESPACES
+namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
 {
     //Static implementations need bootstrapping to avoid allocations and potential performance spykes at runtime.
     //Using DI framework instead of a static class would be a better approach.
-    public interface IEventCategory
-    {
-        public EventCategoryID ID { get; }
-    }
-
     public interface IEventBus<TCategory>
         where TCategory : IEventCategory
     {
-        //void Subscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
-        //void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
-        //void Publish<TEvent>(TEvent eventData) where TEvent : IEvent;
+        void Subscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
+        void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
+        void Publish<TEvent>(TEvent eventData) where TEvent : IEvent;
     }
-    public interface IEventBindingCollection
-    {
-        bool IsEmpty { get; }
-    }
-
-
     public class EventBus<TCategory> : IEventBus<TCategory> where TCategory : IEventCategory, IDisposable 
     {
         private readonly Dictionary<Type, IEventBindingCollection> _bindings = new();
@@ -46,7 +36,7 @@ namespace Assets.Scripts.Batuhan.EventBus //TODOBY FIX NAMESPACES
         public void Dispose()
         {
             Cleanup();
-            //_bindings.Clear();
+            _bindings.Clear();
         }
         public void Publish<TEvent>(TEvent eventData) where TEvent : IEvent
         {

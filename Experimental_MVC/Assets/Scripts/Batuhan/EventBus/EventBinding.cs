@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.Batuhan.EventBus
+namespace Batuhan.EventBus
 {
     public class EventBinding<T> where T : IEvent 
     {

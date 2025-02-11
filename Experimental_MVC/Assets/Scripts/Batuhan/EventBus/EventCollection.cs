@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.Batuhan.EventBus
+namespace Batuhan.EventBus
 {
+    public interface IEventBindingCollection
+    {
+        bool IsEmpty { get; }
+    }
     public class EventCollection<TEvent> : IEventBindingCollection where TEvent : IEvent
     {
-        private readonly HashSet<EventBinding<TEvent>> _bindings = new();
-        private readonly Dictionary<Action<TEvent>, EventBinding<TEvent>> _bindingLookUpMap = new(); //for performance
+        private readonly LinkedList<EventBinding<TEvent>> _bindings = new();
+        private readonly Dictionary<Action<TEvent>, LinkedListNode<EventBinding<TEvent>>> _bindingLookUpMap = new();
         public bool IsEmpty => _bindings.Count == 0;
 
         public void Add(EventBinding<TEvent> binding)
         {
             if (!_bindingLookUpMap.ContainsKey(binding.OnEvent))
             {
-                _bindings.Add(binding);
-                _bindingLookUpMap[binding.OnEvent] = binding;
+                var node = _bindings.AddLast(binding);
+                _bindingLookUpMap[binding.OnEvent] = node;
             }
         }
 
