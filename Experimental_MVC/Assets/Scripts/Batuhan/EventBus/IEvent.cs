@@ -1,6 +1,9 @@
 ﻿
+using System;
+
 namespace Assets.Scripts.Batuhan.EventBus
 {
+    //TODOBY flags
     public enum EventCategoryID
     {
         Global = 0,
@@ -10,5 +13,8 @@ namespace Assets.Scripts.Batuhan.EventBus
         Controller = 4,
         Model = 5
     }
-    public interface IEvent { }
+    public interface IEvent 
+    {
+        public EventCategoryID CategoryID { get; }
+    }
 }

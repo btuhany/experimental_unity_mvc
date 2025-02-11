@@ -1,23 +1,45 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.Batuhan.EventBus
 {
     public class EventCollection<TEvent> : IEventBindingCollection where TEvent : IEvent
     {
         private readonly HashSet<EventBinding<TEvent>> _bindings = new();
-
+        private readonly Dictionary<Action<TEvent>, EventBinding<TEvent>> _bindingLookUpMap = new(); //for performance
         public bool IsEmpty => _bindings.Count == 0;
 
-        public void Add(EventBinding<TEvent> binding) => _bindings.Add(binding);
+        public void Add(EventBinding<TEvent> binding)
+        {
+            if (!_bindingLookUpMap.ContainsKey(binding.OnEvent))
+            {
+                _bindings.Add(binding);
+                _bindingLookUpMap[binding.OnEvent] = binding;
+            }
+        }
 
-        public void Remove(EventBinding<TEvent> binding) => _bindings.Remove(binding);
+        public void Remove(Action<TEvent> callback)
+        {
+            if (_bindingLookUpMap.TryGetValue(callback, out var bindingToRemove))
+            {
+                _bindings.Remove(bindingToRemove);
+                _bindingLookUpMap.Remove(callback);
+            }
+        }
 
         public void Invoke(TEvent eventData)
         {
-            foreach (var binding in _bindings.ToArray())
+            foreach (var binding in _bindings)
             {
-                binding.OnEvent?.Invoke(eventData);
+                try
+                {
+                    binding.OnEvent?.Invoke(eventData);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"Exception in event handler: {ex}");  //TODOby Seperate Debug class - Unity Debugger
+                }
             }
         }
     }
