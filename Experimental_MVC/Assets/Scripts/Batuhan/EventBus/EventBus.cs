@@ -16,7 +16,7 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
         void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
         void Publish<TEvent>(TEvent eventData) where TEvent : IEvent;
     }
-    public class EventBus<TCategory> : IEventBus<TCategory> where TCategory : IEventCategory, IDisposable 
+    public class EventBus<TCategory> : IDisposable, IEventBus<TCategory> where TCategory : IEventCategory
     {
         private readonly Dictionary<Type, IEventBindingCollection> _bindings = new();
         private static readonly Dictionary<Type, EventCategoryID> _categoryCache = new();
