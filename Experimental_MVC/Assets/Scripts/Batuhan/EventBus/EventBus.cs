@@ -118,7 +118,8 @@ namespace Batuhan.EventBus //TODOBY FIX NAMESPACES
             var categoryProperty = type.GetProperty(nameof(IEvent.CategoryID));
             if (categoryProperty != null && categoryProperty.CanRead)
             {
-                categoryID = (EventCategoryID)categoryProperty.GetValue(null);
+                var instance = Activator.CreateInstance(type);
+                categoryID = (EventCategoryID) categoryProperty.GetValue(instance);
                 _categoryCache[type] = categoryID;
                 return categoryID;
             }
