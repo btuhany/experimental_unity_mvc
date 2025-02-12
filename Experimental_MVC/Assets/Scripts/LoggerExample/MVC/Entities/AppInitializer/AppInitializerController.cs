@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
-using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Base;
+using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
-using Events.Category;
+using TimeCounter.Events.Global;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer

@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.LoggerExample.Commands;
-using Batuhan.CommandManager;
+﻿using Batuhan.CommandManager;
 using Batuhan.MVC.Core;
-using Batuhan.MVC.UnityComponents;
+using Batuhan.MVC.UnityComponents.Base;
+using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
 

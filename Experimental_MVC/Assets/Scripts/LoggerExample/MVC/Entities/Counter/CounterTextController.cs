@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.LoggerExample.Commands;
-using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
+﻿using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
-using Events.Category;
 using System;
 using System.Collections;
+using TimeCounter.Commands;
+using TimeCounter.Events.Global;
 using UnityEngine; //TODOBY: Prevent Unity Engine Dependency
 using Zenject;
 

@@ -1,6 +1,6 @@
 ﻿using Batuhan.CommandManager;
 
-namespace Assets.Scripts.LoggerExample.Commands
+namespace TimeCounter.Commands
 {
     public struct UpdateCounterTextCommand : ICommand
     {

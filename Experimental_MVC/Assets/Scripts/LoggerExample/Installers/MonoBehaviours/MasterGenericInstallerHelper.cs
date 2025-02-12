@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.LoggerExample.Installers.Mono;
-using Batuhan.CommandManager;
+﻿using Batuhan.CommandManager;
+using TimeCounter.Installers.Mono;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers.MonoBehaviours

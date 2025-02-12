@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
-using Batuhan.Core.MVC.Unity;
+﻿using Batuhan.MVC.UnityComponents.Base;
 using UnityEngine;
 using Zenject;
 
