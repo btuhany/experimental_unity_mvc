@@ -1,10 +1,9 @@
-﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
-using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Base;
 using System;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterModel : BaseModel
+    internal class CounterTextModel : BaseModel
     {
         private float _countSpeed = 1.0f;
         private int _counterValue = 0;

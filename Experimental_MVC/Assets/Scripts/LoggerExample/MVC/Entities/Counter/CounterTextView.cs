@@ -1,24 +1,23 @@
 ﻿using Assets.Scripts.LoggerExample.Commands;
 using Batuhan.CommandManager;
-using Batuhan.Core.MVC;
-using Batuhan.Core.MVC.Unity;
-using System;
+using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents;
 using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterView : BaseViewMonoBehaviour
+    internal class CounterTextView : BaseViewMonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _counterText;
 
-        private ICounterContext _counterContext;
+        private ICounterTextContext _counterContext;
         private CommandBinding<UpdateCounterTextCommand> _updateCounterTextCommandBinding;
         private CommandBinding<UpdateCounterTextCommand> _updateCounterTextCommandBinding2;
 
         public override IContext Context => _counterContext;
 
-        public void Initialize(ICounterContext context)
+        public void Initialize(ICounterTextContext context)
         {
             //TODO MVC Entity Initialized and Ready to Use Event
             _counterContext = context;

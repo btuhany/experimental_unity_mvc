@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
-using Assets.Scripts.LoggerExample.Commands;
+﻿using Assets.Scripts.LoggerExample.Commands;
 using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
-using Batuhan.Core.MVC;
+using Batuhan.MVC.Base;
+using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using Events.Category;
 using System;
@@ -11,18 +11,17 @@ using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 {
-    internal class CounterController : BaseController<CounterModel, CounterView>, Zenject.IInitializable, IDisposable //TODOby: IDisposable, Destroying object
+    internal class CounterTextController : BaseController<CounterTextModel, CounterTextView>, Zenject.IInitializable, IDisposable //TODOby: IDisposable, Destroying object
     {
         //TEMP
         [Inject]
         CircleController.Factory _circleFactory;
 
-        private ICounterContext _context;
+        private ICounterTextContext _context;
         public override IContext Context => _context;
 
-        //TODOby: A larger scope of a context needed instead of counter context but its okay for now
         [Inject]
-        public CounterController(CounterModel model, CounterView view, ICounterContext context) : base(model, view)
+        public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view)
         {
             _context = context;
         }

@@ -11,6 +11,7 @@ namespace Assets.Scripts.LoggerExample.Commands
         }
         public void OnExecute()
         {
+            UnityEngine.Debug.Log($"Counter value updated to {CounterValue}");
         }
         public void OnUndo()
         {
