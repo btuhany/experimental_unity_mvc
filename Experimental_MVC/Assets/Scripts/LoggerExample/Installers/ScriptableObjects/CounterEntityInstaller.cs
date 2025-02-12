@@ -1,6 +1,7 @@
 ﻿using Zenject;
 using UnityEngine;
 using Batuhan.MVC.UnityComponents.Zenject;
+using TimeCounter.Entities.CounterText;
 
 namespace TimeCounter.Installers
 {

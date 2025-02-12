@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections;
 using TimeCounter.Commands;
+using TimeCounter.Entities.CountIndicator;
 using TimeCounter.Events.Global;
 using UnityEngine; //TODOBY: Prevent Unity Engine Dependency
 using Zenject;

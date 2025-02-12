@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer;
-using Batuhan.MVC.UnityComponents.Zenject;
+﻿using Batuhan.MVC.UnityComponents.Zenject;
+using TimeCounter.Entities.AppInitializer;
 using UnityEngine;
 using Zenject;
 

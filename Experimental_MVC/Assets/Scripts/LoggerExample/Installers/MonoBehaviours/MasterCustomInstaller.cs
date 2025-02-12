@@ -1,6 +1,5 @@
 ﻿using Batuhan.CommandManager;
 using Batuhan.MVC.UnityComponents.Zenject;
-using TimeCounter.Installers.Mono;
 
 namespace TimeCounter.Installers
 {
