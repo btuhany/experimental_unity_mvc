@@ -2,6 +2,6 @@
 {
     public interface IEvent
     {
-        public EventCategoryID CategoryID { get; }
+        public int CategoryID { get; }
     }
 }

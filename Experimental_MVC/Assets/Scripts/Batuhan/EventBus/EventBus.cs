@@ -14,10 +14,11 @@ namespace Batuhan.EventBus
         void Publish<TEvent>(TEvent eventData) where TEvent : IEvent;
         public void CleanUp();
     }
+    //TODOBY IEventCategory could be used with composite
     public class EventBus<TCategory> : IDisposable, IEventBus<TCategory> where TCategory : IEventCategory
     {
         private readonly Dictionary<Type, IEventBindingCollection> _bindings = new();
-        private static readonly Dictionary<Type, EventCategoryID> _categoryCache = new(); //TODOBY use a different helper class for caching
+        private static readonly Dictionary<Type, int> _categoryCache = new(); //TODOBY use a different helper class for caching
         private TCategory _category;
         public TCategory Category => _category;
         public EventBus(TCategory category)
@@ -107,7 +108,7 @@ namespace Batuhan.EventBus
         }
 
         //Not sure about the performance of this one.
-        private EventCategoryID GetCategoryID(Type type)
+        private int GetCategoryID(Type type)
         {
             if (_categoryCache.TryGetValue(type, out var categoryID))
             {
@@ -118,7 +119,7 @@ namespace Batuhan.EventBus
             if (categoryProperty != null && categoryProperty.CanRead)
             {
                 var instance = Activator.CreateInstance(type);
-                categoryID = (EventCategoryID) categoryProperty.GetValue(instance);
+                categoryID = (int) categoryProperty.GetValue(instance);
                 _categoryCache[type] = categoryID;
                 return categoryID;
             }
