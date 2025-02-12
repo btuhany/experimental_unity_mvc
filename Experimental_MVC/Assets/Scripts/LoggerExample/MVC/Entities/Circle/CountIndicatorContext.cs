@@ -1,13 +1,13 @@
-﻿using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Core;
 using System;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
 {
-    internal interface ICircleContext : IContext
+    internal interface ICountIndicatorContext : IContext
     {
         public Action ChangeColorEvent { get; set; }
     }
-    internal class CircleContext : ICircleContext
+    internal class CountIndicatorContext : ICountIndicatorContext
     {
         public Action ChangeColorEvent { get; set; }
     }

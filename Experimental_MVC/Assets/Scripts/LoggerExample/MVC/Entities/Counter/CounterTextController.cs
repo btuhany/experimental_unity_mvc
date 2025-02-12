@@ -15,7 +15,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
     {
         //TEMP
         [Inject]
-        CircleController.Factory _circleFactory;
+        CountIndicatorController.Factory _circleFactory;
 
         private ICounterTextContext _context;
         public override IContext Context => _context;

@@ -1,17 +1,15 @@
-﻿using Batuhan.Core.MVC;
-using Batuhan.Core.MVC.Unity;
-using System;
+﻿using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents;
 using UnityEngine;
-using Zenject;
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
 {
-    internal class CircleView : BaseViewMonoBehaviour
+    internal class CountIndicatorView : BaseViewMonoBehaviour
     {
-        private ICircleContext _circleContext;
+        private ICountIndicatorContext _circleContext;
         public override IContext Context => _circleContext;
 
         //TODOBY Think about integrating it with zenject
-        public void SetContext(ICircleContext circleContext)
+        public void SetContext(ICountIndicatorContext circleContext)
         {
             _circleContext = circleContext;
         }

@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
-using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Base;
+using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
@@ -7,14 +7,14 @@ using Zenject;
 
 namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
 {
-    internal class CircleController : BaseController<CircleModel, CircleView>
+    internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView>
     {
         public override IContext Context => _context;
-        private ICircleContext _context;
-        public class Factory : PlaceholderFactory<CircleController> { }
+        private ICountIndicatorContext _context;
+        public class Factory : PlaceholderFactory<CountIndicatorController> { }
 
         [Inject]
-        public CircleController(CircleModel model, CircleView view, ICircleContext context) : base(model, view)
+        public CountIndicatorController(CountIndicatorModel model, CountIndicatorView view, ICountIndicatorContext context) : base(model, view)
         {
             _context = context;
         }

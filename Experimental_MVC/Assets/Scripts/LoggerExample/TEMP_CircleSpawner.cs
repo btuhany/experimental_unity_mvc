@@ -6,10 +6,10 @@ namespace Assets.Scripts.LoggerExample
 {
     internal class TEMP_CircleSpawner : MonoBehaviour
     {
-        CircleController.Factory _circleFactory;
+        CountIndicatorController.Factory _circleFactory;
 
         [Inject]
-        public void Construct(CircleController.Factory circleFactory)
+        public void Construct(CountIndicatorController.Factory circleFactory)
         {
             _circleFactory = circleFactory;
         }
