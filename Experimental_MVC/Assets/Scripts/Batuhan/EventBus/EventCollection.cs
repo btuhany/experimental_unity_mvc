@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Batuhan.EventBus
 {
@@ -48,7 +47,7 @@ namespace Batuhan.EventBus
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"Exception in event handler: {ex}");  //TODOby Seperate Debug class - Unity Debugger
+                    throw new Exception($"Exception in event handler: {ex}");
                 }
             }
         }

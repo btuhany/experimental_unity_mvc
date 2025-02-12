@@ -1,6 +1,6 @@
 ﻿namespace Batuhan.EventBus
 {
-    //TODOBY flags
+    //TODOBY Can be used flags for multiple categories
     public enum EventCategoryID
     {
         Global = 0,

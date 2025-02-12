@@ -1,6 +1,6 @@
 ﻿namespace Batuhan.EventBus
 {
-    public interface IEvent //TODOBY generic event category
+    public interface IEvent
     {
         public EventCategoryID CategoryID { get; }
     }
