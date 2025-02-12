@@ -2,6 +2,5 @@
 {
     public interface IView
     {
-        public IContext Context { get; }
     }
 }

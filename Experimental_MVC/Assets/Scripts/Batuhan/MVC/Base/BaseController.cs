@@ -17,7 +17,6 @@ namespace Batuhan.MVC.Base
         {
             _model = model;
             _view = view;
-
         }
     }
         public abstract class BaseController<TModel, TView, TContext> : IController<TContext>

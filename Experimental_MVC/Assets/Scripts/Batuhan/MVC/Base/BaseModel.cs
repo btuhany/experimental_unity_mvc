@@ -2,12 +2,8 @@
 
 namespace Batuhan.MVC.Base
 {
-    public abstract class BaseModel : IModel
+    public abstract class BaseModel : IModel, IContextHolder
     {
-        public IContext Context => _context;
-
-        private IContext _context;
-
-
+        public abstract IContext Context { get; }
     }
 }
