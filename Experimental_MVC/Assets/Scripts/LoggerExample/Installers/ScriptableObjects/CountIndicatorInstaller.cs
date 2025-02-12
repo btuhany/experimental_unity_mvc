@@ -1,12 +1,12 @@
 ﻿using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
-using Assets.Scripts.LoggerExample.MVC.Entities.Counter;
+using Batuhan.MVC.UnityComponents.Zenject;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "CircleEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CircleEntityInstaller")]
-    internal class CountIndicatorInstaller : BaseEntityInstallerScriptableObject
+    internal class CountIndicatorInstaller : BaseEntityInstallerSO
     {
         [SerializeField] private CountIndicatorView _circleViewPrefab;
         public override void InstallFrom(DiContainer container)

@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer;
+using Batuhan.MVC.UnityComponents.Zenject;
 using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "AppInitializerInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/AppInitializerInstaller")]
-    internal class AppInitializerInstaller : BaseEntityInstallerScriptableObject
-    {
+    internal class AppInitializerInstaller : BaseEntityInstallerSO
+    {+
         public override void InstallFrom(DiContainer container)
         {
             container.BindInterfacesAndSelfTo<AppInitializerController>().AsSingle();

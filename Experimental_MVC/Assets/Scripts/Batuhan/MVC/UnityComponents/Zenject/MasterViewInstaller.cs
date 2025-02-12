@@ -1,10 +1,9 @@
-﻿using Batuhan.MVC.UnityComponents.Base;
-using UnityEngine;
+﻿using UnityEngine;
+using Batuhan.MVC.UnityComponents.Base;
 using Zenject;
 
-namespace Assets.Scripts.LoggerExample.Installers
+namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    //TODOBY: Can be merged with MasterEntityInstaller
     public class MasterViewInstaller : MonoInstaller
     {
         [SerializeField] private BaseViewMonoBehaviour[] _views;
@@ -14,7 +13,7 @@ namespace Assets.Scripts.LoggerExample.Installers
             {
                 var view = _views[i];
                 var viewType = view.GetType();
-                Container.Bind(viewType).FromInstance(view).AsSingle();
+                Container.Bind(viewType).FromInstance(view).AsTransient();
             }
         }
     }
