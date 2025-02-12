@@ -26,7 +26,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer
         //TODOBY think about execution orders
         private async UniTask SendAppInitializedEventAfterDelay()
         {
-            await UniTask.Delay(2000);
+            await UniTask.Delay(500);
             UnityEngine.Debug.Log("Published AppInitialized Event");
             _context.EventBusGlobal.Publish(new AppInitializedEvent() { Time = UnityEngine.Time.time });
         }

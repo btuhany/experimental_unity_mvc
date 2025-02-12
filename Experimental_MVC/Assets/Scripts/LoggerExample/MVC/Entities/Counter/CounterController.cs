@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Batuhan.Core.MVC.Base;
+using Assets.Scripts.LoggerExample.Commands;
 using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
 using Batuhan.Core.MVC;
 using Cysharp.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
             if (!_isInitialized)
             {
                 _model.Initialize();
-                _view.Initialize();
+                _view.Initialize(_context);
                 //TODOBY: MVC Entity Initialized and Ready to Use Event
                 _model.OnCountValueChanged += OnCountValueChanged;  //TODO Observer Pattern
                 _context.EventBusGlobal.Subscribe<AppInitializedEvent>(HandleOnAppInitialized);
@@ -53,7 +54,7 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
         private async UniTaskVoid ActivateTick()
         {
             UnityEngine.Debug.Log("Started Ticking...");
-            await UniTask.WaitForSeconds(2.0f);
+            await UniTask.WaitForSeconds(1.0f);
             while (true)
             {
                 var secondsToWait = (float)(1f / _model.CountSpeed);
@@ -77,8 +78,13 @@ namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
 
         private void OnCountValueChanged(int counterValue)
         {
-            //TODO Command or Event Manager via Context
-            _view.OnCountChanged(counterValue);
+            //SEND UPDATE COUNT TEXT
+            //_view.OnCountChanged(counterValue);
+            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(counterValue));
+            if (_model.CounterValue == 7)
+            {
+                _view.RemoveTextCommandListener();
+            }
         }
 
     }
