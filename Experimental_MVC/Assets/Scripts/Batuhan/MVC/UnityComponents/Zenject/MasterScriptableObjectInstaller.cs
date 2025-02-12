@@ -3,6 +3,7 @@ using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
+    //TODOBY ZENJECT COMPOSITE INSTALLER CAN BE USED.
     public class MasterScriptableObjectInstaller : MonoInstaller
     {
         [SerializeField] private BaseEntityInstallerSO[] _entityInstallerScriptableObjects;
