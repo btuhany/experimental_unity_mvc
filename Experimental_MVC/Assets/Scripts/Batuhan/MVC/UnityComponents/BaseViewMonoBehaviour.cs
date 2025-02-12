@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Batuhan.MVC.Core;
+using UnityEngine;
 
-namespace Batuhan.Core.MVC.Unity
+namespace Batuhan.MVC.UnityComponents
 {
     //TODOby refactor model, view, controller classes immediately!
     public abstract class BaseViewMonoBehaviour : MonoBehaviour, IMonoBehaviourView

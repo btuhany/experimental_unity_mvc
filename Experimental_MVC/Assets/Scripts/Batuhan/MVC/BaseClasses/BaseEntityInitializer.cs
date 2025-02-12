@@ -1,6 +1,4 @@
-﻿using Zenject;
-
-namespace Batuhan.Core.MVC.Base
+﻿namespace Batuhan.MVC.Base
 {
     public abstract class BaseEntityInitializer
         <TModel,

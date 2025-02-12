@@ -1,5 +1,4 @@
-
-namespace Batuhan.Core.MVC
+namespace Batuhan.MVC.Core
 {
     public interface IModel
     {
