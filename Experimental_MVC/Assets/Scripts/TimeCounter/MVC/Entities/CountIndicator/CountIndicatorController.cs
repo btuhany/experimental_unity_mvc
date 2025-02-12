@@ -17,6 +17,8 @@ namespace TimeCounter.Entities.CountIndicator
         public CountIndicatorController(CountIndicatorModel model, CountIndicatorView view, ICountIndicatorContext context) : base(model, view)
         {
             _context = context;
+
+            UnityEngine.Debug.Log("Instantiated new CountIndicatorController");
         }
 
         public override void Initialize()
@@ -31,7 +33,6 @@ namespace TimeCounter.Entities.CountIndicator
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             _context.ChangeColorEvent?.Invoke();
-            Debug.Log("Event Invoked!");
         }
     }
 }

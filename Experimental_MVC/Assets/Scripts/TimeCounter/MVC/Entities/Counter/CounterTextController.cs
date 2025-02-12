@@ -47,12 +47,12 @@ namespace TimeCounter.Entities.CounterText
         {
             _context.EventBusGlobal.Unsubscribe<AppInitializedEvent>(HandleOnAppInitialized);
             _model.OnCountValueChanged -= OnCountValueChanged;
-            Debug.Log("CounterController Disposed");
+          
         }
 
         private async UniTaskVoid ActivateTick()
         {
-            UnityEngine.Debug.Log("Started Ticking...");
+            
             await UniTask.WaitForSeconds(1.0f);
             while (true)
             {

@@ -21,7 +21,7 @@ namespace TimeCounter.Entities.AppInitializer
         private async UniTask SendAppInitializedEventAfterDelay()
         {
             await UniTask.Delay((int)_model.InitializationDelay);
-            UnityEngine.Debug.Log("Published AppInitialized Event");
+           
             _context.EventBusGlobal.Publish(new AppInitializedEvent() { Time = UnityEngine.Time.time });
         }
     }

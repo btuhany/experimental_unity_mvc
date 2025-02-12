@@ -40,11 +40,11 @@ namespace TimeCounter.Entities.CounterText
         public void OnUpdateCounterTextExecuteCommand(UpdateCounterTextCommand commandData)
         {
             _counterText.text = commandData.CounterValue.ToString();
-            UnityEngine.Debug.Log("Command 1 Executed");
+            
         }
         public void OnUpdateCounterTextExecuteCommand2(UpdateCounterTextCommand commandData)
         {
-            UnityEngine.Debug.Log("Command 2 Executed");
+           
         }
     }
 }

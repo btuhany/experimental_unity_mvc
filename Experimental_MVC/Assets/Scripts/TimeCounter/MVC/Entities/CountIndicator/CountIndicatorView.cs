@@ -20,7 +20,6 @@ namespace TimeCounter.Entities.CountIndicator
 
         private void OnChangeColorEvent()
         {
-            Debug.Log("On Event Invoked!");
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             GetComponent<SpriteRenderer>().color = randomColor;
