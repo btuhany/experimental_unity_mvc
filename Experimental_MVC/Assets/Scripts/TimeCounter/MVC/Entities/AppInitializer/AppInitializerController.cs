@@ -1,20 +1,15 @@
 ﻿using Batuhan.MVC.Base;
-using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using TimeCounter.Events.Global;
 using Zenject;
 
 namespace TimeCounter.Entities.AppInitializer
 {
-    internal class AppInitializerController : BaseController<AppInitializerModel, AppInitializerView>, Zenject.IInitializable
+    internal class AppInitializerController : BaseController<AppInitializerModel, IAppInitializerContext>, Zenject.IInitializable
     {
-        public override IContext Context => _context;
-        private IAppInitializerContext _context;
-        
         [Inject]
-        public AppInitializerController(AppInitializerModel model, AppInitializerView view, IAppInitializerContext context) : base(model, view)
+        public AppInitializerController(AppInitializerModel model, IAppInitializerContext context) : base(model, context)
         {
-            _context = context;
         }
 
         public override void Initialize()
@@ -25,7 +20,7 @@ namespace TimeCounter.Entities.AppInitializer
         //TODOBY think about execution orders
         private async UniTask SendAppInitializedEventAfterDelay()
         {
-            await UniTask.Delay(500);
+            await UniTask.Delay((int)_model.InitializationDelay);
             UnityEngine.Debug.Log("Published AppInitialized Event");
             _context.EventBusGlobal.Publish(new AppInitializedEvent() { Time = UnityEngine.Time.time });
         }

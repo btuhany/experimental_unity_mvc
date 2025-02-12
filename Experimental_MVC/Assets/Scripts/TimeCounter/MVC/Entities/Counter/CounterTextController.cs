@@ -11,7 +11,7 @@ using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal class CounterTextController : BaseController<CounterTextModel, CounterTextView>, Zenject.IInitializable, IDisposable //TODOby: IDisposable, Destroying object
+    internal class CounterTextController : BaseControllerWithoutContext<CounterTextModel, CounterTextView>, Zenject.IInitializable, IDisposable //TODOby: IDisposable, Destroying object
     {
         //TEMP
         [Inject]

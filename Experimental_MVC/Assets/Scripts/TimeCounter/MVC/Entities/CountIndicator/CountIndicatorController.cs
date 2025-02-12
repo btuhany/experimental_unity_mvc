@@ -7,7 +7,7 @@ using Zenject;
 
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView>
+    internal class CountIndicatorController : BaseControllerWithoutContext<CountIndicatorModel, CountIndicatorView>
     {
         public override IContext Context => _context;
         private ICountIndicatorContext _context;

@@ -4,6 +4,7 @@ using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
+    //Used install views that EXIST IN THE SAME SCENE WITH SCENE CONTEXT
     public class MasterViewInstaller : MonoInstaller
     {
         [SerializeField] private BaseViewMonoBehaviour[] _views;
@@ -13,7 +14,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             {
                 var view = _views[i];
                 var viewType = view.GetType();
-                Container.Bind(viewType).FromInstance(view).AsTransient();
+                Container.Bind(viewType).FromInstance(view).AsSingle();
             }
         }
     }

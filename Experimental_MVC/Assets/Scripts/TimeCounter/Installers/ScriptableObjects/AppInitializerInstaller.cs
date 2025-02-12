@@ -12,7 +12,7 @@ namespace TimeCounter.Installers
         {
             container.BindInterfacesAndSelfTo<AppInitializerController>().AsSingle();
             container.Bind<AppInitializerModel>().AsTransient();
-            container.Bind<AppInitializerView>().AsTransient();
+            //container.Bind<AppInitializerView>().AsTransient();
             container.Bind<IAppInitializerContext>().To<AppInitializerContext>().AsTransient();
         }
     }
