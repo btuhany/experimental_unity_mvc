@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
+namespace TimeCounter.Entities.CountIndicator
 {
     internal class CountIndicatorFactory : IFactory<CountIndicatorController>
     {

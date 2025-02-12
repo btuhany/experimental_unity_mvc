@@ -1,7 +1,7 @@
 ﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
 using UnityEngine;
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
+namespace TimeCounter.Entities.CountIndicator
 {
     internal class CountIndicatorView : BaseViewMonoBehaviour
     {

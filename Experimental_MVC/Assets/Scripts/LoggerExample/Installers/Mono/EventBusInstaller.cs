@@ -1,7 +1,7 @@
 ﻿using Batuhan.EventBus;
 using Zenject;
 
-namespace TimeCounter.Installers.Mono
+namespace TimeCounter.Installers
 { 
     internal class EventBusInstaller : Installer<EventBusInstaller>
     {

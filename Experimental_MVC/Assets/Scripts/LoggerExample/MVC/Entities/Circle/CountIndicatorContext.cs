@@ -1,7 +1,7 @@
 ﻿using Batuhan.MVC.Core;
 using System;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
+namespace TimeCounter.Entities.CountIndicator
 {
     internal interface ICountIndicatorContext : IContext
     {

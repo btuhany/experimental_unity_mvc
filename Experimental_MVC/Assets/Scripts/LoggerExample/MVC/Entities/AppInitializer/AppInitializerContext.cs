@@ -1,9 +1,8 @@
 ﻿using Batuhan.EventBus;
 using Batuhan.MVC.Core;
 using Zenject;
-using UnityEditor.PackageManager;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer
+namespace TimeCounter.Entities.AppInitializer
 {
     internal interface IAppInitializerContext : IContext
     {

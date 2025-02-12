@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
-using Batuhan.MVC.Base;
+﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using System;
@@ -9,7 +8,7 @@ using TimeCounter.Events.Global;
 using UnityEngine; //TODOBY: Prevent Unity Engine Dependency
 using Zenject;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
+namespace TimeCounter.Entities.CounterText
 {
     internal class CounterTextController : BaseController<CounterTextModel, CounterTextView>, Zenject.IInitializable, IDisposable //TODOby: IDisposable, Destroying object
     {

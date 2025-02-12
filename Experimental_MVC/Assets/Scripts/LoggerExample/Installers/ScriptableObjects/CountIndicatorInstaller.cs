@@ -1,9 +1,9 @@
-﻿using Assets.Scripts.LoggerExample.MVC.Entities.Circle;
-using Batuhan.MVC.UnityComponents.Zenject;
+﻿using Batuhan.MVC.UnityComponents.Zenject;
+using TimeCounter.Entities.CountIndicator;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.LoggerExample.Installers.ScriptableObjects
+namespace TimeCounter.Installers
 {
     [CreateAssetMenu(fileName = "CircleEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CircleEntityInstaller")]
     internal class CountIndicatorInstaller : BaseEntityInstallerSO

@@ -1,6 +1,6 @@
 ﻿using Batuhan.MVC.Base;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
+namespace TimeCounter.Entities.CountIndicator
 {
     internal class CountIndicatorModel : BaseModel
     {

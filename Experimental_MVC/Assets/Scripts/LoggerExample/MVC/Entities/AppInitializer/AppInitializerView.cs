@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer
+﻿namespace TimeCounter.Entities.AppInitializer
 {
     internal class AppInitializerView
     {

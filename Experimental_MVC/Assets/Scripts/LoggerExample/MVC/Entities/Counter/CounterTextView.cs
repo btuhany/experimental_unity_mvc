@@ -5,7 +5,7 @@ using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
+namespace TimeCounter.Entities.CounterText
 {
     internal class CounterTextView : BaseViewMonoBehaviour
     {

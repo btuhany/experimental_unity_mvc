@@ -2,7 +2,7 @@
 using Batuhan.MVC.UnityComponents.Zenject;
 using TimeCounter.Installers.Mono;
 
-namespace Assets.Scripts.LoggerExample.Installers.MonoBehaviours
+namespace TimeCounter.Installers
 {
     /// <summary>
     /// This class is used to install generic installers of the zenject.

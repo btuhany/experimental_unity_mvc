@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 using TimeCounter.Events.Global;
 using Zenject;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.AppInitializer
+namespace TimeCounter.Entities.AppInitializer
 {
     internal class AppInitializerController : BaseController<AppInitializerModel, AppInitializerView>, Zenject.IInitializable
     {

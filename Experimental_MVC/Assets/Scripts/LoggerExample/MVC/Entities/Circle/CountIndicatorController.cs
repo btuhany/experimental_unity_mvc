@@ -5,7 +5,7 @@ using System;
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Circle
+namespace TimeCounter.Entities.CountIndicator
 {
     internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView>
     {

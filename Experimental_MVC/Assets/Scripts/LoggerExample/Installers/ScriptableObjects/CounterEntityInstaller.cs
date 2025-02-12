@@ -2,7 +2,7 @@
 using UnityEngine;
 using Batuhan.MVC.UnityComponents.Zenject;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
+namespace TimeCounter.Installers
 {
     //TODOby: Dependency Injection base class?
     [CreateAssetMenu(fileName = "CounterEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CounterEntityInstaller")]

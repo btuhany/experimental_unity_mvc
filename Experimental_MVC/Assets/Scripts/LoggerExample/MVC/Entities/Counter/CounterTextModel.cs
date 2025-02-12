@@ -1,7 +1,7 @@
 ﻿using Batuhan.MVC.Base;
 using System;
 
-namespace Assets.Scripts.LoggerExample.MVC.Entities.Counter
+namespace TimeCounter.Entities.CounterText
 {
     internal class CounterTextModel : BaseModel
     {

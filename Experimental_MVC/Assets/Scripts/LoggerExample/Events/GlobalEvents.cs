@@ -1,18 +1,23 @@
 ﻿using Batuhan.EventBus;
 
-namespace TimeCounter.Events.Categories
+namespace TimeCounter.Events
 {
-    public class Global : IEventCategory
+    namespace Categories
     {
-        public EventCategoryID ID => EventCategoryID.Global;
+        public class Global : IEventCategory
+        {
+            public EventCategoryID ID => EventCategoryID.Global;
+        }
+    }
+
+    namespace Global
+    {
+        public struct AppInitializedEvent : IEvent
+        {
+            public EventCategoryID CategoryID => EventCategoryID.Global;
+            public float Time;
+        }
     }
 }
 
-namespace TimeCounter.Events.Global
-{
-    public struct AppInitializedEvent : IEvent
-    {
-        public EventCategoryID CategoryID => EventCategoryID.Global;
-        public float Time;
-    }
-}
+
