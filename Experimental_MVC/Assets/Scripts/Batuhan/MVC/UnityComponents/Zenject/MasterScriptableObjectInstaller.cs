@@ -3,7 +3,7 @@ using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    internal class MasterScriptableObjectInstaller : MonoInstaller
+    public class MasterScriptableObjectInstaller : MonoInstaller
     {
         [SerializeField] private BaseEntityInstallerSO[] _entityInstallerScriptableObjects;
         public override void InstallBindings()

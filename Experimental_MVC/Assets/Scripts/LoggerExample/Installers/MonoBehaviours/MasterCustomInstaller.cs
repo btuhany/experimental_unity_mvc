@@ -1,13 +1,13 @@
 ﻿using Batuhan.CommandManager;
+using Batuhan.MVC.UnityComponents.Zenject;
 using TimeCounter.Installers.Mono;
-using Zenject;
 
 namespace Assets.Scripts.LoggerExample.Installers.MonoBehaviours
 {
     /// <summary>
     /// This class is used to install generic installers of the zenject.
     /// </summary>
-    internal class MasterGenericInstallerHelper : MonoInstaller
+    internal class MasterCustomInstaller : BaseCustomInstallHelper
     {
         public override void InstallBindings()
         {
