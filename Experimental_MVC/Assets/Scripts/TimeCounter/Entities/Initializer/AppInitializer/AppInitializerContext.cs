@@ -2,7 +2,7 @@
 using Batuhan.MVC.Core;
 using Zenject;
 
-namespace TimeCounter.Entities.AppInitializer
+namespace TimeCounter.Initializer
 {
     internal interface IAppInitializerContext : IContext
     {

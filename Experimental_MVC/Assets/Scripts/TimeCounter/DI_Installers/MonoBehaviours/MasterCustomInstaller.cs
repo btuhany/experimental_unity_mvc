@@ -12,6 +12,7 @@ namespace TimeCounter.Installers
         public override void InstallBindings()
         {
             EventBusInstaller.Install(Container);
+            InitializerInstaller.Install(Container);
             Container.Bind<CommandManager>().AsTransient();
             Container.Bind<DebugHelper>().AsSingle();
         }

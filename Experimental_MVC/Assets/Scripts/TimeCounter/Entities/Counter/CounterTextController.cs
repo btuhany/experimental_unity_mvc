@@ -29,13 +29,12 @@ namespace TimeCounter.Entities.CounterText
             _tickCancellationToken = new CancellationToken();
         }
 
-        //CALLED FROM ZENJECT
+        //CALLED FROM ZENJECT 
         public override void Initialize()
         {
-            _context.Debug.Log("Initialized 1!", this);
+            _context.Debug.Log("Initialized!", this);
             if (!_isInitialized)
             {
-                _context.Debug.Log("Initialized 2!", this);
                 _model.Setup(_context);
                 _view.Setup(_context);
                 SubscribeEvents();

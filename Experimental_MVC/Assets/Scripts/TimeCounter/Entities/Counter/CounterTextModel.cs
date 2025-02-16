@@ -16,20 +16,17 @@ namespace TimeCounter.Entities.CounterText
         public float CountSpeed { get => _countSpeed; }
         public int CounterValue { get => _counterValue; }
         public override IContext Context { get => _context; }
-        public CounterTextModel()
-        {
-            Debug.Log("ctor");
-        }
         public void Setup(ICounterTextContext context)
         {
             _context = context;
             _counterValue = 0;
             _countSpeed = 1f;
+            _context.Debug.Log("Setup", this);
         }
 
         public void Dispose()
         {
-            _context.Debug.Log("Finalized", this);
+            _context.Debug.Log("Disposed", this);
         }
         public void IncreaseCounter(int value = 1)
         {
