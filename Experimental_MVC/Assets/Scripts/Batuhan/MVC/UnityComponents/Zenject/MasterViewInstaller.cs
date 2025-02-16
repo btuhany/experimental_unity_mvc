@@ -17,6 +17,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
                 Container.Bind(viewType).FromInstance(view).AsTransient();
             }
         }
+
     }
 }
 

@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using TimeCounter.Commands;
 using TimeCounter.Entities.CountIndicator;
+using TimeCounter.Entities.Initializer;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
 using Zenject;
@@ -12,7 +13,7 @@ using Zenject;
 namespace TimeCounter.Entities.CounterText
 {
     [Serializable]
-    internal class CounterTextController : BaseControllerWithoutContext<CounterTextModel, CounterTextView>
+    internal class CounterTextController : BaseControllerWithoutContext<CounterTextModel, CounterTextView>, ILifeCycleHandler
     {
         //TEMP
         [Inject]
@@ -30,7 +31,6 @@ namespace TimeCounter.Entities.CounterText
             _tickCancellationToken = new CancellationToken();
         }
 
-        //CALLED FROM ZENJECT 
         public override void Initialize()
         {
             _context.Debug.Log("Initialized!", this);
@@ -42,7 +42,6 @@ namespace TimeCounter.Entities.CounterText
             }
         }
 
-        //CALLED FROM ZENJECT
         public void Dispose()
         {
             _context.Debug.Log("Disposed!", this);
@@ -53,15 +52,16 @@ namespace TimeCounter.Entities.CounterText
         private void SubscribeEvents()
         {
             _context.EventBusModel.Subscribe<CountValueUpdatedEvent>(OnCountValueUpdated);
-            _context.EventBusGlobal.Subscribe<AppInitializedEvent>(HandleOnAppInitialized);
+            _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
         }
         private void UnsubscribeEvents()
         {
-            _context.EventBusGlobal.Unsubscribe<AppInitializedEvent>(HandleOnAppInitialized);
+            _context.EventBusGlobal.Unsubscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
             _context.EventBusModel.Unsubscribe<CountValueUpdatedEvent>(OnCountValueUpdated);
         }
-        private void HandleOnAppInitialized(AppInitializedEvent @event)
+        private void HandleOnSceneInitialized(SceneInitializedEvent @event)
         {
+            _context.Debug.Log("Handle on scene init", this);
         }
 
         private void OnCountValueUpdated(CountValueUpdatedEvent @event)

@@ -1,23 +1,18 @@
-﻿using TimeCounter.Entities.CounterText;
-using UnityEngine;
+﻿using Assets.Scripts.TimeCounter.Entities.EntryPoint;
+using Batuhan.MVC.Core;
+using System.Collections.Generic;
+using TimeCounter.Entities.CounterText;
 using Zenject;
 
 namespace TimeCounter.Entities.Initializer
 {
-    public class TimeCounterSceneInitializer : SceneInitializer<TimeCounterSceneReferenceManager>
+    public class TimeCounterSceneInitializer : SceneInitializer
     {
 
     }
     public class TimeCounterSceneReferenceManager : SceneReferenceManager
     {
-        [Inject] private CounterTextController _counterTextController;
-        public override void HandleOnAwake()
-        {
-            _counterTextController.Initialize();
-        }
-        public override void HandleOnDestroy()
-        {
-            _counterTextController.Dispose();
-        }
+       
     }
+
 }

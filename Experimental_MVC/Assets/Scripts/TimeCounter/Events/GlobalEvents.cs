@@ -7,10 +7,9 @@ namespace TimeCounter.Events.GlobalEvents
     {
         public int ID => EventCategory.Global.ToID();
     }
-    public struct AppInitializedEvent : IEvent
+    public struct SceneInitializedEvent : IEvent
     {
         public int CategoryID => Categories.EventCategory.Global.ToID();
-        public float Time;
     }
 }
 

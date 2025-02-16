@@ -8,5 +8,13 @@ namespace Batuhan.MVC.UnityComponents.Zenject
     public abstract class BaseEntityInstallerSO : ScriptableObject 
     {
         public abstract void InstallFrom(DiContainer container);
+
+        /// <summary>
+        /// Custom initialization after zenject installer process
+        /// </summary>
+        public virtual void HandleOnAwake()
+        {
+
+        }
     }
 }

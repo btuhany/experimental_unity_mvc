@@ -5,25 +5,28 @@ namespace Assets.Scripts.TimeCounter.Helper
 {
     internal class DebugHelper
     {
-        public void Log(string message, object callerObj)
+        public void Log(string message, object callerObj = null)
         {
 #if UNITY_EDITOR
-            var logStr = "";
+            var logStr = string.Empty;
 
-            switch (callerObj)
+            if (callerObj is not null)
             {
-                case IController:
-                    logStr = "CONTROLLER | ";
-                    break;
-                case IModel:
-                    logStr = "MODEL | ";
-                    break;
-                case IView:
-                    logStr = "VIEW | ";
-                    break;
+                switch (callerObj)
+                {
+                    case IController:
+                        logStr = "CONTROLLER | ";
+                        break;
+                    case IModel:
+                        logStr = "MODEL | ";
+                        break;
+                    case IView:
+                        logStr = "VIEW | ";
+                        break;
+                }
+                logStr += callerObj.GetType().Name;
             }
 
-            logStr += callerObj.GetType().Name;
             logStr += " " + message;
             Debug.Log(logStr);
 #endif
