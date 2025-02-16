@@ -11,11 +11,11 @@ namespace TimeCounter.Entities.CounterText
 {
     internal class CounterTextController : BaseController<CounterTextModel, CounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
-        private CancellationToken _tickCancellationToken;
+        private CancellationTokenSource _tickCancellationTokenSource;
 
         public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
-            _tickCancellationToken = new CancellationToken();
+            _tickCancellationTokenSource = new CancellationTokenSource();
         }
 
         public void Initialize()
@@ -23,6 +23,7 @@ namespace TimeCounter.Entities.CounterText
             _context.Debug.Log("Initialized!", this);
             _model.Setup(_context);
             _view.Setup(_context);
+
             SubscribeEvents();
         }
 
@@ -31,6 +32,8 @@ namespace TimeCounter.Entities.CounterText
             _context.Debug.Log("Disposed!", this);
             _model.Dispose();
             _view.Dispose();
+
+            DeactivateTick();
             UnsubscribeEvents();
         }
         private void SubscribeEvents()
@@ -59,13 +62,21 @@ namespace TimeCounter.Entities.CounterText
         {
             while (true)
             {
-                _tickCancellationToken.ThrowIfCancellationRequested();
-
                 var secondsToWait = (float)(1f / _model.CountSpeed);
-                await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationToken);
+                await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationTokenSource.Token);
+
+                if (_tickCancellationTokenSource.Token.IsCancellationRequested)
+                    break;
+
                 _model.IncreaseCounter();
                 _context.Debug.Log("tick!", this);
             }
+        }
+        private void DeactivateTick()
+        {
+            _tickCancellationTokenSource?.Cancel();
+            _tickCancellationTokenSource?.Dispose();
+            _tickCancellationTokenSource = null;
         }
     }
 }

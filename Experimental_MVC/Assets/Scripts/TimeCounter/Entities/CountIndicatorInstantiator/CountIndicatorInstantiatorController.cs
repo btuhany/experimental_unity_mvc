@@ -1,21 +1,23 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
+using System.Collections.Generic;
 using TimeCounter.Data;
 using TimeCounter.Entities.CountIndicator;
 using TimeCounter.Entities.CountIndicatorInstantiator;
 using TimeCounter.Events.CoreEvents;
-using UnityEditor.Rendering.LookDev;
 
 namespace TimeCounter.Entities.CountIndicatorManager
 {
     internal class CountIndicatorInstantiatorController : 
         BaseControllerWithoutModel<CountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
     {
-        CountIndicatorController.Factory _indicatorFactory;
+        private CountIndicatorController.Factory _indicatorFactory;
+        private List<CountIndicatorController> _indicatorRuntimeList;
         public CountIndicatorInstantiatorController(CountIndicatorController.Factory factory, CountIndicatorInstantiatorView view,
             ICountIndicatorInstantiatorContext context) 
             : base(view, context)
         {
+            _indicatorRuntimeList = new();
             _indicatorFactory = factory;
         }
         public void Initialize()
@@ -25,6 +27,14 @@ namespace TimeCounter.Entities.CountIndicatorManager
         public void Dispose()
         {
             _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnTimeCountValueUpdated);
+            CleanUpIndicators();
+        }
+        private void CleanUpIndicators()
+        {
+            for (int i = 0; i < _indicatorRuntimeList.Count; i++)
+            {
+                _indicatorRuntimeList[i].Dispose();
+            }
         }
         private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
         {
@@ -42,6 +52,8 @@ namespace TimeCounter.Entities.CountIndicatorManager
 
             var indicator = _indicatorFactory.Create();
             indicator.Initialize(creationData);
+
+            _indicatorRuntimeList.Add(indicator);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Batuhan.CommandManager;
 using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
+using System;
 using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
@@ -35,6 +36,11 @@ namespace TimeCounter.Entities.CounterText
         {
             var counterValue = commandData.CounterValue;
             _textMesh.SetText(counterValue.ToString());
+        }
+
+        internal void Test()
+        {
+            _context.Debug.Log("testset " + gameObject.name);
         }
     }
 }

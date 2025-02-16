@@ -21,7 +21,6 @@ namespace TimeCounter.Entities.CounterText
 
         public override void Dispose()
         {
-
         }
         public void IncreaseCounter(int value = 1)
         {
@@ -38,7 +37,5 @@ namespace TimeCounter.Entities.CounterText
                 _context.Debug.Log("Unable to update counter value", this);
             }
         }
-
-
     }
 }
