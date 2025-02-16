@@ -71,7 +71,6 @@ namespace TimeCounter.Entities.CounterText
         }
         private async UniTask ActivateTick()
         {
-            await UniTask.WaitForSeconds(1.0f, cancellationToken: _tickCancellationToken);
             while (true)
             {
                 _tickCancellationToken.ThrowIfCancellationRequested();
