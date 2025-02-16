@@ -2,7 +2,7 @@
 
 namespace Batuhan.MVC.UnityComponents.Core
 {
-    public interface IMonoBehaviourView : IView
+    public interface IViewMonoBehaviour : IView
     {
     }
 }

@@ -20,7 +20,7 @@ namespace TimeCounter.Entities.CountIndicator
             var context = _container.Resolve<ICountIndicatorContext>();
 
             var view = _container.InstantiatePrefabForComponent<CountIndicatorView>(_circleViewPrefab);
-            view.SetContext(context);
+            //view.SetContext(context);
 
             var controller = _container.Instantiate<CountIndicatorController>(
                 new object[] { model, view, context }

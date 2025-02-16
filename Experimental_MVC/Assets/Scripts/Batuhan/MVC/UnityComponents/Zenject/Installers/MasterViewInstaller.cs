@@ -7,7 +7,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
     //Used install views that EXIST IN THE SAME SCENE WITH SCENE CONTEXT
     public class MasterViewInstaller : MonoInstaller
     {
-        [SerializeField] private BaseViewMonoBehaviour[] _views;
+        [SerializeField] private BaseViewComponent[] _views;
         public override void InstallBindings()
         {
             for (int i = 0; i < _views.Length; i++)

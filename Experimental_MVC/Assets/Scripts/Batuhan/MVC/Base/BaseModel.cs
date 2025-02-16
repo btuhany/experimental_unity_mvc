@@ -3,9 +3,17 @@ using System;
 
 namespace Batuhan.MVC.Base
 {
-    public abstract class BaseModel : IModel, IContextHolder
+    public abstract class BaseModel<TContext> : IModel, IDisposable, IRequiresContext<TContext>
+        where TContext : IContext
     {
-        public abstract IContext Context { get; }
+        protected TContext _context;
+        public TContext Context => _context;
 
+        public abstract void Dispose();
+
+        public virtual void Setup(TContext context)
+        {
+            _context = context;
+        }
     }
 }

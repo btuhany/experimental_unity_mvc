@@ -3,35 +3,10 @@ using Batuhan.MVC.UnityComponents.Base;
 using UnityEngine;
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal class CountIndicatorView : BaseViewMonoBehaviour
+    internal class CountIndicatorView : BaseViewMonoBehaviour<ICountIndicatorContext>
     {
-        private ICountIndicatorContext _circleContext;
-        public override IContext Context => _circleContext;
-
-        //TODOBY Think about integrating it with zenject
-        public void SetContext(ICountIndicatorContext circleContext)
-        {
-            _circleContext = circleContext;
-        }
-        public void Initialize()
-        {
-            _circleContext.ChangeColorEvent += OnChangeColorEvent;
-        }
-
-        private void OnChangeColorEvent()
-        {
-            var randomColor = UnityEngine.Random.ColorHSV();
-            randomColor.a = 1.0f;
-            GetComponent<SpriteRenderer>().color = randomColor;
-        }
-        private void OnDestroy()
-        {
-            _circleContext.ChangeColorEvent -= OnChangeColorEvent;
-        }
-
         public override void Dispose()
         {
-            throw new System.NotImplementedException();
         }
     }
 }

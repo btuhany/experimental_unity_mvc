@@ -20,7 +20,7 @@ namespace TimeCounter.Entities.CountIndicator
         public void Initialize()
         {
             _view.transform.position = UnityEngine.Random.insideUnitCircle * 4;
-            _view.Initialize(); //TODOBY change logic
+            //_view.Initialize(); //TODOBY change logic
             ChangeColorAfterSomeTime().Forget();
         }
         private async UniTask ChangeColorAfterSomeTime()

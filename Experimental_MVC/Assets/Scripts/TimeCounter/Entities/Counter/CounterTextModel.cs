@@ -1,32 +1,27 @@
-﻿using Assets.Scripts.TimeCounter.Helper;
-using Batuhan.MVC.Base;
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Base;
 using System;
 using TimeCounter.Events.ModelEvents;
-using UnityEngine;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal class CounterTextModel : BaseModel
+    internal class CounterTextModel : BaseModel<ICounterTextContext>
     {
-        private ICounterTextContext _context;
         private float _countSpeed = 1.0f;
         private int _counterValue = 0;
 
         public float CountSpeed { get => _countSpeed; }
         public int CounterValue { get => _counterValue; }
-        public override IContext Context { get => _context; }
-        public void Setup(ICounterTextContext context)
+        public override void Setup(ICounterTextContext context)
         {
-            _context = context;
+            base.Setup(context);
             _counterValue = 0;
             _countSpeed = 1f;
             _context.Debug.Log("Setup", this);
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
-            _context.Debug.Log("Disposed", this);
+
         }
         public void IncreaseCounter(int value = 1)
         {

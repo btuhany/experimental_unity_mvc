@@ -5,11 +5,25 @@ using UnityEngine;
 
 namespace Batuhan.MVC.UnityComponents.Base
 {
-    //TODOby refactor model, view, controller classes immediately!
-    public abstract class BaseViewMonoBehaviour : MonoBehaviour, IMonoBehaviourView, IDisposable
+    public abstract class BaseViewComponent : MonoBehaviour, IViewMonoBehaviour
     {
-        public abstract IContext Context { get; }
+
+    }
+    public abstract class BaseViewMonoBehaviour<TContext> : BaseViewComponent, IDisposable, IRequiresContext<TContext>
+        where TContext : IContext
+    {
+        protected TContext _context;
+        public TContext Context => _context;
 
         public abstract void Dispose();
+
+        public virtual void Setup(TContext context)
+        {
+            _context = context;
+        }
+        public virtual void OnDestroy()
+        {
+            Dispose();
+        }
     }
 }

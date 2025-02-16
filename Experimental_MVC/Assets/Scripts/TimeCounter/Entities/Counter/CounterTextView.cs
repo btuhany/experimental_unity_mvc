@@ -7,19 +7,15 @@ using UnityEngine;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal class CounterTextView : BaseViewMonoBehaviour
+    internal class CounterTextView : BaseViewMonoBehaviour<ICounterTextContext>
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
 
-        private ICounterTextContext _context;
-        public override IContext Context => _context;
-
-        public void Setup(ICounterTextContext context)
+        public override void Setup(ICounterTextContext context)
         {
-            _context = context;
-            _textMesh.SetText("-");
-            
+            base.Setup(context);
             RegisterCommandListeners();
+            _textMesh.SetText("-");
         }
 
         public override void Dispose()
