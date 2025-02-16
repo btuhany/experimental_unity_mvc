@@ -8,7 +8,6 @@ namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
 {
     internal class EntryPointController : BaseController<IEntryPointContext>, ILifeCycleHandler, IEntryPoint
     {
-        [Inject]
         public EntryPointController(IEntryPointContext context) : base(context)
         {
         }

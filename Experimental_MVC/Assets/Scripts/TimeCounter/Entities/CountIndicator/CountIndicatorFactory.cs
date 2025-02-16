@@ -7,7 +7,6 @@ namespace TimeCounter.Entities.CountIndicator
         readonly DiContainer _container;
         readonly CountIndicatorView _circleViewPrefab;
 
-        [Inject]
         public CountIndicatorFactory(DiContainer container, CountIndicatorView circleViewPrefab)
         {
             _container = container;

@@ -1,7 +1,6 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
-using System;
 using System.Threading;
 using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
@@ -10,7 +9,6 @@ using TimeCounter.Events.ModelEvents;
 
 namespace TimeCounter.Entities.CounterText
 {
-    [Serializable]
     internal class CounterTextController : BaseController<CounterTextModel, CounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
         private CancellationToken _tickCancellationToken;
