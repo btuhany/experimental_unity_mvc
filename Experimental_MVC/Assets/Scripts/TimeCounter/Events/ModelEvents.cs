@@ -1,16 +1,16 @@
 ﻿using Batuhan.EventBus;
 using TimeCounter.Events.Categories;
 
-namespace TimeCounter.Events.Model
+namespace TimeCounter.Events.ModelEvents
 {
     public class Model : IEventCategory
     {
-        public int ID => EventCategory.Global.ToID();
+        public int ID => EventCategory.Model.ToID();
     }
 
-    public struct TimeCountChangedEvent : IEvent
+    public struct CountValueUpdatedEvent : IEvent
     {
         public int CategoryID => Categories.EventCategory.Model.ToID();
-        public float Value;
+        public int NewValue;
     }
 }

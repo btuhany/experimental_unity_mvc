@@ -11,8 +11,8 @@ namespace TimeCounter.Installers
         public override void InstallFrom(DiContainer container)
         {
             container.BindInterfacesAndSelfTo<AppInitializerController>().AsSingle();
+            container.BindExecutionOrder<AppInitializerController>(-100);
             container.Bind<AppInitializerModel>().AsTransient();
-            //container.Bind<AppInitializerView>().AsTransient();
             container.Bind<IAppInitializerContext>().To<AppInitializerContext>().AsTransient();
         }
     }

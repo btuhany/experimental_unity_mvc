@@ -7,17 +7,17 @@ namespace Batuhan.CommandManager
     //TODOBY: Composite command support
     public class CommandManager : ICommandManager
     {
-        private readonly Dictionary<Type, List<ICommandBinding>> _commandListeners = new();
+        private readonly Dictionary<Type, List<ICommandBinding>> _listenerMap = new();
         private readonly Stack<ICommand> _executedCommands = new();
 
         public void AddListener<TCommand>(CommandBinding<TCommand> binding) where TCommand : ICommand
         {
             Type commandType = typeof(TCommand);
-            if (!_commandListeners.ContainsKey(commandType))
+            if (!_listenerMap.ContainsKey(commandType))
             {
-                _commandListeners[commandType] = new List<ICommandBinding>();
+                _listenerMap[commandType] = new List<ICommandBinding>();
             }
-            _commandListeners[commandType].Add(binding);
+            _listenerMap[commandType].Add(binding);
 
             SortListeners(commandType);
         }
@@ -25,29 +25,30 @@ namespace Batuhan.CommandManager
         public void RemoveListener<TCommand>(CommandBinding<TCommand> binding) where TCommand : ICommand
         {
             Type commandType = typeof(TCommand);
-            if (_commandListeners.ContainsKey(commandType))
+            if (_listenerMap.ContainsKey(commandType)) 
             {
-                _commandListeners[commandType].Remove(binding);
-                if (_commandListeners[commandType].Count == 0)
+                var commandList = _listenerMap[commandType];
+                commandList.Remove(binding);
+                if (commandList.Count == 0)
                 {
-                    _commandListeners.Remove(commandType);
+                    _listenerMap.Remove(commandType);
                 }
             }
         }
         public void RemoveListenerFromExecuteCallback<TCommand>(Action<TCommand> executeCallback) where TCommand : ICommand
         {
             Type commandType = typeof(TCommand);
-            if (_commandListeners.ContainsKey(commandType))
+            if (_listenerMap.ContainsKey(commandType))
             {
-                var listenersCopy = _commandListeners[commandType].ToArray();
+                var listenersCopy = _listenerMap[commandType].ToArray();
                 foreach (var binding in listenersCopy)
                 {
                     if (binding is CommandBinding<TCommand> typedBinding && typedBinding.ExecuteEquals(executeCallback))
                     {
-                        _commandListeners[commandType].Remove(binding);
-                        if (_commandListeners[commandType].Count == 0)
+                        _listenerMap[commandType].Remove(binding);
+                        if (_listenerMap[commandType].Count == 0)
                         {
-                            _commandListeners.Remove(commandType);
+                            _listenerMap.Remove(commandType);
                         }
                         break;
                     }
@@ -58,9 +59,9 @@ namespace Batuhan.CommandManager
         public void ExecuteCommand(ICommand command)
         {
             Type commandType = command.GetType();
-            if (_commandListeners.ContainsKey(commandType))
+            if (_listenerMap.ContainsKey(commandType))
             {
-                foreach (var binding in _commandListeners[commandType])
+                foreach (var binding in _listenerMap[commandType])
                 {
                     binding.Execute(command);
                 }
@@ -71,9 +72,9 @@ namespace Batuhan.CommandManager
         public void UndoCommand(ICommand command)
         {
             Type commandType = command.GetType();
-            if (_commandListeners.ContainsKey(commandType))
+            if (_listenerMap.ContainsKey(commandType))
             {
-                foreach (var binding in _commandListeners[commandType])
+                foreach (var binding in _listenerMap[commandType])
                 {
                     binding.Undo(command);
                 }
@@ -85,9 +86,9 @@ namespace Batuhan.CommandManager
             {
                 var lastCommand = _executedCommands.Pop();
                 Type commandType = lastCommand.GetType();
-                if (_commandListeners.ContainsKey(commandType))
+                if (_listenerMap.ContainsKey(commandType))
                 {
-                    foreach (var binding in _commandListeners[commandType])
+                    foreach (var binding in _listenerMap[commandType])
                     {
                         binding.Undo(lastCommand);
                     }
@@ -96,13 +97,18 @@ namespace Batuhan.CommandManager
         }
         public void Dispose()
         {
-            _commandListeners.Clear();
+            _listenerMap.Clear();
             _executedCommands.Clear();
         }
         private void SortListeners(Type type)
         {
-            var commandList = _commandListeners[type];
-            _commandListeners[type] = commandList.OrderByDescending(binding => binding.Priority).ToList();
+            var commandList = _listenerMap[type];
+            _listenerMap[type] = commandList.OrderByDescending(binding => binding.Priority).ToList();
+        }
+
+        internal void AddListener<T>(object onUpdateCounterTextCommand)
+        {
+            throw new NotImplementedException();
         }
     }
 }

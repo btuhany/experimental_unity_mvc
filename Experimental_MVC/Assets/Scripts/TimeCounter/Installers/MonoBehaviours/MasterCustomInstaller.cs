@@ -1,4 +1,5 @@
-﻿using Batuhan.CommandManager;
+﻿using Assets.Scripts.TimeCounter.Helper;
+using Batuhan.CommandManager;
 using Batuhan.MVC.UnityComponents.Zenject;
 
 namespace TimeCounter.Installers
@@ -12,6 +13,7 @@ namespace TimeCounter.Installers
         {
             EventBusInstaller.Install(Container);
             Container.Bind<CommandManager>().AsTransient();
+            Container.Bind<DebugHelper>().AsSingle();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Batuhan.EventBus;
 using TimeCounter.Events.Categories;
 
-namespace TimeCounter.Events.Global
+namespace TimeCounter.Events.GlobalEvents
 {
     public class Global : IEventCategory
     {

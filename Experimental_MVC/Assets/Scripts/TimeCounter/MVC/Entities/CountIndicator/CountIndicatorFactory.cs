@@ -25,7 +25,6 @@ namespace TimeCounter.Entities.CountIndicator
             var controller = _container.Instantiate<CountIndicatorController>(
                 new object[] { model, view, context }
             );
-            _container.BindInter
 
             return controller;
         }

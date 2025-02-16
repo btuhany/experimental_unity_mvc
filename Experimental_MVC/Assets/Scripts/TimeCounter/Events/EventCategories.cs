@@ -1,5 +1,5 @@
-﻿using Batuhan.EventBus;
-using System;
+﻿using System;
+using TimeCounter.Events.ModelEvents;
 namespace TimeCounter.Events
 {
     namespace Categories
@@ -19,8 +19,8 @@ namespace TimeCounter.Events
             {
                 return categoryID switch
                 {
-                    EventCategory.Global => typeof(Global),
-                    EventCategory.Model => typeof(Model),
+                    EventCategory.Global => typeof(GlobalEvents.Global),
+                    EventCategory.Model => typeof(ModelEvents.Model),
                     _ => throw new ArgumentOutOfRangeException(nameof(categoryID), categoryID, null)
                 };
             }

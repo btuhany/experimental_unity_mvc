@@ -28,5 +28,10 @@ namespace TimeCounter.Entities.CountIndicator
         {
             _circleContext.ChangeColorEvent -= OnChangeColorEvent;
         }
+
+        public override void Dispose()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

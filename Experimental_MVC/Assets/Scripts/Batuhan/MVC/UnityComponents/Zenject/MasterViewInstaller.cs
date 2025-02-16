@@ -14,7 +14,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             {
                 var view = _views[i];
                 var viewType = view.GetType();
-                Container.Bind(viewType).FromInstance(view).AsSingle();
+                Container.Bind(viewType).FromInstance(view).AsTransient();
             }
         }
     }

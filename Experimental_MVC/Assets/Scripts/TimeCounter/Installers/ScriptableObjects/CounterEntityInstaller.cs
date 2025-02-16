@@ -15,7 +15,7 @@ namespace TimeCounter.Installers
             container.Bind<CounterTextModel>().AsTransient();
             container.Bind<CounterTextController>().AsTransient(); //TODOby Do we need to inject this?
             //container.Bind<IInitializable>().To<CounterController>().FromResolve();
-            container.BindInterfacesTo<CounterTextController>().FromResolve();
+            container.BindInterfacesTo<CounterTextController>().FromResolve().AsCached();
         }
     }
 }

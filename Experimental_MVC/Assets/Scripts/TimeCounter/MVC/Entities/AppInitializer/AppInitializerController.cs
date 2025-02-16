@@ -1,6 +1,6 @@
 ﻿using Batuhan.MVC.Base;
 using Cysharp.Threading.Tasks;
-using TimeCounter.Events.Global;
+using TimeCounter.Events.GlobalEvents;
 using Zenject;
 
 namespace TimeCounter.Entities.AppInitializer
@@ -14,14 +14,6 @@ namespace TimeCounter.Entities.AppInitializer
 
         public override void Initialize()
         {
-            SendAppInitializedEventAfterDelay().Forget();
-        }
-
-        //TODOBY think about execution orders
-        private async UniTask SendAppInitializedEventAfterDelay()
-        {
-            await UniTask.Delay((int)_model.InitializationDelay);
-           
             _context.EventBusGlobal.Publish(new AppInitializedEvent() { Time = UnityEngine.Time.time });
         }
     }

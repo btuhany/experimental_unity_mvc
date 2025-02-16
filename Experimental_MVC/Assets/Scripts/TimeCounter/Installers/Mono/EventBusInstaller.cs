@@ -1,4 +1,6 @@
 ﻿using Batuhan.EventBus;
+using TimeCounter.Events.GlobalEvents;
+using TimeCounter.Events.ModelEvents;
 using Zenject;
 
 namespace TimeCounter.Installers
@@ -7,8 +9,10 @@ namespace TimeCounter.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<Events.Categories.Global>().AsSingle();
-            Container.Bind<EventBus<Events.Categories.Global>>().AsSingle();
+            Container.Bind<Global>().AsSingle();
+            Container.Bind<Model>().AsSingle();
+            Container.Bind<EventBus<Global>>().AsSingle();
+            Container.Bind<EventBus<Model>>().AsSingle();
         }
     }
 }
