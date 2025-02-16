@@ -1,0 +1,4 @@
+﻿
+namespace TimeCounter.Entities.CountIndicatorManager
+{
+}
