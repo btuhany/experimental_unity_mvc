@@ -1,36 +1,31 @@
-﻿using Batuhan.MVC.Base;
-using Batuhan.MVC.Core;
-using Cysharp.Threading.Tasks;
+﻿using Assets.Scripts.TimeCounter.Commands;
+using Batuhan.MVC.Base;
 using System;
+using TimeCounter.Data;
 using Zenject;
 
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView, ICountIndicatorContext>, ILifeCycleHandler
+    internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView, ICountIndicatorContext>, IDisposable
     {
-        public class Factory : PlaceholderFactory<CountIndicatorController> { }
+        internal class Factory : PlaceholderFactory<CountIndicatorController> { }
 
-        [Inject]
         public CountIndicatorController(CountIndicatorModel model, CountIndicatorView view, ICountIndicatorContext context) : base(model, view, context)
         {
         }
 
-        public void Initialize()
+        public void Initialize(CountIndicatorInitData initData)
         {
             _view.Setup(_context);
             _model.Setup(_context);
+            _model.SetInitialData(initData.CommonData);
 
-            ChangeColorAfterSomeTime().Forget();
+            _context.CommandManager.ExecuteCommand(new SetParentCommand() { Parent = initData.ParentTransform });
         }
         public void Dispose()
         {
-
-        }
-        private async UniTask ChangeColorAfterSomeTime()
-        {
-            await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(1, 10)));
-            var randomColor = UnityEngine.Random.ColorHSV();
-            randomColor.a = 1.0f;
+            _view.Dispose();
+            _model.Dispose();
         }
     }
 }

@@ -10,6 +10,7 @@ namespace TimeCounter.Entities.CounterText
     {
         public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
         public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
         public CommandManager CommandManager { get; }
         public DebugHelper Debug { get; }
 
@@ -20,6 +21,8 @@ namespace TimeCounter.Entities.CounterText
         public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }        
         [Inject]
         public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        [Inject]
+        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
         [Inject]
         public DebugHelper Debug { get; }
         [Inject]

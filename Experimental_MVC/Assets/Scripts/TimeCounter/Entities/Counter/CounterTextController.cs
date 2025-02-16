@@ -4,23 +4,17 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
 using TimeCounter.Commands;
-using TimeCounter.Entities.CountIndicator;
+using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
-using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
     [Serializable]
     internal class CounterTextController : BaseController<CounterTextModel, CounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
-        //TEMP
-        [Inject]
-        CountIndicatorController.Factory _circleFactory;
-
         private CancellationToken _tickCancellationToken;
 
-        [Inject]
         public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
             _tickCancellationToken = new CancellationToken();
@@ -43,13 +37,13 @@ namespace TimeCounter.Entities.CounterText
         }
         private void SubscribeEvents()
         {
-            _context.EventBusModel.Subscribe<CountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusModel.Subscribe<CounterValueUpdatedEvent>(OnCountValueUpdated);
             _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
         }
         private void UnsubscribeEvents()
         {
             _context.EventBusGlobal.Unsubscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
-            _context.EventBusModel.Unsubscribe<CountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusModel.Unsubscribe<CounterValueUpdatedEvent>(OnCountValueUpdated);
         }
         private void HandleOnSceneInitialized(SceneInitializedEvent @event)
         {
@@ -57,10 +51,11 @@ namespace TimeCounter.Entities.CounterText
             ActivateTick().Forget();
         }
 
-        private void OnCountValueUpdated(CountValueUpdatedEvent @event)
+        private void OnCountValueUpdated(CounterValueUpdatedEvent @event)
         {
             _context.Debug.Log("OnCountValueUpdated");
-            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(@event.NewValue));
+            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(@event.UpdatedValue));
+            _context.EventBusCore.Publish(new TimeCountValueUpdatedEvent(@event.UpdatedValue));
         }
         private async UniTask ActivateTick()
         {
@@ -71,8 +66,6 @@ namespace TimeCounter.Entities.CounterText
                 var secondsToWait = (float)(1f / _model.CountSpeed);
                 await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationToken);
                 _model.IncreaseCounter();
-                //var circleController = _circleFactory.Create();
-                //circleController.Initialize();
                 _context.Debug.Log("tick!", this);
             }
         }

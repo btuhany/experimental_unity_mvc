@@ -7,7 +7,8 @@ namespace TimeCounter.Events
         public enum EventCategory
         {
             Global = 0,
-            Model = 1
+            Model = 1,
+            CoreEvents = 2
         }
         public static class Utility
         {

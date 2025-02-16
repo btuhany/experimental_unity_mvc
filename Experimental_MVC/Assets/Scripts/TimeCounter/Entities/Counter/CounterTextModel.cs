@@ -31,7 +31,7 @@ namespace TimeCounter.Entities.CounterText
 
             if (oldValue != newValue)
             {
-                _context.EventBusModel.Publish(new CountValueUpdatedEvent() { NewValue = _counterValue });
+                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _counterValue });
             }
             else
             {
