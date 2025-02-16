@@ -12,33 +12,26 @@ using Zenject;
 namespace TimeCounter.Entities.CounterText
 {
     [Serializable]
-    internal class CounterTextController : BaseControllerWithoutContext<CounterTextModel, CounterTextView>, ILifeCycleHandler
+    internal class CounterTextController : BaseController<CounterTextModel, CounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
         //TEMP
         [Inject]
         CountIndicatorController.Factory _circleFactory;
 
-        private ICounterTextContext _context;
-        public override IContext Context => _context;
-
         private CancellationToken _tickCancellationToken;
 
         [Inject]
-        public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view)
+        public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
-            _context = context;
             _tickCancellationToken = new CancellationToken();
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
             _context.Debug.Log("Initialized!", this);
-            if (!_isInitialized)
-            {
-                _model.Setup(_context);
-                _view.Setup(_context);
-                SubscribeEvents();
-            }
+            _model.Setup(_context);
+            _view.Setup(_context);
+            SubscribeEvents();
         }
 
         public void Dispose()

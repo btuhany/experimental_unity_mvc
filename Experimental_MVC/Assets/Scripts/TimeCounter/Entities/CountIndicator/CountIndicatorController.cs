@@ -7,21 +7,17 @@ using Zenject;
 
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal class CountIndicatorController : BaseControllerWithoutContext<CountIndicatorModel, CountIndicatorView>
+    internal class CountIndicatorController : BaseController<CountIndicatorModel, CountIndicatorView, ICountIndicatorContext>
     {
-        public override IContext Context => _context;
-        private ICountIndicatorContext _context;
         public class Factory : PlaceholderFactory<CountIndicatorController> { }
 
         [Inject]
-        public CountIndicatorController(CountIndicatorModel model, CountIndicatorView view, ICountIndicatorContext context) : base(model, view)
+        public CountIndicatorController(CountIndicatorModel model, CountIndicatorView view, ICountIndicatorContext context) : base(model, view, context)
         {
-            _context = context;
-
             UnityEngine.Debug.Log("Instantiated new CountIndicatorController");
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
             _view.transform.position = UnityEngine.Random.insideUnitCircle * 4;
             _view.Initialize(); //TODOBY change logic

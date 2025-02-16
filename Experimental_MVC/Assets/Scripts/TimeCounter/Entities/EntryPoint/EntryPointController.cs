@@ -1,17 +1,16 @@
-﻿using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Base;
+using Batuhan.MVC.Core;
 using TimeCounter.Entities.EntryPoint;
 using TimeCounter.Events.GlobalEvents;
 using Zenject;
 
 namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
 {
-    internal class EntryPointController : ILifeCycleHandler, IEntryPoint
+    internal class EntryPointController : BaseController<IEntryPointContext>, ILifeCycleHandler, IEntryPoint
     {
-        private IEntryPointContext _context;
         [Inject]
-        public EntryPointController(IEntryPointContext context)
+        public EntryPointController(IEntryPointContext context) : base(context)
         {
-            _context = context;
         }
         public void Initialize()
         {
