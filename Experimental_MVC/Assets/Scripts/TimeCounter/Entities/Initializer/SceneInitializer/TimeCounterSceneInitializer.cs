@@ -1,8 +1,4 @@
-﻿using Assets.Scripts.TimeCounter.Entities.EntryPoint;
-using Batuhan.MVC.Core;
-using System.Collections.Generic;
-using TimeCounter.Entities.CounterText;
-using Zenject;
+﻿using Batuhan.MVC.UnityComponents.Zenject;
 
 namespace TimeCounter.Entities.Initializer
 {

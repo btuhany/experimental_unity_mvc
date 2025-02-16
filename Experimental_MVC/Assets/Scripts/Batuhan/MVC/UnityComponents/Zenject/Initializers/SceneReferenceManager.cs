@@ -1,35 +1,11 @@
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents.Core;
 using System.Collections.Generic;
-using UnityEngine;
 using Zenject;
 
-namespace TimeCounter.Entities.Initializer
+namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    //TODOBY move to core
-    public abstract class SceneInitializer : MonoBehaviour
-    {
-        private SceneReferenceManager _refHolder;
-
-        [Inject]
-        public void Construct(SceneReferenceManager refHolder)
-        {
-            _refHolder = refHolder;
-        }
-
-        private void Awake()
-        {
-            _refHolder.HandleOnAwake();
-        }
-        private void Start()
-        {
-            _refHolder.HandleOnStart();
-        }
-        private void OnDestroy()
-        {
-            _refHolder.HandleOnDestroy();
-        }
-    }
-    public class SceneReferenceManager
+    public class SceneReferenceManager : ISceneReferenceManager
     {
         [Inject]
         private List<ILifeCycleHandler> _lifeCycleHandlers;
@@ -38,7 +14,11 @@ namespace TimeCounter.Entities.Initializer
         /// Usually there should be only one entry point. But for customization i will leave it with list.
         /// </summary>
         [Inject]
-        private List<IEntryPoint> _entryPoints; 
+        private List<IEntryPoint> _entryPoints;
+
+        public List<ILifeCycleHandler> LifeCycleHandlers => throw new System.NotImplementedException();
+
+        public List<IEntryPoint> EntryPoints => throw new System.NotImplementedException();
 
         public virtual void HandleOnAwake()
         {

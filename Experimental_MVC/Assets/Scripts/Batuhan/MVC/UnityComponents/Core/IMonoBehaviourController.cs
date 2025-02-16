@@ -1,6 +1,6 @@
 ﻿using Batuhan.MVC.Core;
 
-namespace Batuhan.MVC.UnityComponents
+namespace Batuhan.MVC.UnityComponents.Core
 {
     public interface IMonoBehaviourController : IController
     {

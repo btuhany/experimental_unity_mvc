@@ -1,4 +1,5 @@
 ﻿using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents.Core;
 using System;
 using UnityEngine;
 
