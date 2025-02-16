@@ -35,9 +35,10 @@ namespace TimeCounter.Entities.CounterText
             _context.CommandManager.RemoveListenerFromExecuteCallback<UpdateCounterTextCommand>(OnExecuteUpdateCounterText);
         }
 
-        private void OnExecuteUpdateCounterText(UpdateCounterTextCommand command)
+        private void OnExecuteUpdateCounterText(UpdateCounterTextCommand commandData)
         {
-
+            var counterValue = commandData.CounterValue;
+            _textMesh.SetText(counterValue.ToString());
         }
     }
 }

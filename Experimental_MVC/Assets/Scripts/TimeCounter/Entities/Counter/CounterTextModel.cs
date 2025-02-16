@@ -32,10 +32,11 @@ namespace TimeCounter.Entities.CounterText
         {
             var oldValue = _counterValue;
             var newValue = Math.Max(_counterValue + value, 0);
+            _counterValue = newValue;
 
             if (oldValue != newValue)
             {
-                _context.EventBusModel.Publish(new CountValueUpdatedEvent() { NewValue = value });
+                _context.EventBusModel.Publish(new CountValueUpdatedEvent() { NewValue = _counterValue });
             }
             else
             {

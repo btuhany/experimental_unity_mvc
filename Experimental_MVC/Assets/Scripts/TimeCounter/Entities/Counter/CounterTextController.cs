@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using TimeCounter.Commands;
 using TimeCounter.Entities.CountIndicator;
-using TimeCounter.Entities.Initializer;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
 using Zenject;
@@ -62,10 +61,12 @@ namespace TimeCounter.Entities.CounterText
         private void HandleOnSceneInitialized(SceneInitializedEvent @event)
         {
             _context.Debug.Log("Handle on scene init", this);
+            ActivateTick().Forget();
         }
 
         private void OnCountValueUpdated(CountValueUpdatedEvent @event)
         {
+            _context.Debug.Log("OnCountValueUpdated");
             _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(@event.NewValue));
         }
         private async UniTask ActivateTick()
