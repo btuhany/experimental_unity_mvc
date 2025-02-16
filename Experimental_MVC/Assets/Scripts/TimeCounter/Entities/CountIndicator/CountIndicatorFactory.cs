@@ -18,9 +18,7 @@ namespace TimeCounter.Entities.CountIndicator
             //can bind model in install process
             var model = _container.Resolve<CountIndicatorModel>();
             var context = _container.Resolve<ICountIndicatorContext>();
-
             var view = _container.InstantiatePrefabForComponent<CountIndicatorView>(_circleViewPrefab);
-            //view.SetContext(context);
 
             var controller = _container.Instantiate<CountIndicatorController>(
                 new object[] { model, view, context }
