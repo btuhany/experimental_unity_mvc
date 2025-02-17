@@ -52,6 +52,6 @@ namespace Batuhan.CommandManager
                 throw new InvalidOperationException("Invalid command type");
             }
         }
-        public bool ExecuteEquals(Action<TCommand> action) => _execute == action;
+        public bool ExecuteEquals(Action<TCommand> action) => (_execute == action);
     }
 }

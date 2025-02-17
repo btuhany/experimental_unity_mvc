@@ -1,22 +1,18 @@
-﻿using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Core;
 
-namespace Assets.Scripts.Batuhan.Core.MVC.Base
+namespace Batuhan.MVC.Base
 {
-    public abstract class BaseView : IView
+    public abstract class BaseView<TContext> : IView, IRequiresContext<TContext>
+        where TContext : IContext
     {
-        public bool IsInitialized => _isInitialized;
+        protected TContext _context;
+        public TContext Context => _context;
 
-        public IContext Context => _context;
+        public abstract void Dispose();
 
-        private bool _isInitialized = false;
-        private IContext _context;
-        public virtual void Initialize(IContext context)
+        public virtual void Setup(TContext context)
         {
-            if (!_isInitialized)
-            {
-                _context = context;
-                _isInitialized = true;
-            }
+            _context = context;
         }
     }
 }

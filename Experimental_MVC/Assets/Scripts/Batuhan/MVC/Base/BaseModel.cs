@@ -1,13 +1,19 @@
-﻿using Batuhan.Core.MVC;
+﻿using Batuhan.MVC.Core;
+using System;
 
-namespace Assets.Scripts.Batuhan.Core.MVC.Base
+namespace Batuhan.MVC.Base
 {
-    public abstract class BaseModel : IModel
+    public abstract class BaseModel<TContext> : IModel, IDisposable, IRequiresContext<TContext>
+        where TContext : IContext
     {
-        public IContext Context => _context;
+        protected TContext _context;
+        public TContext Context => _context;
 
-        private IContext _context;
+        public abstract void Dispose();
 
-
+        public virtual void Setup(TContext context)
+        {
+            _context = context;
+        }
     }
 }

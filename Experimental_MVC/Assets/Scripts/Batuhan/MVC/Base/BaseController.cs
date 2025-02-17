@@ -1,22 +1,47 @@
-﻿using Batuhan.Core.MVC;
-namespace Assets.Scripts.Batuhan.Core.MVC.Base
-{
-    public abstract class BaseController<TModel, TView> : IController
-    {
+﻿using Batuhan.MVC.Core;
+using NUnit.Framework;
 
+namespace Batuhan.MVC.Base
+{
+    public abstract class BaseController<TModel, TView, TContext> : IController
+        where TModel : IModel
+        where TView : IView
+        where TContext : IContext
+    {
         protected readonly TModel _model;
         protected readonly TView _view;
-        protected bool _isInitialized = false;
+        protected readonly TContext _context;
 
-        public bool IsInitialized => _isInitialized;
-
-        public abstract IContext Context { get; }
-
-        public abstract void Initialize();
-        public BaseController(TModel model, TView view)
+        public BaseController(TModel model, TView view, TContext context)
         {
             _model = model;
             _view = view;
+            _context = context;
+        }
+    }
+
+    public abstract class BaseController<TContext> : IController
+        where TContext : IContext
+    {
+        protected readonly TContext _context;
+        public IContext Context => _context;
+        public BaseController(TContext context)
+        {
+            _context = context;
+        }
+    }
+
+    public abstract class BaseControllerWithoutModel<TView, TContext> : IController
+        where TView : IView
+        where TContext : IContext
+    {
+        protected readonly TView _view;
+        protected readonly TContext _context;
+
+        public BaseControllerWithoutModel(TView view, TContext context)
+        {
+            _view = view;
+            _context = context;
         }
     }
 }
