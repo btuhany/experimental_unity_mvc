@@ -2,7 +2,7 @@
 using Batuhan.MVC.Core;
 using Zenject;
 
-namespace TimeCounter.Entities.CountIndicatorManager
+namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
     public interface ICountIndicatorInstantiatorContext : IContext 
     {

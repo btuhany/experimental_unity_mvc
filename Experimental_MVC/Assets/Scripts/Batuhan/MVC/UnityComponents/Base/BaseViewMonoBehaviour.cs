@@ -15,7 +15,9 @@ namespace Batuhan.MVC.UnityComponents.Base
         protected TContext _context;
         public TContext Context => _context;
 
-        public abstract void Dispose();
+        public virtual void Dispose()
+        {
+        }
 
         public virtual void Setup(TContext context)
         {

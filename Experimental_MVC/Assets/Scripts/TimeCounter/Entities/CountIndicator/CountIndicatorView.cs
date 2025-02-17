@@ -30,7 +30,7 @@ namespace TimeCounter.Entities.CountIndicator
         private void OnIndicatorDataUpdated(CountIndicatorDataUpdatedEvent eventData)
         {
             var commonData = eventData.Data;
-            _text.text = commonData.Indice.ToString();
+            _text.text = commonData.Index.ToString();
             _spriteRenderer.color = commonData.Color;
             _transform.position = commonData.Position;
         }

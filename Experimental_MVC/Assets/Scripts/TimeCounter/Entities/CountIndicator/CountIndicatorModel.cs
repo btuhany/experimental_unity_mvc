@@ -13,7 +13,7 @@ namespace TimeCounter.Entities.CountIndicator
             _data = new CountIndicatorCommonData()
             {
                 Color = UnityEngine.Color.white,
-                Indice = 0,
+                Index = 0,
                 Position = UnityEngine.Vector3.zero,
             };
         }

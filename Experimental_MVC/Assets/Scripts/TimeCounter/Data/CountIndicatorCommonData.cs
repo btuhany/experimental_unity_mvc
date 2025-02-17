@@ -3,7 +3,7 @@
     public struct CountIndicatorCommonData
     {
         public UnityEngine.Vector3 Position;
-        public int Indice;
+        public int Index;
         public UnityEngine.Color Color;
     }
     public struct CountIndicatorInitData
