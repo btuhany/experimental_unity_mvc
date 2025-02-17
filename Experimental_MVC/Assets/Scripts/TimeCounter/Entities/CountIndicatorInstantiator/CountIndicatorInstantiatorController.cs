@@ -34,6 +34,7 @@ namespace TimeCounter.Entities.CountIndicatorManager
             {
                 _indicatorRuntimeList[i].Dispose();
             }
+            _indicatorRuntimeList.Clear();
         }
         private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
         {
