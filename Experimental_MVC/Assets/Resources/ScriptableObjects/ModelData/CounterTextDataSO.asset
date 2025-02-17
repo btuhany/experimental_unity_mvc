@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f2b7f557ab514468f8f5770a097c61, type: 3}
   m_Name: CounterTextDataSO
   m_EditorClassIdentifier: 
-  RuntimeSO: {fileID: 0}
-  _countSpeed: 1
+  RuntimeClone: {fileID: 0}
+  _countSpeed: 0.2
   _counterValue: 0

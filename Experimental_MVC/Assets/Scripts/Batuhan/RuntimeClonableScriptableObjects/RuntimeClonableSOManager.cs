@@ -11,14 +11,23 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
         private const string FOLDER_NAME = "ScriptableObjects";
         private const string FULL_PATH = "Assets/Runtime/ScriptableObjects";
         private const string INSTATIATED_SO_SUFFIX = "_Runtime.asset";
+
 #if UNITY_EDITOR
-        private void OnEnable()
+        private bool _isRegisteredToEditorAppEvent = false;
+        private void Awake()
         {
-            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            if (!_isRegisteredToEditorAppEvent)
+            {
+                EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+                _isRegisteredToEditorAppEvent = true;
+            }
         }
-        private void OnDisable()
+        private void OnDestroy()
         {
-            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            if (_isRegisteredToEditorAppEvent)
+            {
+                EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+            }
         }
 #endif
         public T CreateModelDataSOInstance<T>(T baseData) where T : BaseRuntimeClonableScriptableObject
@@ -51,10 +60,10 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
         {
             if (change == PlayModeStateChange.ExitingPlayMode)
             {
-
+                DeleteAllRuntimeSOAssets();
             }
         }
-        private void DeleteAllRuntimeAssets()
+        private void DeleteAllRuntimeSOAssets()
         {
             if (!AssetDatabase.IsValidFolder(FULL_PATH))
             {
