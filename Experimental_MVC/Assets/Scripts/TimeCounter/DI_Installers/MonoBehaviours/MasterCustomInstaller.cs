@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.TimeCounter.Entities.EntryPoint;
+﻿using Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects;
+using Assets.Scripts.TimeCounter.Entities.EntryPoint;
 using Assets.Scripts.TimeCounter.Helper;
 using Batuhan.CommandManager;
 using Batuhan.MVC.Core;
@@ -13,6 +14,7 @@ namespace TimeCounter.Installers
         public override void InstallBindings()
         {
             EventBusInstaller.Install(Container);
+            Container.Bind<RuntimeClonableSOManager>().AsSingle();
             Container.Bind<SceneReferenceManager>().To<TimeCounterSceneReferenceManager>().AsSingle();
             Container.Bind<CommandManager>().AsTransient();
             Container.Bind<DebugHelper>().AsSingle();

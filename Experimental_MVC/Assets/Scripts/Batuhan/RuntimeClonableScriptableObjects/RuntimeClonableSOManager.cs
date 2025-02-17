@@ -1,0 +1,82 @@
+﻿using Batuhan.RuntimeClonableScriptableObjects;
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
+{
+    internal class RuntimeClonableSOManager : MonoBehaviour
+    {
+        private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/Runtime";
+        private const string FOLDER_NAME = "ScriptableObjects";
+        private const string FULL_PATH = "Assets/Runtime/ScriptableObjects";
+        private const string INSTATIATED_SO_SUFFIX = "_Runtime.asset";
+#if UNITY_EDITOR
+        private void OnEnable()
+        {
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+        }
+        private void OnDisable()
+        {
+            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+        }
+#endif
+        public T CreateModelDataSOInstance<T>(T baseData) where T : BaseRuntimeClonableScriptableObject
+        {
+            T copyData = Instantiate(baseData);
+
+#if UNITY_EDITOR
+            
+            if (!AssetDatabase.IsValidFolder(FULL_PATH))
+            {
+                AssetDatabase.CreateFolder(RUNTIME_CLONES_FOLDER_PATH, FOLDER_NAME);
+                Debug.Log($"Created folder {FOLDER_NAME} for runtime so assets in: {RUNTIME_CLONES_FOLDER_PATH}");
+            }
+
+            var assetName = $"{baseData.name}{ INSTATIATED_SO_SUFFIX}";
+            string assetPath = $"{FULL_PATH}/" + assetName;
+
+            AssetDatabase.CreateAsset(copyData, assetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            baseData.RuntimeClone = copyData;
+
+            Debug.Log($"Created runtime so asset {assetName}");
+#endif
+
+            return copyData;
+        }
+        private void OnPlayModeStateChanged(PlayModeStateChange change)
+        {
+            if (change == PlayModeStateChange.ExitingPlayMode)
+            {
+
+            }
+        }
+        private void DeleteAllRuntimeAssets()
+        {
+            if (!AssetDatabase.IsValidFolder(FULL_PATH))
+            {
+                Debug.LogWarning($"Couldn't find any runtime so in {FULL_PATH}. There isn't anything to cleanup!");
+                return;
+            }
+
+            string[] assetPaths = Directory.GetFiles(FULL_PATH, "*.asset");
+
+            foreach (string assetPath in assetPaths)
+            {
+                string unityPath = assetPath.Replace("\\", "/");
+                bool deleted = AssetDatabase.DeleteAsset(unityPath);
+
+                if (deleted)
+                    Debug.Log($"Deleted: {unityPath}");
+                else
+                    Debug.LogWarning($"Couldn't be deleted: {unityPath}");
+            }
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+        }
+    }
+}
