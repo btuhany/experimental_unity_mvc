@@ -8,19 +8,21 @@ namespace TimeCounter.Entities.CounterText
 {
     internal class CounterTextModel : BaseModel<ICounterTextContext>
     {
-        private CounterTextModelDataSO _data;
-
-        public float CountSpeed => _data.CountSpeed;
+        private CounterTextModelDataSO _dataSO;
+        private RuntimeClonableSOManager _runtimeClonableSOManager;
+        public float CountSpeed => _dataSO.CountSpeed;
         public CounterTextModel(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
-            _data = clonableSOManager.CreateModelDataSOInstance(initialData);
+            _dataSO = initialData;
+            _runtimeClonableSOManager = clonableSOManager;
         }
 
         public override void Setup(ICounterTextContext context)
         {
             base.Setup(context);
-            _data.CounterValue = 0;
-            _data.CountSpeed = 10f;
+            _dataSO = _runtimeClonableSOManager.CreateModelDataSOInstance(_dataSO);
+            _dataSO.CounterValue = 0;
+            _dataSO.CountSpeed = 10f;
             _context.Debug.Log("Setup", this);
         }
 
@@ -29,13 +31,13 @@ namespace TimeCounter.Entities.CounterText
         }
         public void IncreaseCounter(int value = 1)
         {
-            var oldValue = _data.CounterValue;
-            var newValue = Math.Max(_data.CounterValue + value, 0);
-            _data.CounterValue = newValue;
+            var oldValue = _dataSO.CounterValue;
+            var newValue = Math.Max(_dataSO.CounterValue + value, 0);
+            _dataSO.CounterValue = newValue;
 
             if (oldValue != newValue)
             {
-                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _data.CounterValue });
+                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _dataSO.CounterValue });
             }
             else
             {
