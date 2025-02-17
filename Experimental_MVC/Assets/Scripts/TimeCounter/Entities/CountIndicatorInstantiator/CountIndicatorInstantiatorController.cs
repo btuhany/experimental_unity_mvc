@@ -5,7 +5,6 @@ using TimeCounter.Data;
 using TimeCounter.Entities.CountIndicator;
 using TimeCounter.Entities.CountIndicatorInstantiator;
 using TimeCounter.Events.CoreEvents;
-
 namespace TimeCounter.Entities.CountIndicatorManager
 {
     internal class CountIndicatorInstantiatorController : 
@@ -39,12 +38,19 @@ namespace TimeCounter.Entities.CountIndicatorManager
         private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
         {
             CountIndicatorCommonData commonData = new CountIndicatorCommonData();
-            commonData.Indice = UnityEngine.Random.Range(0, 100);
+            var indice = _indicatorRuntimeList.Count;
+            commonData.Indice = indice;
+
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             commonData.Color = randomColor;
-            var randomVec2 = UnityEngine.Random.insideUnitCircle * 5.0f;
-            commonData.Position = new UnityEngine.Vector3(randomVec2.x, randomVec2.y, 1.0f);
+
+            //TODOBY Increase radius after a circle has been completed.
+            var radius = 4.0f;
+            var posVec2 = new UnityEngine.Vector2(
+                UnityEngine.Mathf.Cos(indice + 2.0f), 
+                UnityEngine.Mathf.Sin(indice + 2.0f)) * radius;
+            commonData.Position = new UnityEngine.Vector3(posVec2.x, posVec2.y, 1.0f);
 
             CountIndicatorInitData creationData = new CountIndicatorInitData();
             creationData.CommonData = commonData;

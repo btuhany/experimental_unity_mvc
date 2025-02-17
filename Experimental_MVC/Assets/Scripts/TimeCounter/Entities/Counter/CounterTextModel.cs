@@ -4,6 +4,7 @@ using TimeCounter.Events.ModelEvents;
 
 namespace TimeCounter.Entities.CounterText
 {
+    //TODOBY connect it to a SO
     internal class CounterTextModel : BaseModel<ICounterTextContext>
     {
         private float _countSpeed = 1.0f;
@@ -15,7 +16,7 @@ namespace TimeCounter.Entities.CounterText
         {
             base.Setup(context);
             _counterValue = 0;
-            _countSpeed = 1f;
+            _countSpeed = 10f;
             _context.Debug.Log("Setup", this);
         }
 
