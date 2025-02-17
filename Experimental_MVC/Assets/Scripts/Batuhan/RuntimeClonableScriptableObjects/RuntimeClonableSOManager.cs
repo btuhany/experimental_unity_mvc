@@ -1,4 +1,5 @@
 ﻿using Batuhan.RuntimeClonableScriptableObjects;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -7,13 +8,13 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
 {
     internal class RuntimeClonableSOManager : MonoBehaviour
     {
+#if UNITY_EDITOR
         private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/Runtime";
         private const string FOLDER_NAME = "ScriptableObjects";
         private const string FULL_PATH = "Assets/Runtime/ScriptableObjects";
         private const string INSTATIATED_SO_SUFFIX = "_Runtime.asset";
-
-#if UNITY_EDITOR
         private bool _isRegisteredToEditorAppEvent = false;
+        private List<BaseRuntimeClonableScriptableObject> _runtimeClonedBaseSOList = new List<BaseRuntimeClonableScriptableObject>();
         private void Awake()
         {
             if (!_isRegisteredToEditorAppEvent)
@@ -28,33 +29,6 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
             {
                 EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             }
-        }
-#endif
-        public T CreateModelDataSOInstance<T>(T baseData) where T : BaseRuntimeClonableScriptableObject
-        {
-            T copyData = Instantiate(baseData);
-
-#if UNITY_EDITOR
-            
-            if (!AssetDatabase.IsValidFolder(FULL_PATH))
-            {
-                AssetDatabase.CreateFolder(RUNTIME_CLONES_FOLDER_PATH, FOLDER_NAME);
-                Debug.Log($"Created folder {FOLDER_NAME} for runtime so assets in: {RUNTIME_CLONES_FOLDER_PATH}");
-            }
-
-            var assetName = $"{baseData.name}{ INSTATIATED_SO_SUFFIX}";
-            string assetPath = $"{FULL_PATH}/" + assetName;
-
-            AssetDatabase.CreateAsset(copyData, assetPath);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-
-            baseData.RuntimeClone = copyData;
-
-            Debug.Log($"Created runtime so asset {assetName}");
-#endif
-
-            return copyData;
         }
         private void OnPlayModeStateChanged(PlayModeStateChange change)
         {
@@ -86,6 +60,42 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+
+            foreach (var so in _runtimeClonedBaseSOList)
+            {
+                so.RuntimeClone = null;
+            }
+            _runtimeClonedBaseSOList.Clear();
         }
+#endif
+        public T CreateModelDataSOInstance<T>(T baseData) where T : BaseRuntimeClonableScriptableObject
+        {
+            T copyData = Instantiate(baseData);
+
+#if UNITY_EDITOR
+            
+            if (!AssetDatabase.IsValidFolder(FULL_PATH))
+            {
+                AssetDatabase.CreateFolder(RUNTIME_CLONES_FOLDER_PATH, FOLDER_NAME);
+                Debug.Log($"Created folder {FOLDER_NAME} for runtime so assets in: {RUNTIME_CLONES_FOLDER_PATH}");
+            }
+
+            var assetName = $"{baseData.name}{ INSTATIATED_SO_SUFFIX}";
+            string assetPath = $"{FULL_PATH}/" + assetName;
+
+            AssetDatabase.CreateAsset(copyData, assetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            baseData.RuntimeClone = copyData;
+            _runtimeClonedBaseSOList.Add(baseData);
+
+            copyData.EDITOR_ShowRuntimeClone = false;
+            Debug.Log($"Created runtime so asset {assetName}");
+#endif
+
+            return copyData;
+        }
+       
     }
 }
