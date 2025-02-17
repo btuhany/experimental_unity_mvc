@@ -9,20 +9,15 @@ namespace TimeCounter.Entities.CounterText
     internal class CounterTextModel : BaseModel<ICounterTextContext>
     {
         private CounterTextModelDataSO _dataSO;
-        private RuntimeClonableSOManager _runtimeClonableSOManager;
         public float CountSpeed => _dataSO.CountSpeed;
         public CounterTextModel(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
-            _dataSO = initialData;
-            _runtimeClonableSOManager = clonableSOManager;
+            _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }
 
         public override void Setup(ICounterTextContext context)
         {
             base.Setup(context);
-            _dataSO = _runtimeClonableSOManager.CreateModelDataSOInstance(_dataSO);
-            _dataSO.CounterValue = 0;
-            _dataSO.CountSpeed = 10f;
             _context.Debug.Log("Setup", this);
         }
 
