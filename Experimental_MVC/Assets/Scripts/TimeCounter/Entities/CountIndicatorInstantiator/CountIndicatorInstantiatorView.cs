@@ -1,5 +1,4 @@
 ﻿using Batuhan.MVC.UnityComponents.Base;
-using TimeCounter.Entities.CountIndicatorManager;
 using UnityEngine;
 
 namespace TimeCounter.Entities.CountIndicatorInstantiator
@@ -9,8 +8,5 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
         [SerializeField]
         private Transform _indicatorParent;
         public Transform IndicatorParentTransform => _indicatorParent;
-        public override void Dispose()
-        {
-        }
     }
 }

@@ -3,18 +3,20 @@ using Batuhan.MVC.Core;
 using System.Collections.Generic;
 using TimeCounter.Data;
 using TimeCounter.Entities.CountIndicator;
-using TimeCounter.Entities.CountIndicatorInstantiator;
 using TimeCounter.Events.CoreEvents;
-namespace TimeCounter.Entities.CountIndicatorManager
+namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
     internal class CountIndicatorInstantiatorController : 
-        BaseControllerWithoutModel<CountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
+        BaseController<CountIndicatorInstantiatorModel, CountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
     {
         private CountIndicatorController.Factory _indicatorFactory;
         private List<CountIndicatorController> _indicatorRuntimeList;
-        public CountIndicatorInstantiatorController(CountIndicatorController.Factory factory, CountIndicatorInstantiatorView view,
+        public CountIndicatorInstantiatorController(
+            CountIndicatorController.Factory factory, 
+            CountIndicatorInstantiatorModel model, 
+            CountIndicatorInstantiatorView view,
             ICountIndicatorInstantiatorContext context) 
-            : base(view, context)
+            : base(model, view, context)
         {
             _indicatorRuntimeList = new();
             _indicatorFactory = factory;
@@ -34,23 +36,19 @@ namespace TimeCounter.Entities.CountIndicatorManager
             {
                 _indicatorRuntimeList[i].Dispose();
             }
+            _indicatorRuntimeList.Clear();
         }
         private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
         {
             CountIndicatorCommonData commonData = new CountIndicatorCommonData();
-            var indice = _indicatorRuntimeList.Count;
-            commonData.Indice = indice;
+            var index = _indicatorRuntimeList.Count;
+            commonData.Index = index;
 
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             commonData.Color = randomColor;
 
-            //TODOBY Increase radius after a circle has been completed.
-            var radius = 4.0f;
-            var posVec2 = new UnityEngine.Vector2(
-                UnityEngine.Mathf.Cos(indice + 2.0f), 
-                UnityEngine.Mathf.Sin(indice + 2.0f)) * radius;
-            commonData.Position = new UnityEngine.Vector3(posVec2.x, posVec2.y, 1.0f);
+            commonData.Position = _model.CalcAndGetNextPosition();
 
             CountIndicatorInitData creationData = new CountIndicatorInitData();
             creationData.CommonData = commonData;

@@ -6,6 +6,7 @@ using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
+using UnityEngine;
 
 namespace TimeCounter.Entities.CounterText
 {
@@ -62,7 +63,8 @@ namespace TimeCounter.Entities.CounterText
         {
             while (true)
             {
-                var secondsToWait = (float)(1f / _model.CountSpeed);
+                var countSpeed = Mathf.Max(_model.CountSpeed, 0.01f);
+                var secondsToWait = (float) (1f / countSpeed);
                 await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationTokenSource.Token);
 
                 if (_tickCancellationTokenSource.Token.IsCancellationRequested)

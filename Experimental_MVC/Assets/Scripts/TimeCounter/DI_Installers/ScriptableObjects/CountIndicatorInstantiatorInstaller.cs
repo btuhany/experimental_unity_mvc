@@ -1,7 +1,6 @@
 ﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
-using TimeCounter.Entities.CounterText;
-using TimeCounter.Entities.CountIndicatorManager;
+using TimeCounter.Entities.CountIndicatorInstantiator;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +13,7 @@ namespace TimeCounter.Installers
         {
             container.Bind<ICountIndicatorInstantiatorContext>().To<CountIndicatorInstantiatorContext>().AsTransient();
             container.Bind<ILifeCycleHandler>().To<CountIndicatorInstantiatorController>().AsTransient();
+            container.Bind<CountIndicatorInstantiatorModel>().AsTransient();
         }
     }
 }
