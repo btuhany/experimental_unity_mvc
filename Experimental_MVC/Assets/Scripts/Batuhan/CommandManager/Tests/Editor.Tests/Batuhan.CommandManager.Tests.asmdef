@@ -1,6 +1,6 @@
 {
-    "name": "Batuhan.CommandManager.Tests",
-    "rootNamespace": "Batuhan.CommandManager.Tests",
+    "name": "Batuhan.CommandManager.EditorTests",
+    "rootNamespace": "Batuhan.CommandManager.EditorTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
