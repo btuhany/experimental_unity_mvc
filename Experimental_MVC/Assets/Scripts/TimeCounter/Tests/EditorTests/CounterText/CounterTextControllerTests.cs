@@ -35,6 +35,11 @@ namespace TimeCounter.Tests
 
             _controller = new CounterTextController(_model, _view, _context);
         }
+        [TearDown]
+        public void TearDown()
+        {
+            _controller.Dispose();
+        }
 
         [Test]
         public void Initialize_ShouldSetupModelAndView_AndSubscribeEvents()

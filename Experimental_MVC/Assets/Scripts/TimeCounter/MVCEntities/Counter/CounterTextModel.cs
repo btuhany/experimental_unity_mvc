@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects;
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
+using Batuhan.RuntimeCopyScriptableObjects;
 using System;
 using TimeCounter.Data;
 using TimeCounter.Events.ModelEvents;
@@ -8,17 +8,19 @@ namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextModel :  IModelContextual<ICounterTextContext>
     {
+        void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         float CountSpeed { get; }
     }
-    internal class CounterTextModel : ICounterTextModel
+    public class CounterTextModel : ICounterTextModel
     {
         private ICounterTextContext _context;
         private CounterTextModelDataSO _dataSO;
         public float CountSpeed => _dataSO.CountSpeed;
         public ICounterTextContext Context => _context;
 
-        public CounterTextModel(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
+        [Zenject.Inject]
+        public void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }
@@ -34,10 +36,15 @@ namespace TimeCounter.Entities.CounterText
         }
         public void IncreaseCounter(int value = 1)
         {
+            if (value < 0)
+            {
+                _context.Debug.Log("Unable to update counter value", this);
+                return;
+            }
+
             var oldValue = _dataSO.CounterValue;
             var newValue = Math.Max(_dataSO.CounterValue + value, 0);
             _dataSO.CounterValue = newValue;
-
             if (oldValue != newValue)
             {
                 _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _dataSO.CounterValue });

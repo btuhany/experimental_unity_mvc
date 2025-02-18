@@ -37,6 +37,11 @@ namespace TimeCounter.Entities.CounterText
             DeactivateTick();
             UnsubscribeEvents();
         }
+        private void HandleOnTick()
+        {
+            _model.IncreaseCounter(1);
+            _context.Debug.Log("tick!", this);
+        }
         private void SubscribeEvents()
         {
             _context.EventBusModel.Subscribe<CounterValueUpdatedEvent>(OnCountValueUpdated);
@@ -70,8 +75,7 @@ namespace TimeCounter.Entities.CounterText
                 if (_tickCancellationTokenSource.Token.IsCancellationRequested)
                     break;
 
-                _model.IncreaseCounter(1);
-                _context.Debug.Log("tick!", this);
+                HandleOnTick();
             }
         }
         private void DeactivateTick()

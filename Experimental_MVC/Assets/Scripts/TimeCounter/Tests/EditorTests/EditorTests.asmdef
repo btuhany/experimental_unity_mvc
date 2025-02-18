@@ -8,7 +8,8 @@
         "TNRD.NSubstitute",
         "Batuhan.MVC",
         "Batuhan.EventBus",
-        "Batuhan.CommandManager"
+        "Batuhan.CommandManager",
+        "Batuhan.RuntimeClonableScriptableObjects"
     ],
     "includePlatforms": [
         "Editor"

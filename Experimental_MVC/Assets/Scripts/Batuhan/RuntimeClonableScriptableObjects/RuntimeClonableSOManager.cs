@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
+namespace Batuhan.RuntimeCopyScriptableObjects
 {
     public class RuntimeClonableSOManager : MonoBehaviour
     {
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
                 DeleteAllRuntimeSOAssets();
             }
         }
-        private void DeleteAllRuntimeSOAssets()
+        public void DeleteAllRuntimeSOAssets()
         {
             if (!AssetDatabase.IsValidFolder(FULL_PATH))
             {
