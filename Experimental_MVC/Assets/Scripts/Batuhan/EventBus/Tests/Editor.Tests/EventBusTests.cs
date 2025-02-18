@@ -7,6 +7,36 @@ namespace Batuhan.EventBus.EditorTests
     [TestFixture]
     public class EventBusTests
     {
+        public class TestCategory : IEventCategory
+        {
+            public int ID => 1;
+        }
+
+        public class TestEvent : IEvent
+        {
+            public int CategoryID => 1;
+            public string Message { get; set; }
+        }
+        public class AnotherTestEvent : IEvent
+        {
+            public int CategoryID => 1;
+            public int Data { get; set; }
+        }
+        public class InvalidCategoryTestEvent : IEvent
+        {
+            public int CategoryID => 2;
+        }
+
+        // NSubstitute mock
+        public interface ITestEventHandler
+        {
+            void HandleEvent(TestEvent evt);
+        }
+        public interface IAnotherTestEventHandler
+        {
+            void HandleEvent(AnotherTestEvent evt);
+        }
+
         private EventBus<TestCategory> _eventBus;
         private TestCategory _category;
 
@@ -222,35 +252,5 @@ namespace Batuhan.EventBus.EditorTests
         {
             // Dummy method for equality testing
         }
-    }
-
-    public class TestCategory : IEventCategory
-    {
-        public int ID => 1;
-    }
-
-    public class TestEvent : IEvent
-    {
-        public int CategoryID => 1;
-        public string Message { get; set; }
-    }
-    public class AnotherTestEvent : IEvent
-    {
-        public int CategoryID => 1;
-        public int Data { get; set; }
-    }
-    public class InvalidCategoryTestEvent : IEvent
-    {
-        public int CategoryID => 2;
-    }
-
-    // NSubstitute mock
-    public interface ITestEventHandler
-    {
-        void HandleEvent(TestEvent evt);
-    }
-    public interface IAnotherTestEventHandler
-    {
-        void HandleEvent(AnotherTestEvent evt);
     }
 }

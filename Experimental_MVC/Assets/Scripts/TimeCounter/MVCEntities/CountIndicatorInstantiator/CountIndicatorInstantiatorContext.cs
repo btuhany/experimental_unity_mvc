@@ -6,14 +6,14 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
     public interface ICountIndicatorInstantiatorContext : IContext 
     {
-        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
     }
     public class CountIndicatorInstantiatorContext : ICountIndicatorInstantiatorContext
     {
         [Inject]
-        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
+        public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         [Inject]
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
     }
 }

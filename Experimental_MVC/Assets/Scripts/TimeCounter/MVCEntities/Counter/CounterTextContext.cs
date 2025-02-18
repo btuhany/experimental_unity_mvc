@@ -8,24 +8,24 @@ namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextContext : IContext
     {
-        public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
-        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
-        public CommandManager CommandManager { get; }
-        public DebugHelper Debug { get; }
+        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
+        public ICommandManager CommandManager { get; }
+        public IDebugHelper Debug { get; }
 
     }
     internal class CounterTextContext : ICounterTextContext
     {
         [Inject]
-        public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }        
+        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }        
         [Inject]
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
         [Inject]
-        public EventBus<Events.CoreEvents.Core> EventBusCore { get; }
+        public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         [Inject]
-        public DebugHelper Debug { get; }
+        public IDebugHelper Debug { get; }
         [Inject]
-        public CommandManager CommandManager { get; }
+        public ICommandManager CommandManager { get; }
     }
 }
