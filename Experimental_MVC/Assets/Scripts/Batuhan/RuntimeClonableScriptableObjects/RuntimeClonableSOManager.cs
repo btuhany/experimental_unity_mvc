@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
 {
-    internal class RuntimeClonableSOManager : MonoBehaviour
+    public class RuntimeClonableSOManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/Runtime";

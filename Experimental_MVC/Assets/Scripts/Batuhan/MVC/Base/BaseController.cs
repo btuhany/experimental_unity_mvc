@@ -1,5 +1,4 @@
 ﻿using Batuhan.MVC.Core;
-using NUnit.Framework;
 
 namespace Batuhan.MVC.Base
 {
