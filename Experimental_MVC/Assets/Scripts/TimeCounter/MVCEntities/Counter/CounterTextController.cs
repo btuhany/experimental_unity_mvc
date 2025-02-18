@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal class CounterTextController : BaseController<CounterTextModel, CounterTextView, ICounterTextContext>, ILifeCycleHandler
+    public class CounterTextController : BaseController<ICounterTextModel, IViewContextual<ICounterTextContext>, ICounterTextContext>, ILifeCycleHandler
     {
         private CancellationTokenSource _tickCancellationTokenSource;
 
-        public CounterTextController(CounterTextModel model, CounterTextView view, ICounterTextContext context) : base(model, view, context)
+        public CounterTextController(ICounterTextModel model, IViewContextual<ICounterTextContext> view, ICounterTextContext context) : base(model, view, context)
         {
             _tickCancellationTokenSource = new CancellationTokenSource();
         }
@@ -36,6 +36,11 @@ namespace TimeCounter.Entities.CounterText
 
             DeactivateTick();
             UnsubscribeEvents();
+        }
+        private void HandleOnTick()
+        {
+            _model.IncreaseCounter(1);
+            _context.Debug.Log("tick!", this);
         }
         private void SubscribeEvents()
         {
@@ -70,8 +75,7 @@ namespace TimeCounter.Entities.CounterText
                 if (_tickCancellationTokenSource.Token.IsCancellationRequested)
                     break;
 
-                _model.IncreaseCounter();
-                _context.Debug.Log("tick!", this);
+                HandleOnTick();
             }
         }
         private void DeactivateTick()

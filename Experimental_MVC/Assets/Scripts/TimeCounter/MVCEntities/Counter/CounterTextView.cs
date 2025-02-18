@@ -5,21 +5,30 @@ using System;
 using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal class CounterTextView : BaseViewMonoBehaviour<ICounterTextContext>
+    public interface ICounterTextView : IViewContextual<ICounterTextContext>
+    {
+    }
+    internal class CounterTextView : BaseViewComponent, ICounterTextView
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
+        private ICounterTextContext _context;
 
-        public override void Setup(ICounterTextContext context)
+        public ICounterTextContext Context => _context;
+
+        public override Type ContractTypeToBind => typeof(IViewContextual<ICounterTextContext>);
+
+        public void Setup(ICounterTextContext context)
         {
-            base.Setup(context);
+            _context = context;
             RegisterCommandListeners();
             _textMesh.SetText("-");
         }
 
-        public override void Dispose()
+        public void Dispose()
         {
             UnregisterCommandListeners();
         }
@@ -36,11 +45,6 @@ namespace TimeCounter.Entities.CounterText
         {
             var counterValue = commandData.CounterValue;
             _textMesh.SetText(counterValue.ToString());
-        }
-
-        internal void Test()
-        {
-            _context.Debug.Log("testset " + gameObject.name);
         }
     }
 }

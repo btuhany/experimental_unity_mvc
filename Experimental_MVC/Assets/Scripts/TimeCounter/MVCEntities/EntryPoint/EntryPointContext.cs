@@ -8,16 +8,16 @@ namespace TimeCounter.Entities.EntryPoint
 {
     internal interface IEntryPointContext : IContext
     {
-        public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
-        public DebugHelper Debug { get; }
+        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
+        public IDebugHelper Debug { get; }
 
     }
     internal class EntryPointContext : IEntryPointContext
     {
         [Inject]
-        public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
+        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
         [Inject]
-        public DebugHelper Debug { get; }
+        public IDebugHelper Debug { get; }
 
     }
 }

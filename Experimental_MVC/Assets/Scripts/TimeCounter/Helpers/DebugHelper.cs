@@ -3,7 +3,12 @@ using UnityEngine;
 
 namespace Assets.Scripts.TimeCounter.Helper
 {
-    internal class DebugHelper
+    public interface IDebugHelper
+    {
+        public void Log(string message);
+        public void Log(string message, object callerObj = null);
+    }
+    public class DebugHelper : IDebugHelper
     {
         public void Log(string message, object callerObj = null)
         {
@@ -29,6 +34,13 @@ namespace Assets.Scripts.TimeCounter.Helper
 
             logStr += " " + message;
             Debug.Log(logStr);
+#endif
+        }
+
+        public void Log(string message)
+        {
+#if UNITY_EDITOR
+            Debug.Log(message);
 #endif
         }
     }

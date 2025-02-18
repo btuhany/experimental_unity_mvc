@@ -13,7 +13,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             for (int i = 0; i < _views.Length; i++)
             {
                 var view = _views[i];
-                var viewType = view.GetType();
+                var viewType = view.ContractTypeToBind;
                 Container.Bind(viewType).FromInstance(view).AsTransient();
             }
         }

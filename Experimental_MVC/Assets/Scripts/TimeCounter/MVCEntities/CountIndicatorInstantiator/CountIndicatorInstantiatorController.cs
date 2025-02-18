@@ -7,14 +7,14 @@ using TimeCounter.Events.CoreEvents;
 namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
     internal class CountIndicatorInstantiatorController : 
-        BaseController<CountIndicatorInstantiatorModel, CountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
+        BaseController<CountIndicatorInstantiatorModel, ICountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
     {
         private CountIndicatorController.Factory _indicatorFactory;
         private List<CountIndicatorController> _indicatorRuntimeList;
         public CountIndicatorInstantiatorController(
             CountIndicatorController.Factory factory, 
-            CountIndicatorInstantiatorModel model, 
-            CountIndicatorInstantiatorView view,
+            CountIndicatorInstantiatorModel model,
+            ICountIndicatorInstantiatorView view,
             ICountIndicatorInstantiatorContext context) 
             : base(model, view, context)
         {

@@ -4,9 +4,9 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
+namespace Batuhan.RuntimeCopyScriptableObjects
 {
-    internal class RuntimeClonableSOManager : MonoBehaviour
+    public class RuntimeClonableSOManager : MonoBehaviour
     {
 #if UNITY_EDITOR
         private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/Runtime";
@@ -37,7 +37,7 @@ namespace Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects
                 DeleteAllRuntimeSOAssets();
             }
         }
-        private void DeleteAllRuntimeSOAssets()
+        public void DeleteAllRuntimeSOAssets()
         {
             if (!AssetDatabase.IsValidFolder(FULL_PATH))
             {

@@ -2,6 +2,7 @@
 using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace TimeCounter.Installers
@@ -14,10 +15,9 @@ namespace TimeCounter.Installers
             Container.Bind<Model>().AsSingle();
             Container.Bind<Core>().AsSingle();
 
-            Container.Bind<EventBus<Global>>().AsSingle();
-            Container.Bind<EventBus<Core>>().AsSingle();
-
-            Container.Bind<EventBus<Model>>().AsTransient();
+            Container.Bind<IEventBus<Global>>().To<EventBus<Global>>().AsSingle();
+            Container.Bind<IEventBus<Core>>().To<EventBus<Core>>().AsSingle();
+            Container.Bind<IEventBus<Model>>().To<EventBus<Model>>().AsTransient();
         }
     }
 }

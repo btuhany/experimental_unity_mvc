@@ -11,8 +11,8 @@ namespace TimeCounter.Installers
         {
             EventBusInstaller.Install(Container);
             Container.Bind<SceneReferenceManager>().To<TimeCounterSceneReferenceManager>().AsSingle();
-            Container.Bind<CommandManager>().AsTransient();
-            Container.Bind<DebugHelper>().AsSingle();
+            Container.Bind<ICommandManager>().To<CommandManager>().AsTransient();
+            Container.Bind<IDebugHelper>().To<DebugHelper>().AsSingle();
         }
     }
 }

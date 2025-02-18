@@ -5,16 +5,16 @@ using Zenject;
 
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal interface ICountIndicatorContext : IContext
+    public interface ICountIndicatorContext : IContext
     {
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
-        public CommandManager CommandManager { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public ICommandManager CommandManager { get; }
     }
     internal class CountIndicatorContext : ICountIndicatorContext
     {
         [Inject]
-        public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
+        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
         [Inject]
-        public CommandManager CommandManager { get; }
+        public ICommandManager CommandManager { get; }
     }
 }

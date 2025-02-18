@@ -1,6 +1,6 @@
 ﻿using Zenject;
 using UnityEngine;
-using Assets.Scripts.Batuhan.RuntimeCopyScriptableObjects;
+using Batuhan.RuntimeCopyScriptableObjects;
 
 namespace TimeCounter.Installers
 {
