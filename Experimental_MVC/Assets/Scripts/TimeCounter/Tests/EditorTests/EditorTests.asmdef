@@ -1,0 +1,28 @@
+{
+    "name": "ExperimentalMVC.TimeCounter.EditorTests",
+    "rootNamespace": "ExperimentalMVC.TimeCounter.EditorTests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "ExperimentalMVC.TimeCounter",
+        "TNRD.NSubstitute",
+        "Batuhan.MVC",
+        "Batuhan.EventBus",
+        "Batuhan.CommandManager"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
