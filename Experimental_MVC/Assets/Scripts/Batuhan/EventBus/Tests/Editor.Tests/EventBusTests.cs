@@ -2,7 +2,7 @@ using System;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Batuhan.EventBus.Tests
+namespace Batuhan.EventBus.EditorTests
 {
     [TestFixture]
     public class EventBusTests

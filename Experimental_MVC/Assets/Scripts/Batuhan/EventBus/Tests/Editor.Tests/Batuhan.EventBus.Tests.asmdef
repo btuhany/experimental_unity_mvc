@@ -1,6 +1,6 @@
 {
-    "name": "Batuhan.EventBus.Tests",
-    "rootNamespace": "Batuhan.EventBus.Tests",
+    "name": "Batuhan.EventBus.EditorTests",
+    "rootNamespace": "Batuhan.EventBus.EditorTests",
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
