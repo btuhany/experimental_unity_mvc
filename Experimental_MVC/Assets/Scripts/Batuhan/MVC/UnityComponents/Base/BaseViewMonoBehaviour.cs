@@ -1,15 +1,14 @@
 ﻿using Batuhan.MVC.Core;
-using Batuhan.MVC.UnityComponents.Core;
 using System;
 using UnityEngine;
 
 namespace Batuhan.MVC.UnityComponents.Base
 {
-    public abstract class BaseViewComponent : MonoBehaviour, IViewMonoBehaviour
+    public abstract class BaseViewComponent : MonoBehaviour 
     {
-
+        public abstract Type ContractTypeToBind { get; }
     }
-    public abstract class BaseViewMonoBehaviour<TContext> : BaseViewComponent, IDisposable, IRequiresContext<TContext>
+    public abstract class BaseViewMonoBehaviour<TContext> : BaseViewComponent, IViewContextual<TContext>
         where TContext : IContext
     {
         protected TContext _context;

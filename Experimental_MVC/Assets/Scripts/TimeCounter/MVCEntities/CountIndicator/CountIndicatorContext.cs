@@ -5,7 +5,7 @@ using Zenject;
 
 namespace TimeCounter.Entities.CountIndicator
 {
-    internal interface ICountIndicatorContext : IContext
+    public interface ICountIndicatorContext : IContext
     {
         public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
         public CommandManager CommandManager { get; }

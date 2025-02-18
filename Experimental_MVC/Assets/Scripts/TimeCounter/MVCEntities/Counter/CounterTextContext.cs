@@ -6,7 +6,7 @@ using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
-    internal interface ICounterTextContext : IContext
+    public interface ICounterTextContext : IContext
     {
         public EventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
         public EventBus<Events.ModelEvents.Model> EventBusModel { get; }
