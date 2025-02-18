@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class TEST_SceneChanger : MonoBehaviour
+public class SceneChangerHelper : MonoBehaviour
 {
     [SerializeField] private int _nextSceneIndex;
     [SerializeField] private Button _button;
@@ -23,7 +23,7 @@ public class TEST_SceneChanger : MonoBehaviour
 
     public void ChangeScene(int sceneIndex)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneIndex);
     }
     public async UniTaskVoid LoadSceneAsyncByIndex(int sceneIndex)
     {
