@@ -9,10 +9,16 @@ using TimeCounter.Events.GlobalEvents;
 
 namespace TimeCounter.Entities.Counter
 {
+    public enum TickCountType
+    {
+        Increasing = 0,
+        Decreasing = 1
+    }
     public class TickerController : BaseControllerWithModelAndContext<ITickerModel, ITickerContext>, ILifeCycleHandler
     {
         private CancellationTokenSource _tickCancellationTokenSource;
         private IDisposable _modelSubDisposable;
+        private TickCountType _tickCountingType;
         public TickerController(ITickerModel model, ITickerContext context) : base(model, context)
         {
             _tickCancellationTokenSource = new CancellationTokenSource();
@@ -37,14 +43,31 @@ namespace TimeCounter.Entities.Counter
 
         private void HandleOnSceneInitialized(SceneInitializedEvent @event)
         {
-            _context.Debug.Log("Handle on scene init", this);
             ActivateTick().Forget();
         }
         private void HandleOnTick()
         {
-            _model.IncreaseCounter(1);
-            
-            _context.Debug.Log("tick!", this);
+            CheckHasCountingTypeChanged();
+            HandleCounter();
+        }
+
+        private void CheckHasCountingTypeChanged()
+        {
+            if (_model.IsMaxTickCountReached())
+                _tickCountingType = TickCountType.Decreasing;
+            if (_model.IsMinTickCountReached())
+                _tickCountingType = TickCountType.Increasing;
+        }
+        private void HandleCounter()
+        {
+            if (_tickCountingType == TickCountType.Increasing)
+            {
+                _model.IncreaseCounter(1);
+            }
+            else if (_tickCountingType == TickCountType.Decreasing)
+            {
+                _model.DecreaseCounter(1);
+            }
         }
         private async UniTask ActivateTick()
         {

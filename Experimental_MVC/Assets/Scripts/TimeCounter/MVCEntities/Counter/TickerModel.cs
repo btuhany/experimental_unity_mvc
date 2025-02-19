@@ -11,7 +11,11 @@ namespace TimeCounter.Entities.Counter
     {
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
+        void DecreaseCounter(int value);
+        bool IsMaxTickCountReached();
+        bool IsMinTickCountReached();
         float TickSpeed { get; }
+
         ReactiveProperty<int> TickCount { get; }
     }
     public class TickerModel : ITickerModel
@@ -19,6 +23,7 @@ namespace TimeCounter.Entities.Counter
         private ITickerContext _context;
         private TimeTickerModelDataSO _dataSO;
         private IDisposable _disposable;
+
         public float TickSpeed => _dataSO.TickSpeed;
         public ITickerContext Context => _context;
 
@@ -55,7 +60,36 @@ namespace TimeCounter.Entities.Counter
             }
 
             var oldValue = TickCount.Value;
-            var newValue = Math.Max(oldValue + value, 0);
+            var newValue = Math.Max(oldValue + value, _dataSO.MinTickCount);
+            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
+
+            if (oldValue != newValue)
+            {
+                TickCount.Value = newValue;
+            }
+            else
+            {
+                _context.Debug.Log("Unable to update counter value", this);
+            }
+        }
+        public bool IsMaxTickCountReached()
+        {
+            return _dataSO.MaxTickCountReached;
+        }
+        public bool IsMinTickCountReached()
+        {
+            return _dataSO.MinTickCountReached;
+        }
+        public void DecreaseCounter(int value)
+        {
+            if (value < 0)
+            {
+                _context.Debug.Log("Unable to update counter value", this);
+                return;
+            }
+
+            var oldValue = TickCount.Value;
+            var newValue = Math.Max(oldValue - value, _dataSO.MinTickCount);
             newValue = Math.Min(newValue, _dataSO.MaxTickCount);
 
             if (oldValue != newValue)

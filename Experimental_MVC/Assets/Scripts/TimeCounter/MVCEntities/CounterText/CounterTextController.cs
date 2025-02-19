@@ -42,7 +42,6 @@ namespace TimeCounter.Entities.CounterText
 
         private void OnTickValueUpdated(TickCountValueUpdatedEvent @event)
         {
-            _context.Debug.Log(@event.UpdatedValue.ToString());
             _model.UpdateTextWithTickValue(@event.UpdatedValue);
             //_context.CommandManager.ExecuteCommand(_animateCounterTextCommand); //Or we can make view listen to command like a event and handle the animation
             if (@event.UpdatedValue > 0)
