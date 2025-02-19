@@ -15,12 +15,12 @@ public class CounterTextModelTests
     private ICounterTextContext _mockContext;
     private IEventBus<Model> _mockEventBusModel;
     private RuntimeClonableSOManager _mockClonableSOManager;
-    private CounterTextModelDataSO _mockCounterTextDataSO;
+    private CounterModelDataSO _mockCounterTextDataSO;
 
-    private static CounterTextModelDataSO GetDataSOWithReflection(ICounterTextModel model)
+    private static CounterModelDataSO GetDataSOWithReflection(ICounterTextModel model)
     {
         var fieldInfo = typeof(CounterTextModel).GetField(DATA_SO_FIELD_NAME, BindingFlags.NonPublic | BindingFlags.Instance);
-        var dataSO = (CounterTextModelDataSO)fieldInfo.GetValue(model);
+        var dataSO = (CounterModelDataSO)fieldInfo.GetValue(model);
         return dataSO;
     }
 
@@ -31,7 +31,7 @@ public class CounterTextModelTests
         _mockContext = Substitute.For<ICounterTextContext>();
         _mockEventBusModel = Substitute.For<IEventBus<Model>>();
         _mockClonableSOManager = Substitute.For<RuntimeClonableSOManager>();
-        _mockCounterTextDataSO = Substitute.For<CounterTextModelDataSO>();
+        _mockCounterTextDataSO = Substitute.For<CounterModelDataSO>();
 
         // Set up the initial counter value and count speed
         _mockCounterTextDataSO.CounterValue = 0;

@@ -8,19 +8,17 @@ namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextModel :  IModelContextual<ICounterTextContext>
     {
-        void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
-        void IncreaseCounter(int value);
-        float CountSpeed { get; }
+
     }
     public class CounterTextModel : ICounterTextModel
     {
         private ICounterTextContext _context;
-        private CounterTextModelDataSO _dataSO;
+        private CounterModelDataSO _dataSO;
         public float CountSpeed => _dataSO.CountSpeed;
         public ICounterTextContext Context => _context;
 
         [Zenject.Inject]
-        public void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
+        public void CreateData(CounterModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }

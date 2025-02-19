@@ -5,7 +5,7 @@ using UnityEngine;
 namespace TimeCounter.Data
 {
     [CreateAssetMenu(fileName = "CounterTextDataSO", menuName = "Scriptable Objects/Batuhan/ModelData/CounterText")]
-    public class CounterTextModelDataSO : BaseRuntimeClonableScriptableObject
+    public class CounterModelDataSO : BaseRuntimeClonableScriptableObject
     {
         [SerializeField] private float _countSpeed = 1.0f;
         [NonSerialized] private int _counterValue = 0;
