@@ -7,7 +7,7 @@ namespace TimeCounter.Commands
         public string Text { get; }
         public UpdateCounterTextCommand(string text)
         {
-            Text = counterValue;
+            Text = text;
         }
         public void OnExecute()
         {
