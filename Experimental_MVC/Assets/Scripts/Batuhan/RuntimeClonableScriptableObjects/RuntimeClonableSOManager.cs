@@ -14,7 +14,7 @@ namespace Batuhan.RuntimeCopyScriptableObjects
         private const string FULL_PATH = "Assets/Runtime/ScriptableObjects";
         private const string INSTATIATED_SO_SUFFIX = "_Runtime.asset";
         private bool _isRegisteredToEditorAppEvent = false;
-        private List<BaseRuntimeClonableScriptableObject> _runtimeClonedBaseSOList = new List<BaseRuntimeClonableScriptableObject>();
+        private List<RuntimeClonableScriptableObject> _runtimeClonedBaseSOList = new List<RuntimeClonableScriptableObject>();
         private void Awake()
         {
             if (!_isRegisteredToEditorAppEvent)
@@ -68,7 +68,7 @@ namespace Batuhan.RuntimeCopyScriptableObjects
             _runtimeClonedBaseSOList.Clear();
         }
 #endif
-        public T CreateModelDataSOInstance<T>(T baseData) where T : BaseRuntimeClonableScriptableObject
+        public T CreateModelDataSOInstance<T>(T baseData) where T : RuntimeClonableScriptableObject
         {
             T copyData = Instantiate(baseData);
 

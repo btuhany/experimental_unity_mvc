@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19a9963c42c5fe24493bff26372e932a, type: 3}
-  m_Name: CounterTextDataSO
+  m_Script: {fileID: 11500000, guid: 780908de79ac3094588e083600471205, type: 3}
+  m_Name: TimeTickerInstaller
   m_EditorClassIdentifier: 
-  EDITOR_ShowRuntimeClone: 1
-  RuntimeClone: {fileID: 0}
-  _countSpeed: 1
+  _modelDataSO: {fileID: 11400000, guid: 27630e16a4960f14789a16d6883253f1, type: 2}

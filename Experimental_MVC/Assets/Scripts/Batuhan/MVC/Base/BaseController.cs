@@ -18,28 +18,38 @@ namespace Batuhan.MVC.Base
             _context = context;
         }
     }
+    public abstract class BaseControllerWithModelAndContext<TModel, TContext> : IController
+        where TModel : IModel
+        where TContext : IContext
+    {
+        protected readonly TModel _model;
+        protected readonly TContext _context;
 
+        public BaseControllerWithModelAndContext(TModel model, TContext context)
+        {
+            _model = model;
+            _context = context;
+        }
+    }
+    public abstract class BaseControllerWithViewAndContext<TView, TContext> : IController
+        where TView : IView
+        where TContext : IContext
+    {
+        protected readonly TView _model;
+        protected readonly TContext _context;
+
+        public BaseControllerWithViewAndContext(TView model, TContext context)
+        {
+            _model = model;
+            _context = context;
+        }
+    }
     public abstract class BaseController<TContext> : IController
         where TContext : IContext
     {
         protected readonly TContext _context;
-        public IContext Context => _context;
         public BaseController(TContext context)
         {
-            _context = context;
-        }
-    }
-
-    public abstract class BaseControllerWithoutModel<TView, TContext> : IController
-        where TView : IView
-        where TContext : IContext
-    {
-        protected readonly TView _view;
-        protected readonly TContext _context;
-
-        public BaseControllerWithoutModel(TView view, TContext context)
-        {
-            _view = view;
             _context = context;
         }
     }

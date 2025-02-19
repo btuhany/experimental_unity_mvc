@@ -1,31 +1,33 @@
-﻿using Batuhan.MVC.Core;
+using Batuhan.MVC.Core;
 using Batuhan.RuntimeCopyScriptableObjects;
 using System;
 using TimeCounter.Data;
-using TimeCounter.Events.ModelEvents;
 
-namespace TimeCounter.Entities.CounterText
+namespace TimeCounter.Entities.Counter
 {
-    public interface ICounterTextModel :  IModelContextual<ICounterTextContext>
+    public interface ITimeTickerModel : IModelContextual<ITimeTickerContext>
     {
-        void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
+        void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         float CountSpeed { get; }
+        Action<int> OnCountValueChanged { get; set; } //TODOby reactive property unirx
     }
-    public class CounterTextModel : ICounterTextModel
+    public class TimeTickerModel : ITimeTickerModel
     {
-        private ICounterTextContext _context;
-        private CounterTextModelDataSO _dataSO;
+        private ITimeTickerContext _context;
+        private TimeTickerModelDataSO _dataSO;
         public float CountSpeed => _dataSO.CountSpeed;
-        public ICounterTextContext Context => _context;
+        public ITimeTickerContext Context => _context;
+
+        public Action<int> OnCountValueChanged { get; set; }
 
         [Zenject.Inject]
-        public void CreateData(CounterTextModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
+        public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }
 
-        public void Setup(ICounterTextContext context)
+        public void Setup(ITimeTickerContext context)
         {
             _context = context;
             _context.Debug.Log("Setup", this);
@@ -47,7 +49,7 @@ namespace TimeCounter.Entities.CounterText
             _dataSO.CounterValue = newValue;
             if (oldValue != newValue)
             {
-                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _dataSO.CounterValue });
+                OnCountValueChanged?.Invoke(newValue);
             }
             else
             {

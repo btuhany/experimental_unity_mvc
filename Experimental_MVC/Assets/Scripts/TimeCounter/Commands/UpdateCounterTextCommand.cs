@@ -4,10 +4,10 @@ namespace TimeCounter.Commands
 {
     public struct UpdateCounterTextCommand : ICommand
     {
-        public int CounterValue { get; }
-        public UpdateCounterTextCommand(int counterValue)
+        public string Text { get; }
+        public UpdateCounterTextCommand(string text)
         {
-            CounterValue = counterValue;
+            Text = text;
         }
         public void OnExecute()
         {
