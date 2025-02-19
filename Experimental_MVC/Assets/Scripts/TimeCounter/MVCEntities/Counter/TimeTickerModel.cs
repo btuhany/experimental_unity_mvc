@@ -56,6 +56,7 @@ namespace TimeCounter.Entities.Counter
 
             var oldValue = TickCount.Value;
             var newValue = Math.Max(oldValue + value, 0);
+            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
 
             if (oldValue != newValue)
             {

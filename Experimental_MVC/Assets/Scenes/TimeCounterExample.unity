@@ -765,7 +765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _textMesh: {fileID: 177734041}
-  _animator: {fileID: 0}
+  _animator: {fileID: 177734043}
 --- !u!1 &1111145202
 GameObject:
   m_ObjectHideFlags: 0

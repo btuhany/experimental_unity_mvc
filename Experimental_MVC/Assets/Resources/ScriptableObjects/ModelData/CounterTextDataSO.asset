@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EDITOR_ShowRuntimeClone: 1
   RuntimeClone: {fileID: 0}
-  _countSpeed: 1
+  _tickSpeed: 5
+  _maxTickCount: 100

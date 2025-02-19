@@ -8,8 +8,10 @@ namespace TimeCounter.Data
     public class TimeTickerModelDataSO : RuntimeClonableScriptableObject
     {
         [SerializeField] private float _tickSpeed = 1.0f;
+        [SerializeField] private int _maxTickCount = 100;
         [NonSerialized] private int _tickCount = 0;
         public float TickSpeed { get => _tickSpeed; set => _tickSpeed = value; }
         public int TickCount { get => _tickCount; set => _tickCount = value; }
+        public int MaxTickCount { get => _maxTickCount; }
     }
 }

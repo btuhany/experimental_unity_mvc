@@ -19,6 +19,7 @@ namespace TimeCounter.Entities.Counter
         }
         public void Initialize()
         {
+            _model.Setup(_context);
             _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
             _modelSubDisposable = _model.TickCount.Subscribe(HandleOnTickCountValueUpdated);
         }
