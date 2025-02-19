@@ -5,14 +5,13 @@ using System;
 using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextView : IViewContextual<ICounterTextContext>
     {
     }
-    internal class CounterTextView : BaseViewComponent, ICounterTextView
+    internal class CounterTextView : BaseViewMonoBehaviour, ICounterTextView
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
         private ICounterTextContext _context;
@@ -43,7 +42,7 @@ namespace TimeCounter.Entities.CounterText
 
         private void OnExecuteUpdateCounterText(UpdateCounterTextCommand commandData)
         {
-            var counterValue = commandData.CounterValue;
+            var counterValue = commandData.Text;
             _textMesh.SetText(counterValue.ToString());
         }
     }
