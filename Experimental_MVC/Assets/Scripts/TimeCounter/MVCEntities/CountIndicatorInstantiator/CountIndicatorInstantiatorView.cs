@@ -9,7 +9,7 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
     {
         public Transform IndicatorParentTransform { get; }
     }
-    internal class CountIndicatorInstantiatorView : BaseViewComponent, ICountIndicatorInstantiatorView
+    internal class CountIndicatorInstantiatorView : BaseViewMonoBehaviour, ICountIndicatorInstantiatorView
     {
         [SerializeField] private Transform _indicatorParent;
         private ICountIndicatorInstantiatorContext _context;

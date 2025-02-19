@@ -12,7 +12,7 @@ namespace TimeCounter.Entities.CountIndicator
     {
 
     }
-    internal class CountIndicatorView : BaseViewComponent, ICountIndicatorView
+    internal class CountIndicatorView : BaseViewMonoBehaviour, ICountIndicatorView
     {
         [SerializeField] private Transform _transform;
         [SerializeField] private TextMeshPro _text;

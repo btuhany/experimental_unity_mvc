@@ -2,7 +2,6 @@
 using Batuhan.MVC.Core;
 using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
-using TimeCounter.Events.ModelEvents;
 namespace TimeCounter.Entities.CounterText
 {
     public class CounterTextController : BaseController<ICounterTextModel, IViewContextual<ICounterTextContext>, ICounterTextContext>, ILifeCycleHandler

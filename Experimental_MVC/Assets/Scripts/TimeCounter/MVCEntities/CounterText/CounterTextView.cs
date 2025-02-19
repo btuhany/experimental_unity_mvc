@@ -11,7 +11,7 @@ namespace TimeCounter.Entities.CounterText
     public interface ICounterTextView : IViewContextual<ICounterTextContext>
     {
     }
-    internal class CounterTextView : BaseViewComponent, ICounterTextView
+    internal class CounterTextView : BaseViewMonoBehaviour, ICounterTextView
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
         private ICounterTextContext _context;
