@@ -2,7 +2,7 @@
 
 namespace TimeCounter.Commands
 {
-    public struct TriggerAnimatorHashCommand : ICommand
+    public class TriggerAnimatorHashCommand : ICommand
     {
         private int _triggerHash;
         private UnityEngine.Animator _animator;

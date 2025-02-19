@@ -40,15 +40,30 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
         }
         private void OnTimeCountValueUpdated(TickCountValueUpdatedEvent @event)
         {
+            var tickCount = @event.UpdatedValue;
+            var indicatorCount = _indicatorRuntimeList.Count;
+
+            if (tickCount > indicatorCount)
+            {
+                CreateAndInitializeNewIndicator(indicatorCount);
+            }
+            else if (tickCount < indicatorCount)
+            {
+                var lastIndicatorIndex = indicatorCount - 1;
+                _indicatorRuntimeList[lastIndicatorIndex].DestroyEntityForRuntime();
+                _indicatorRuntimeList.RemoveAt(lastIndicatorIndex);
+            }
+        }
+        private void CreateAndInitializeNewIndicator(int index)
+        {
             CountIndicatorCommonData commonData = new CountIndicatorCommonData();
-            var index = _indicatorRuntimeList.Count;
             commonData.Index = index;
 
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             commonData.Color = randomColor;
 
-            commonData.Position = _model.CalcAndGetNextPosition();
+            commonData.Position = _model.CalcPosition(index);
 
             CountIndicatorInitData creationData = new CountIndicatorInitData();
             creationData.CommonData = commonData;

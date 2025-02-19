@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CounterTextDataSO
   m_EditorClassIdentifier: 
   EDITOR_ShowRuntimeClone: 1
-  RuntimeClone: {fileID: 11400000, guid: 676222740114a6c49b7dda9873246f82, type: 2}
-  _tickSpeed: 8.65
+  RuntimeClone: {fileID: 0}
+  _tickSpeed: 1
   _maxTickCount: 100
+  _minTickCount: 0

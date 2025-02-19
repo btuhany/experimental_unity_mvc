@@ -2,6 +2,7 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using System;
+using TimeCounter.Commands;
 using TimeCounter.Data;
 using Zenject;
 
@@ -27,6 +28,11 @@ namespace TimeCounter.Entities.CountIndicator
         {
             _view.Dispose();
             _model.Dispose();
+        }
+        public void DestroyEntityForRuntime()
+        {
+            _context.CommandManager.ExecuteCommand(new DestroyGameObjectCommand());
+            Dispose();
         }
     }
 }

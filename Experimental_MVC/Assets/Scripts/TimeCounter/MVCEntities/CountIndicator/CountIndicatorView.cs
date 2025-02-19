@@ -3,6 +3,7 @@ using Batuhan.CommandManager;
 using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
 using System;
+using TimeCounter.Commands;
 using TimeCounter.Events.ModelEvents;
 using TMPro;
 using UnityEngine;
@@ -29,11 +30,17 @@ namespace TimeCounter.Entities.CountIndicator
             _text.SetText("-");
             _context.EventBusModel.Subscribe<CountIndicatorDataUpdatedEvent>(OnIndicatorDataUpdated);
             _context.CommandManager.AddListener(new CommandBinding<SetParentCommand>(OnSetParentCommand));
+            _context.CommandManager.AddListener(new CommandBinding<DestroyGameObjectCommand>(OnDestroyGameObjectCommand));
+        }
+        private void OnDestroyGameObjectCommand(DestroyGameObjectCommand commandData)
+        {
+            Destroy(gameObject);
         }
         public void Dispose()
         {
             _context.EventBusModel.Unsubscribe<CountIndicatorDataUpdatedEvent>(OnIndicatorDataUpdated);
             _context.CommandManager.RemoveListenerFromExecuteCallback<SetParentCommand>(OnSetParentCommand);
+            _context.CommandManager.RemoveListenerFromExecuteCallback<DestroyGameObjectCommand>(OnDestroyGameObjectCommand);
         }
         private void OnSetParentCommand(SetParentCommand commandData)
         {
