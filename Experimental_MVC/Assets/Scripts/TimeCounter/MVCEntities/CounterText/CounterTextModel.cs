@@ -7,14 +7,19 @@ namespace TimeCounter.Entities.CounterText
     {
         public void UpdateTextWithTickValue(int value);
         ReactiveProperty<string> CounterText { get; }
+        public int TriggerHash { get; }
     }
     public class CounterTextModel : ICounterTextModel
     {
-        private const string _prefix = "EXPERIMENTAL MVC | TICK COUNT: ";
+
         private ICounterTextContext _context;
         public ICounterTextContext Context => _context;
 
         public ReactiveProperty<string> CounterText { get; private set; }
+
+        private readonly int _triggerHash = UnityEngine.Animator.StringToHash("trigger");
+
+        public int TriggerHash => _triggerHash;
 
         public void Setup(ICounterTextContext context)
         {
@@ -30,7 +35,7 @@ namespace TimeCounter.Entities.CounterText
 
         public void UpdateTextWithTickValue(int value)
         {
-            CounterText.Value = _prefix + value.ToString();
+            CounterText.Value = value.ToString();
         }
     }
 }

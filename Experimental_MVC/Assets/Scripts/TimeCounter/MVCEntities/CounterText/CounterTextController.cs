@@ -2,7 +2,9 @@
 using Batuhan.MVC.Core;
 using R3;
 using System;
+using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
+
 namespace TimeCounter.Entities.CounterText
 {
     public class CounterTextController : BaseController<ICounterTextModel, ICounterTextView, ICounterTextContext>, ILifeCycleHandler
@@ -11,11 +13,13 @@ namespace TimeCounter.Entities.CounterText
         {
         }
         private IDisposable _dataBindingDisposable;
+        //private TriggerAnimatorHashCommand _animateCounterTextCommand;
         public void Initialize()
         {
             _model.Setup(_context);
             _view.Setup(_context);
             _dataBindingDisposable = _model.CounterText.Subscribe(_view.OnCounterTextUpdated);
+            //_animateCounterTextCommand = new TriggerAnimatorHashCommand(_model.TriggerHash, _view.Animator);
             SubscribeEvents();
         }
 
@@ -38,7 +42,11 @@ namespace TimeCounter.Entities.CounterText
 
         private void OnTickValueUpdated(TickCountValueUpdatedEvent @event)
         {
+            _context.Debug.Log(@event.UpdatedValue.ToString());
             _model.UpdateTextWithTickValue(@event.UpdatedValue);
+            //_context.CommandManager.ExecuteCommand(_animateCounterTextCommand); //Or we can make view listen to command like a event and handle the animation
+            if (@event.UpdatedValue > 0)
+                _context.CommandManager.ExecuteCommand(new AnimateCounterTextCommand(_model.TriggerHash, UnityEngine.AnimatorControllerParameterType.Trigger));
         }
     }
 }

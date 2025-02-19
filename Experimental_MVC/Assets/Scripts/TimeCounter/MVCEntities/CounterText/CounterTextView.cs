@@ -11,10 +11,15 @@ namespace TimeCounter.Entities.CounterText
     public interface ICounterTextView : IViewContextual<ICounterTextContext>
     {
         void OnCounterTextUpdated(string str);
+        //Animator Animator { get; }
     }
     internal class CounterTextView : BaseViewMonoBehaviour, ICounterTextView
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
+        [SerializeField] private Animator _animator;
+
+        //public Animator Animator => _animator;
+
         private ICounterTextContext _context;
         public ICounterTextContext Context => _context;
 
@@ -37,17 +42,17 @@ namespace TimeCounter.Entities.CounterText
         }
         private void RegisterCommandListeners()
         {
-            _context.CommandManager.AddListener(new CommandBinding<UpdateCounterTextCommand>(OnExecuteUpdateCounterText, null));
+            _context.CommandManager.AddListener(new CommandBinding<AnimateCounterTextCommand>(OnExecuteUpdateCounterText, null));
         }
         private void UnregisterCommandListeners()
         {
-            _context.CommandManager.RemoveListenerFromExecuteCallback<UpdateCounterTextCommand>(OnExecuteUpdateCounterText);
+            _context.CommandManager.RemoveListenerFromExecuteCallback<AnimateCounterTextCommand>(OnExecuteUpdateCounterText);
         }
 
-        private void OnExecuteUpdateCounterText(UpdateCounterTextCommand commandData)
+        private void OnExecuteUpdateCounterText(AnimateCounterTextCommand commandData)
         {
-            var counterValue = commandData.Text;
-            _textMesh.SetText(counterValue.ToString());
+            if (commandData.ParameterType == AnimatorControllerParameterType.Trigger)
+                _animator.SetTrigger(commandData.ParameterHash);
         }
     }
 }

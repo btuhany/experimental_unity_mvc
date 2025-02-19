@@ -23,7 +23,24 @@ namespace Batuhan.CommandManager.EditorTests
         }
 
         #region Basic Functionality Tests
+        [Test]
+        public void ExecuteCommand_ShouldCallExecuteCallbackWithoutBindings()
+        {
+            var command = new TestCommand();
 
+            _commandManager.ExecuteCommand(command);
+
+            Assert.IsTrue(command.ExecuteCalled, "Execute callback was invoked.");
+        }
+        [Test]
+        public void UndoCommand_ShouldCallUndoCallbackWithoutBindings()
+        {
+            var command = new TestCommand();
+
+            _commandManager.UndoCommand(command);
+
+            Assert.IsTrue(command.UndoCalled, "Undo callback was invoked.");
+        }
         [Test]
         public void ExecuteCommand_ShouldCallExecuteCallbackAndOnExecute()
         {
@@ -40,8 +57,8 @@ namespace Batuhan.CommandManager.EditorTests
             _commandManager.ExecuteCommand(command);
 
             // Assert
-            Assert.IsTrue(executeCallbackCalled, "Execute callback was not invoked.");
-            Assert.IsTrue(command.ExecuteCalled, "Command's OnExecute was not called.");
+            Assert.IsTrue(executeCallbackCalled, "Execute callback was invoked.");
+            Assert.IsTrue(command.ExecuteCalled, "Command's OnExecute was called.");
         }
 
         [Test]
