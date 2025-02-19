@@ -7,20 +7,20 @@ using TimeCounter.Data;
 
 namespace TimeCounter.Entities.Counter
 {
-    public interface ITimeTickerModel : IModelContextual<ITimeTickerContext>
+    public interface ITickerModel : IModelContextual<ITickerContext>
     {
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         float TickSpeed { get; }
         ReactiveProperty<int> TickCount { get; }
     }
-    public class TimeTickerModel : ITimeTickerModel
+    public class TickerModel : ITickerModel
     {
-        private ITimeTickerContext _context;
+        private ITickerContext _context;
         private TimeTickerModelDataSO _dataSO;
         private IDisposable _disposable;
         public float TickSpeed => _dataSO.TickSpeed;
-        public ITimeTickerContext Context => _context;
+        public ITickerContext Context => _context;
 
         public ReactiveProperty<int> TickCount { get; private set; }
 
@@ -36,7 +36,7 @@ namespace TimeCounter.Entities.Counter
             _disposable = disposable.Build();
         }
 
-        public void Setup(ITimeTickerContext context)
+        public void Setup(ITickerContext context)
         {
             _context = context;
             _context.Debug.Log("Setup", this);

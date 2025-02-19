@@ -5,13 +5,13 @@ using Zenject;
 
 namespace TimeCounter.Entities.Counter
 {
-    public interface ITimeTickerContext : IContext
+    public interface ITickerContext : IContext
     {
         public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
         public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         public IDebugHelper Debug { get; }
     }
-    internal class TimeTickerContext : ITimeTickerContext
+    internal class TickerContext : ITickerContext
     {
         [Inject]
         public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }

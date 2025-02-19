@@ -9,11 +9,11 @@ using TimeCounter.Events.GlobalEvents;
 
 namespace TimeCounter.Entities.Counter
 {
-    public class TimeTickerController : BaseControllerWithModelAndContext<ITimeTickerModel, ITimeTickerContext>, ILifeCycleHandler
+    public class TickerController : BaseControllerWithModelAndContext<ITickerModel, ITickerContext>, ILifeCycleHandler
     {
         private CancellationTokenSource _tickCancellationTokenSource;
         private IDisposable _modelSubDisposable;
-        public TimeTickerController(ITimeTickerModel model, ITimeTickerContext context) : base(model, context)
+        public TickerController(ITickerModel model, ITickerContext context) : base(model, context)
         {
             _tickCancellationTokenSource = new CancellationTokenSource();
         }
