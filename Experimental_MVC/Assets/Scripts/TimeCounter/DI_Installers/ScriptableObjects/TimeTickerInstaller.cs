@@ -13,9 +13,9 @@ namespace TimeCounter.Installers
         [SerializeField] private CounterModelDataSO _modelDataSO;
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<ICounterContext>().To<CounterContext>().AsTransient();
-            container.Bind<ICounterModel>().To<CounterModel>().AsTransient();
-            container.Bind<ILifeCycleHandler>().To<CounterController>().AsTransient();
+            container.Bind<ITimeTickerContext>().To<TimeTickerContext>().AsTransient();
+            container.Bind<ITimeTickerModel>().To<TimeTickerModel>().AsTransient();
+            container.Bind<ILifeCycleHandler>().To<TimeTickerController>().AsTransient();
             container.Bind<CounterModelDataSO>().FromScriptableObject(_modelDataSO).AsTransient();
         }
     }

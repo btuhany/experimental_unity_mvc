@@ -2,16 +2,15 @@ using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using System.Threading;
-using TimeCounter.Entitites.Counter;
 using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
 
 namespace TimeCounter.Entities.Counter
 {
-    public class CounterController : BaseControllerWithModelAndContext<ICounterModel, ICounterContext>, ILifeCycleHandler
+    public class TimeTickerController : BaseControllerWithModelAndContext<ITimeTickerModel, ITimeTickerContext>, ILifeCycleHandler
     {
         private CancellationTokenSource _tickCancellationTokenSource;
-        public CounterController(ICounterModel model, ICounterContext context) : base(model, context)
+        public TimeTickerController(ITimeTickerModel model, ITimeTickerContext context) : base(model, context)
         {
             _tickCancellationTokenSource = new CancellationTokenSource();
         }

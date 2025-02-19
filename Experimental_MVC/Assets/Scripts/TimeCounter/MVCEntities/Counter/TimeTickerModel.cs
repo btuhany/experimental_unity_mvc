@@ -2,24 +2,22 @@ using Batuhan.MVC.Core;
 using Batuhan.RuntimeCopyScriptableObjects;
 using System;
 using TimeCounter.Data;
-using TimeCounter.Entitites.Counter;
-using TimeCounter.Events.ModelEvents;
 
 namespace TimeCounter.Entities.Counter
 {
-    public interface ICounterModel : IModelContextual<ICounterContext>
+    public interface ITimeTickerModel : IModelContextual<ITimeTickerContext>
     {
         void CreateData(CounterModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         float CountSpeed { get; }
         Action<int> OnCountValueChanged { get; set; } //TODOby reactive property unirx
     }
-    public class CounterModel : ICounterModel
+    public class TimeTickerModel : ITimeTickerModel
     {
-        private ICounterContext _context;
+        private ITimeTickerContext _context;
         private CounterModelDataSO _dataSO;
         public float CountSpeed => _dataSO.CountSpeed;
-        public ICounterContext Context => _context;
+        public ITimeTickerContext Context => _context;
 
         public Action<int> OnCountValueChanged { get; set; }
 
@@ -29,7 +27,7 @@ namespace TimeCounter.Entities.Counter
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }
 
-        public void Setup(ICounterContext context)
+        public void Setup(ITimeTickerContext context)
         {
             _context = context;
             _context.Debug.Log("Setup", this);
@@ -51,7 +49,7 @@ namespace TimeCounter.Entities.Counter
             _dataSO.CounterValue = newValue;
             if (oldValue != newValue)
             {
-                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _dataSO.CounterValue });
+                OnCountValueChanged?.Invoke(newValue);
             }
             else
             {
