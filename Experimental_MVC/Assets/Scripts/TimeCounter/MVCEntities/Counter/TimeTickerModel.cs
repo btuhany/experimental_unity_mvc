@@ -1,5 +1,7 @@
 using Batuhan.MVC.Core;
 using Batuhan.RuntimeCopyScriptableObjects;
+using Cysharp.Threading.Tasks;
+using R3;
 using System;
 using TimeCounter.Data;
 
@@ -9,22 +11,29 @@ namespace TimeCounter.Entities.Counter
     {
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
-        float CountSpeed { get; }
-        Action<int> OnCountValueChanged { get; set; } //TODOby reactive property unirx
+        float TickSpeed { get; }
+        ReactiveProperty<int> TickCount { get; }
     }
     public class TimeTickerModel : ITimeTickerModel
     {
         private ITimeTickerContext _context;
         private TimeTickerModelDataSO _dataSO;
-        public float CountSpeed => _dataSO.CountSpeed;
+        private IDisposable _disposable;
+        public float TickSpeed => _dataSO.TickSpeed;
         public ITimeTickerContext Context => _context;
 
-        public Action<int> OnCountValueChanged { get; set; }
+        public ReactiveProperty<int> TickCount { get; private set; }
 
         [Zenject.Inject]
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
+            var disposable = Disposable.CreateBuilder();
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
+
+            TickCount = new ReactiveProperty<int>(_dataSO.TickCount).AddTo(ref disposable);
+            TickCount.Subscribe(newValue => _dataSO.TickCount = newValue).AddTo(ref disposable);
+
+            _disposable = disposable.Build();
         }
 
         public void Setup(ITimeTickerContext context)
@@ -35,6 +44,7 @@ namespace TimeCounter.Entities.Counter
 
         public void Dispose()
         {
+            _disposable?.Dispose();
         }
         public void IncreaseCounter(int value = 1)
         {
@@ -44,12 +54,12 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = _dataSO.CounterValue;
-            var newValue = Math.Max(_dataSO.CounterValue + value, 0);
-            _dataSO.CounterValue = newValue;
+            var oldValue = TickCount.Value;
+            var newValue = Math.Max(oldValue + value, 0);
+
             if (oldValue != newValue)
             {
-                OnCountValueChanged?.Invoke(newValue);
+                TickCount.Value = newValue;
             }
             else
             {

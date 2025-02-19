@@ -7,11 +7,11 @@ namespace TimeCounter.Events.CoreEvents
     {
         public int ID => EventCategory.CoreEvents.ToID();
     }
-    public struct TimeCountValueUpdatedEvent : IEvent
+    public struct TickCountValueUpdatedEvent : IEvent
     {
         public int CategoryID => Categories.EventCategory.CoreEvents.ToID();
         public int UpdatedValue { get; set; }
-        public TimeCountValueUpdatedEvent(int updatedValue)
+        public TickCountValueUpdatedEvent(int updatedValue)
         {
             UpdatedValue = updatedValue;
         }

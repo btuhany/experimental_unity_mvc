@@ -23,11 +23,11 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
         }
         public void Initialize()
         {
-            _context.EventBusCore.Subscribe<TimeCountValueUpdatedEvent>(OnTimeCountValueUpdated);
+            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
         }
         public void Dispose()
         {
-            _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnTimeCountValueUpdated);
+            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
             CleanUpIndicators();
         }
         private void CleanUpIndicators()
@@ -38,7 +38,7 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
             }
             _indicatorRuntimeList.Clear();
         }
-        private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
+        private void OnTimeCountValueUpdated(TickCountValueUpdatedEvent @event)
         {
             CountIndicatorCommonData commonData = new CountIndicatorCommonData();
             var index = _indicatorRuntimeList.Count;

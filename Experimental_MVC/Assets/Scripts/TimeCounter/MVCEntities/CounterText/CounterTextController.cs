@@ -27,16 +27,14 @@ namespace TimeCounter.Entities.CounterText
 
         private void SubscribeEvents()
         {
-            _context.EventBusCore.Subscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
-           
+            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnCountValueUpdated);
         }
         private void UnsubscribeEvents()
         {
-            
-            _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnCountValueUpdated);
         }
 
-        private void OnCountValueUpdated(TimeCountValueUpdatedEvent @event)
+        private void OnCountValueUpdated(TickCountValueUpdatedEvent @event)
         {
             _model.UpdateTextWithValue(@event.UpdatedValue);
             _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(_model.TEXT));
