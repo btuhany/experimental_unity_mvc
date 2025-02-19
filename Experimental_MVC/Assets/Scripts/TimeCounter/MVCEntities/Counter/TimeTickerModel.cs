@@ -7,7 +7,7 @@ namespace TimeCounter.Entities.Counter
 {
     public interface ITimeTickerModel : IModelContextual<ITimeTickerContext>
     {
-        void CreateData(CounterModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
+        void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         float CountSpeed { get; }
         Action<int> OnCountValueChanged { get; set; } //TODOby reactive property unirx
@@ -15,14 +15,14 @@ namespace TimeCounter.Entities.Counter
     public class TimeTickerModel : ITimeTickerModel
     {
         private ITimeTickerContext _context;
-        private CounterModelDataSO _dataSO;
+        private TimeTickerModelDataSO _dataSO;
         public float CountSpeed => _dataSO.CountSpeed;
         public ITimeTickerContext Context => _context;
 
         public Action<int> OnCountValueChanged { get; set; }
 
         [Zenject.Inject]
-        public void CreateData(CounterModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
+        public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
         }
