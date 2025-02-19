@@ -1,25 +1,27 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
-using TimeCounter.Commands;
+using R3;
+using System;
 using TimeCounter.Events.CoreEvents;
 namespace TimeCounter.Entities.CounterText
 {
-    public class CounterTextController : BaseController<ICounterTextModel, IViewContextual<ICounterTextContext>, ICounterTextContext>, ILifeCycleHandler
+    public class CounterTextController : BaseController<ICounterTextModel, ICounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
-        public CounterTextController(ICounterTextModel model, IViewContextual<ICounterTextContext> view, ICounterTextContext context) : base(model, view, context)
+        public CounterTextController(ICounterTextModel model, ICounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
-
         }
-
+        private IDisposable _dataBindingDisposable;
         public void Initialize()
         {
             _model.Setup(_context);
             _view.Setup(_context);
+            _dataBindingDisposable = _model.CounterText.Subscribe(_view.OnCounterTextUpdated);
             SubscribeEvents();
         }
 
         public void Dispose()
         {
+            _dataBindingDisposable?.Dispose();
             _model.Dispose();
             _view.Dispose();
             UnsubscribeEvents();
@@ -27,17 +29,16 @@ namespace TimeCounter.Entities.CounterText
 
         private void SubscribeEvents()
         {
-            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
         private void UnsubscribeEvents()
         {
-            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
 
-        private void OnCountValueUpdated(TickCountValueUpdatedEvent @event)
+        private void OnTickValueUpdated(TickCountValueUpdatedEvent @event)
         {
-            _model.UpdateTextWithValue(@event.UpdatedValue);
-            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(_model.TEXT));
+            _model.UpdateTextWithTickValue(@event.UpdatedValue);
         }
     }
 }

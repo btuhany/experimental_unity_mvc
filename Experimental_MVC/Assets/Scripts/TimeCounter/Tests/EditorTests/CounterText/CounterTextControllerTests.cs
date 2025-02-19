@@ -16,7 +16,7 @@ namespace TimeCounter.Tests
     public class CounterTextControllerTests
     {
         private ICounterTextModel _model;
-        private IViewContextual<ICounterTextContext> _view;
+        private ICounterTextView _view;
         private ICounterTextContext _context;
         private CounterTextController _controller;
 
@@ -24,7 +24,7 @@ namespace TimeCounter.Tests
         public void SetUp()
         {
             _model = Substitute.For<ICounterTextModel>();
-            _view = Substitute.For<IViewContextual<ICounterTextContext>>();
+            _view = Substitute.For<ICounterTextView>();
             _context = Substitute.For<ICounterTextContext>();
 
             _context.Debug.Returns(Substitute.For<IDebugHelper>());

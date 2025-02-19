@@ -10,23 +10,27 @@ namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextView : IViewContextual<ICounterTextContext>
     {
+        void OnCounterTextUpdated(string str);
     }
     internal class CounterTextView : BaseViewMonoBehaviour, ICounterTextView
     {
         [SerializeField] private TextMeshProUGUI _textMesh;
         private ICounterTextContext _context;
-
         public ICounterTextContext Context => _context;
 
-        public override Type ContractTypeToBind => typeof(IViewContextual<ICounterTextContext>);
+        public override Type ContractTypeToBind => typeof(ICounterTextView);
 
         public void Setup(ICounterTextContext context)
         {
             _context = context;
+            _textMesh.SetText(string.Empty);
             RegisterCommandListeners();
-            _textMesh.SetText("-");
         }
 
+        public void OnCounterTextUpdated(string str)
+        {
+            _textMesh.SetText(str);
+        }
         public void Dispose()
         {
             UnregisterCommandListeners();
