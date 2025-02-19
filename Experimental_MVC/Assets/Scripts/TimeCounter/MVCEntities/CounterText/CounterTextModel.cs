@@ -1,27 +1,21 @@
 ﻿using Batuhan.MVC.Core;
-using Batuhan.RuntimeCopyScriptableObjects;
-using System;
-using TimeCounter.Data;
-using TimeCounter.Events.ModelEvents;
 
 namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextModel :  IModelContextual<ICounterTextContext>
     {
-
+        public void UpdateTextWithValue(int value);
+        public string TEXT { get; }
     }
     public class CounterTextModel : ICounterTextModel
     {
+        private string _textStr;
+        private const string _prefix = "EXPERIMENTAL_MVC: ";
         private ICounterTextContext _context;
-        private CounterModelDataSO _dataSO;
-        public float CountSpeed => _dataSO.CountSpeed;
         public ICounterTextContext Context => _context;
 
-        [Zenject.Inject]
-        public void CreateData(CounterModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
-        {
-            _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
-        }
+        //TODOBY
+        public string TEXT => _textStr;
 
         public void Setup(ICounterTextContext context)
         {
@@ -32,25 +26,10 @@ namespace TimeCounter.Entities.CounterText
         public void Dispose()
         {
         }
-        public void IncreaseCounter(int value = 1)
-        {
-            if (value < 0)
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-                return;
-            }
 
-            var oldValue = _dataSO.CounterValue;
-            var newValue = Math.Max(_dataSO.CounterValue + value, 0);
-            _dataSO.CounterValue = newValue;
-            if (oldValue != newValue)
-            {
-                _context.EventBusModel.Publish(new CounterValueUpdatedEvent() { UpdatedValue = _dataSO.CounterValue });
-            }
-            else
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-            }
+        public void UpdateTextWithValue(int value)
+        {
+            _textStr = _prefix + value.ToString();
         }
     }
 }

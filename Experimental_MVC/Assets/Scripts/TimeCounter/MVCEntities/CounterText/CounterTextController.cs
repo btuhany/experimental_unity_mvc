@@ -7,7 +7,6 @@ namespace TimeCounter.Entities.CounterText
 {
     public class CounterTextController : BaseController<ICounterTextModel, IViewContextual<ICounterTextContext>, ICounterTextContext>, ILifeCycleHandler
     {
-
         public CounterTextController(ICounterTextModel model, IViewContextual<ICounterTextContext> view, ICounterTextContext context) : base(model, view, context)
         {
 
@@ -22,31 +21,26 @@ namespace TimeCounter.Entities.CounterText
 
         public void Dispose()
         {
-            _context.Debug.Log("Disposed!", this);
             _model.Dispose();
             _view.Dispose();
-
-
             UnsubscribeEvents();
         }
 
         private void SubscribeEvents()
         {
-            _context.EventBusModel.Subscribe<CounterValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Subscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
            
         }
         private void UnsubscribeEvents()
         {
             
-            _context.EventBusModel.Unsubscribe<CounterValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
         }
 
-
-        private void OnCountValueUpdated(CounterValueUpdatedEvent @event)
+        private void OnCountValueUpdated(TimeCountValueUpdatedEvent @event)
         {
-            _context.Debug.Log("OnCountValueUpdated");
-            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(@event.UpdatedValue));
-            _context.EventBusCore.Publish(new TimeCountValueUpdatedEvent(@event.UpdatedValue));
+            _model.UpdateTextWithValue(@event.UpdatedValue);
+            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(_model.TEXT));
         }
     }
 }

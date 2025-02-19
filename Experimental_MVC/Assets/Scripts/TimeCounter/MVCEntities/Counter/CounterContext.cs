@@ -3,7 +3,7 @@ using Batuhan.EventBus;
 using Batuhan.MVC.Core;
 using Zenject;
 
-namespace TimeCounter.Entitites.Counter
+namespace TimeCounter.Entities.Counter
 {
     public interface ICounterContext : IContext
     {

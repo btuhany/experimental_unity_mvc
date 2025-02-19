@@ -3,8 +3,8 @@ using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using TimeCounter.Entitites.Counter;
+using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
-using TimeCounter.Events.ModelEvents;
 
 namespace TimeCounter.Entities.Counter
 {
@@ -29,7 +29,7 @@ namespace TimeCounter.Entities.Counter
 
         private void HandleOnCountValueChanged(int newValue)
         {
-            _context.EventBusCore.Publish(new CounterValueUpdatedEvent() { UpdatedValue = newValue });
+            _context.EventBusCore.Publish(new TimeCountValueUpdatedEvent() { UpdatedValue = newValue });
         }
 
         private void HandleOnSceneInitialized(SceneInitializedEvent @event)

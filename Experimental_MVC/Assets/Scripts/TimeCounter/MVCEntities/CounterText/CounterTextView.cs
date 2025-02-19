@@ -5,7 +5,6 @@ using System;
 using TimeCounter.Commands;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace TimeCounter.Entities.CounterText
 {
@@ -43,7 +42,7 @@ namespace TimeCounter.Entities.CounterText
 
         private void OnExecuteUpdateCounterText(UpdateCounterTextCommand commandData)
         {
-            var counterValue = commandData.CounterValue;
+            var counterValue = commandData.Text;
             _textMesh.SetText(counterValue.ToString());
         }
     }
