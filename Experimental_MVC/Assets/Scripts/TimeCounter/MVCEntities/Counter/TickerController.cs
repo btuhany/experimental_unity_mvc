@@ -64,7 +64,6 @@ namespace TimeCounter.Entities.Counter
             CheckHasCountingTypeChanged();
             HandleCounter();
         }
-
         private void CheckHasCountingTypeChanged()
         {
             if (_model.IsMaxTickCountReached())

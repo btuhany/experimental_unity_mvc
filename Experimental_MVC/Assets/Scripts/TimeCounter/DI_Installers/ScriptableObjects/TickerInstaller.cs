@@ -14,7 +14,7 @@ namespace TimeCounter.Installers
         public override void InstallFrom(DiContainer container)
         {
             container.Bind<ITickerContext>().To<TickerContext>().AsTransient();
-            container.Bind<ITickerModel>().To<TickerModel>().AsTransient();
+            container.Bind<ITickerModel>().To<TickerModel>().AsSingle();
             container.Bind<ILifeCycleHandler>().To<TickerController>().AsTransient();
             container.Bind<TimeTickerModelDataSO>().FromScriptableObject(_modelDataSO).AsTransient();
 

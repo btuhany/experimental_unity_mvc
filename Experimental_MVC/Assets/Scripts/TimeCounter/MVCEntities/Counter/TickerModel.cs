@@ -12,10 +12,11 @@ namespace TimeCounter.Entities.Counter
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         void DecreaseCounter(int value);
-        void IncreaseTickSpeed(float value);
+        void AddToTickSpeed(float value);
         bool IsMaxTickCountReached();
         bool IsMinTickCountReached();
-
+        void SetMaxTickCount(int value);
+        void SetMinTickCount(int value);
         ReadOnlyReactiveProperty<int> TickCount { get; }
         ReadOnlyReactiveProperty<float> TickSpeed { get; }
     }
@@ -34,17 +35,18 @@ namespace TimeCounter.Entities.Counter
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
-            _dataSO.Initialize();
         }
 
         public void Setup(ITickerContext context)
         {
             _context = context;
+            _dataSO.Initialize();
             _context.Debug.Log("Setup", this);
         }
 
         public void Dispose()
         {
+            UnityEngine.Debug.Log("dISPOSESESESESE");
             _dataSO.Dispose();
         }
         public void IncreaseCounter(int value = 1)
@@ -97,9 +99,19 @@ namespace TimeCounter.Entities.Counter
                 _context.Debug.Log("Unable to update counter value", this);
             }
         }
-        public void IncreaseTickSpeed(float value)
+        public void AddToTickSpeed(float value)
         {
             _dataSO.TickSpeed.Value += value;
+        }
+
+        public void SetMaxTickCount(int value)
+        {
+            _dataSO.MaxTickCount = value;
+        }
+
+        public void SetMinTickCount(int value)
+        {
+            _dataSO.MinTickCount = value;
         }
     }
 }

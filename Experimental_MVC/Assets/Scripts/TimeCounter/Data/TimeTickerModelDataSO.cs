@@ -10,6 +10,7 @@ namespace TimeCounter.Data
     [CreateAssetMenu(fileName = "CounterTextDataSO", menuName = "Scriptable Objects/Batuhan/Model_DataSO/TimeTickerModelDataSO")]
     public class TimeTickerModelDataSO : RuntimeClonableScriptableObject, IDisposable
     {
+        //TODOBY SERIALIZED REACTIVE PROPERTY
         [SerializeField] private int _maxTickCount = 100;
         [SerializeField] private int _minTickCount = 0;
         [SerializeField] private int _initialTickCount= 0;
@@ -17,8 +18,8 @@ namespace TimeCounter.Data
         [NonSerialized] private float _tickSpeed = 1.0f;
         [NonSerialized] private int _tickCount = 0;
 
-        public int MaxTickCount { get => _maxTickCount; }
-        public int MinTickCount { get => _minTickCount; }
+        public int MaxTickCount { get => _maxTickCount; set => _maxTickCount = value; }
+        public int MinTickCount { get => _minTickCount; set => _minTickCount = value; }
         public bool MaxTickCountReached => _maxTickCount == _tickCount;
         public bool MinTickCountReached => _minTickCount == _tickCount;
         public ReactiveProperty<int> TickCount { get; private set; }
