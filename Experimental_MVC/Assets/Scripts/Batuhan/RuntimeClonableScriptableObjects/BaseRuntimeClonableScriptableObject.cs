@@ -11,6 +11,7 @@ namespace Batuhan.RuntimeClonableScriptableObjects
         [ShowIf("EDITOR_ShowRuntimeClone")]
         [ReadOnly]
         public ScriptableObject RuntimeClone;
+
 #endif
     }
 }

@@ -50,13 +50,21 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
 
             if (tickCount > indicatorCount)
             {
-                CreateAndInitializeNewIndicator(indicatorCount);
+                var difference = tickCount - indicatorCount;
+                for (int i = 0; i < difference; i++)
+                {
+                    CreateAndInitializeNewIndicator(indicatorCount + i);
+                }
             }
             else if (tickCount < indicatorCount)
             {
-                var lastIndicatorIndex = indicatorCount - 1;
-                _indicatorRuntimeList[lastIndicatorIndex].DestroyEntityForRuntime();
-                _indicatorRuntimeList.RemoveAt(lastIndicatorIndex);
+                var difference = indicatorCount - tickCount;
+                for (int i = 0; i < difference; i++)
+                {
+                    var lastIndicatorIndex = _indicatorRuntimeList.Count - 1;
+                    _indicatorRuntimeList[lastIndicatorIndex].DestroyEntityForRuntime();
+                    _indicatorRuntimeList.RemoveAt(lastIndicatorIndex);
+                }
             }
         }
         private void CreateAndInitializeNewIndicator(int index)

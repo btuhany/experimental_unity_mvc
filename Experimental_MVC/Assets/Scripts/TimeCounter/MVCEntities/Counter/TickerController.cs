@@ -90,8 +90,8 @@ namespace TimeCounter.Entities.Counter
         private async UniTask ActivateTick()
         {
             while (true)
-            {
-                var countSpeed = UnityEngine.Mathf.Max(_model.TickSpeed.Value, 0.01f);
+            { 
+                var countSpeed = UnityEngine.Mathf.Max(_model.TickSpeed.CurrentValue, 0.01f);
                 var secondsToWait = (float)(1f / countSpeed);
                 await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationTokenSource.Token);
 

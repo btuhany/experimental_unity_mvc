@@ -16,34 +16,25 @@ namespace TimeCounter.Entities.Counter
         bool IsMaxTickCountReached();
         bool IsMinTickCountReached();
 
-        ReactiveProperty<int> TickCount { get; }
-        ReactiveProperty<float> TickSpeed { get; }
+        ReadOnlyReactiveProperty<int> TickCount { get; }
+        ReadOnlyReactiveProperty<float> TickSpeed { get; }
     }
     public class TickerModel : ITickerModel
     {
         private ITickerContext _context;
         private TimeTickerModelDataSO _dataSO;
-        private IDisposable _modelDisposable;
 
         public ITickerContext Context => _context;
 
-        public ReactiveProperty<int> TickCount { get; private set; }
+        public ReadOnlyReactiveProperty<int> TickCount => _dataSO.TickCount;
 
-        public ReactiveProperty<float> TickSpeed { get; private set; }
+        public ReadOnlyReactiveProperty<float> TickSpeed => _dataSO.TickSpeed;
 
         [Zenject.Inject]
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
-
-            var disposable = Disposable.CreateBuilder();
-            TickCount = new ReactiveProperty<int>(_dataSO.TickCount).AddTo(ref disposable);
-            TickCount.Subscribe(newValue => _dataSO.TickCount = newValue).AddTo(ref disposable);
-
-            TickSpeed = new ReactiveProperty<float>(_dataSO.TickSpeed).AddTo(ref disposable);
-            TickSpeed.Subscribe(newValue => _dataSO.TickSpeed = newValue).AddTo(ref disposable);
-
-            _modelDisposable = disposable.Build();
+            _dataSO.Initialize();
         }
 
         public void Setup(ITickerContext context)
@@ -54,7 +45,7 @@ namespace TimeCounter.Entities.Counter
 
         public void Dispose()
         {
-            _modelDisposable?.Dispose();
+            _dataSO.Dispose();
         }
         public void IncreaseCounter(int value = 1)
         {
@@ -64,13 +55,13 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = TickCount.Value;
+            var oldValue = _dataSO.TickCount.Value;
             var newValue = Math.Max(oldValue + value, _dataSO.MinTickCount);
             newValue = Math.Min(newValue, _dataSO.MaxTickCount);
 
             if (oldValue != newValue)
             {
-                TickCount.Value = newValue;
+                _dataSO.TickCount.Value = newValue;
             }
             else
             {
@@ -93,13 +84,13 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = TickCount.Value;
+            var oldValue = _dataSO.TickCount.Value;
             var newValue = Math.Max(oldValue - value, _dataSO.MinTickCount);
             newValue = Math.Min(newValue, _dataSO.MaxTickCount);
 
             if (oldValue != newValue)
             {
-                TickCount.Value = newValue;
+                _dataSO.TickCount.Value = newValue;
             }
             else
             {
@@ -108,7 +99,7 @@ namespace TimeCounter.Entities.Counter
         }
         public void IncreaseTickSpeed(float value)
         {
-            TickSpeed.Value += value;
+            _dataSO.TickSpeed.Value += value;
         }
     }
 }
