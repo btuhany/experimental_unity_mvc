@@ -12,33 +12,38 @@ namespace TimeCounter.Entities.Counter
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         void DecreaseCounter(int value);
+        void IncreaseTickSpeed(float value);
         bool IsMaxTickCountReached();
         bool IsMinTickCountReached();
-        float TickSpeed { get; }
 
         ReactiveProperty<int> TickCount { get; }
+        ReactiveProperty<float> TickSpeed { get; }
     }
     public class TickerModel : ITickerModel
     {
         private ITickerContext _context;
         private TimeTickerModelDataSO _dataSO;
-        private IDisposable _disposable;
+        private IDisposable _modelDisposable;
 
-        public float TickSpeed => _dataSO.TickSpeed;
         public ITickerContext Context => _context;
 
         public ReactiveProperty<int> TickCount { get; private set; }
 
+        public ReactiveProperty<float> TickSpeed { get; private set; }
+
         [Zenject.Inject]
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
-            var disposable = Disposable.CreateBuilder();
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
 
+            var disposable = Disposable.CreateBuilder();
             TickCount = new ReactiveProperty<int>(_dataSO.TickCount).AddTo(ref disposable);
             TickCount.Subscribe(newValue => _dataSO.TickCount = newValue).AddTo(ref disposable);
 
-            _disposable = disposable.Build();
+            TickSpeed = new ReactiveProperty<float>(_dataSO.TickSpeed).AddTo(ref disposable);
+            TickSpeed.Subscribe(newValue => _dataSO.TickSpeed = newValue).AddTo(ref disposable);
+
+            _modelDisposable = disposable.Build();
         }
 
         public void Setup(ITickerContext context)
@@ -49,7 +54,7 @@ namespace TimeCounter.Entities.Counter
 
         public void Dispose()
         {
-            _disposable?.Dispose();
+            _modelDisposable?.Dispose();
         }
         public void IncreaseCounter(int value = 1)
         {
@@ -100,6 +105,10 @@ namespace TimeCounter.Entities.Counter
             {
                 _context.Debug.Log("Unable to update counter value", this);
             }
+        }
+        public void IncreaseTickSpeed(float value)
+        {
+            TickSpeed.Value += value;
         }
     }
 }

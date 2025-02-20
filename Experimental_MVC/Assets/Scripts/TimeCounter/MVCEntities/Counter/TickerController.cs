@@ -27,15 +27,29 @@ namespace TimeCounter.Entities.Counter
         {
             _model.Setup(_context);
             _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
-            _modelSubDisposable = _model.TickCount.Subscribe(HandleOnTickCountValueUpdated);
+
+            var modelDisposableBuilder = Disposable.CreateBuilder();
+            _model.TickCount.Subscribe(HandleOnTickCountValueUpdated).AddTo(ref modelDisposableBuilder);
+            _model.TickSpeed.Subscribe(HandleOnTickSpeedValueUpdated).AddTo(ref modelDisposableBuilder);
+            _modelSubDisposable = modelDisposableBuilder.Build();
         }
+
+        private void HandleOnTickSpeedValueUpdated(float value)
+        {
+            //TODOBY
+        }
+
         public void Dispose()
         {
             _context.EventBusGlobal.Unsubscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
             _modelSubDisposable.Dispose();
+            _model.Dispose();
             DeactivateTick();
         }
-
+        private void IncreaseTickSpeed(int value)
+        {
+           _model.IncreaseTickSpeed(value);
+        }
         private void HandleOnTickCountValueUpdated(int newValue)
         {
             _context.EventBusCore.Publish(new TickCountValueUpdatedEvent() { UpdatedValue = newValue });
@@ -73,7 +87,7 @@ namespace TimeCounter.Entities.Counter
         {
             while (true)
             {
-                var countSpeed = UnityEngine.Mathf.Max(_model.TickSpeed, 0.01f);
+                var countSpeed = UnityEngine.Mathf.Max(_model.TickSpeed.Value, 0.01f);
                 var secondsToWait = (float)(1f / countSpeed);
                 await UniTask.Delay((int)(secondsToWait * 1000), cancellationToken: _tickCancellationTokenSource.Token);
 
