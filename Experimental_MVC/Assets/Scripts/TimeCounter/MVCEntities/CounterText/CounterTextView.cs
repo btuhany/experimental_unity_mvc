@@ -3,7 +3,6 @@ using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
 using System;
 using TimeCounter.Commands;
-using TimeCounter.Events.CoreEvents;
 using TMPro;
 using UnityEngine;
 
