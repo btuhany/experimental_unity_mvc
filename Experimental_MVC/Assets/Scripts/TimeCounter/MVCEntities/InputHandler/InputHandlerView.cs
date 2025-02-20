@@ -2,6 +2,7 @@ using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
 using R3;
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,13 +25,13 @@ namespace TimeCounter.Entities.InputHandler
         [SerializeField] private Button _speedUpButton;
         [SerializeField] private Button _speedDownButton;
 
-        [SerializeField] private InputField _setMaxCountField;
+        [SerializeField] private TMP_InputField _setMaxCountField;
         [SerializeField] private Button _setMaxCountButton;
 
-        [SerializeField] private InputField _setMinCountField;
+        [SerializeField] private TMP_InputField _setMinCountField;
         [SerializeField] private Button _setMinCountButton;
 
-        [SerializeField] private InputField _setCountField;
+        [SerializeField] private TMP_InputField _setCountField;
         [SerializeField] private Button _setCountButton;
 
         private DisposableBag _disposables;
@@ -52,11 +53,6 @@ namespace TimeCounter.Entities.InputHandler
 
         public ReadOnlyReactiveProperty<string> SetCountField { get; private set; }
 
-        public void Dispose()
-        {
-            _disposables.Dispose();
-        }
-
         private void Awake()
         {
             SpeedUpCommand = new ReactiveCommand();
@@ -71,13 +67,21 @@ namespace TimeCounter.Entities.InputHandler
             _setMinCountButton.OnClickAsObservable().Subscribe(_ => SetMinCommand.Execute(Unit.Default)).AddTo(ref _disposables);
             _setCountButton.OnClickAsObservable().Subscribe(_ => SetCountCommand.Execute(Unit.Default)).AddTo(ref _disposables);
 
-            SetMaxCountField = _setMaxCountField.OnValueChangedAsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
-            SetMinCountField = _setMinCountField.OnValueChangedAsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
-            SetCountField = _setCountField.OnValueChangedAsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
+            SetMaxCountField = _setMaxCountField.onValueChanged.AsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
+            SetMinCountField = _setMinCountField.onValueChanged.AsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
+            SetCountField = _setCountField.onValueChanged.AsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
+        }
+        private void DebugLog()
+        {
+
         }
         private void OnDestroy()
         {
             Dispose();
+        }
+        public void Dispose()
+        {
+            _disposables.Dispose();
         }
     }
 }

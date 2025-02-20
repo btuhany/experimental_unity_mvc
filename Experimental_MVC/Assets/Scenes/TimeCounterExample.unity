@@ -275,6 +275,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7166b5feb0db6654991dae207f8c6280, type: 2}
   - {fileID: 11400000, guid: 7df674789c09e2444a9fa21073e92548, type: 2}
   - {fileID: 11400000, guid: b5e700b85f9b8984d9cfc9a7d54d0c5d, type: 2}
+  - {fileID: 11400000, guid: 3d6532cb8f875cb418dc4c668a33d4a2, type: 2}
 --- !u!4 &18490880
 Transform:
   m_ObjectHideFlags: 0
@@ -1158,6 +1159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 363572062}
+  - component: {fileID: 363572063}
   m_Layer: 0
   m_Name: InputHandler_view
   m_TagString: Untagged
@@ -1180,6 +1182,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1698559150}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &363572063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363572061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d70b2bd1152cfa4dbe619dac02bdd9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedUpButton: {fileID: 672291000}
+  _speedDownButton: {fileID: 1014479377}
+  _setMaxCountField: {fileID: 373014970}
+  _setMaxCountButton: {fileID: 1877882390}
+  _setMinCountField: {fileID: 224316776}
+  _setMinCountButton: {fileID: 1577039534}
+  _setCountField: {fileID: 1438906299}
+  _setCountButton: {fileID: 180881}
 --- !u!1 &373014968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1427,7 @@ MonoBehaviour:
   _views:
   - {fileID: 665612556}
   - {fileID: 1458279449}
+  - {fileID: 363572063}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1850,7 +1873,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Set Max
+  m_text: Set Min
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2288,7 +2311,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1134878145
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4035,7 +4058,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Speed Up
+  m_text: Speed Down
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
