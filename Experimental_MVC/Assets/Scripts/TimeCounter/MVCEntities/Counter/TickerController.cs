@@ -50,10 +50,6 @@ namespace TimeCounter.Entities.Counter
         {
             Dispose();
         }
-        private void IncreaseTickSpeed(int value)
-        {
-           _model.IncreaseTickSpeed(value);
-        }
         private void HandleOnTickCountValueUpdated(int newValue)
         {
             _context.EventBusCore.Publish(new TickCountValueUpdatedEvent() { UpdatedValue = newValue });
