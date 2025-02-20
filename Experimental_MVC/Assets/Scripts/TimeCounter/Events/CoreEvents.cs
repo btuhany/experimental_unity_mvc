@@ -7,7 +7,7 @@ namespace TimeCounter.Events.CoreEvents
     {
         public int ID => EventCategory.CoreEvents.ToID();
     }
-    public struct TickCountValueUpdatedEvent : IEvent
+    public struct TickCountValueUpdatedEvent : IValueUpdatedEvent<int>
     {
         public int CategoryID => Categories.EventCategory.CoreEvents.ToID();
         public int UpdatedValue { get; set; }
@@ -15,5 +15,20 @@ namespace TimeCounter.Events.CoreEvents
         {
             UpdatedValue = updatedValue;
         }
+    }
+    public struct TickSpeedUpdatedEvent : IValueUpdatedEvent<float>
+    {
+        public float UpdatedValue { get; set; }
+
+        public int CategoryID => Categories.EventCategory.CoreEvents.ToID();
+
+        public TickSpeedUpdatedEvent(int updatedValue)
+        {
+            UpdatedValue = updatedValue;
+        }
+    }
+    public interface IValueUpdatedEvent<T> : IEvent
+    {
+        public T UpdatedValue { get; set; }
     }
 }

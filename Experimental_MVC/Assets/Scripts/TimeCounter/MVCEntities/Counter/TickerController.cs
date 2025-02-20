@@ -36,7 +36,7 @@ namespace TimeCounter.Entities.Counter
 
         private void HandleOnTickSpeedValueUpdated(float value)
         {
-            //TODOBY
+            _context.EventBusCore.Publish(new TickSpeedUpdatedEvent() { UpdatedValue = _model.TickSpeed.CurrentValue });
         }
 
         public override void Dispose()

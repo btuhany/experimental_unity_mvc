@@ -1,6 +1,7 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
+using System;
 using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
 
@@ -33,6 +34,7 @@ namespace TimeCounter.Entities.CounterText
         {
             _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
+
         private void UnsubscribeEvents()
         {
             _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);

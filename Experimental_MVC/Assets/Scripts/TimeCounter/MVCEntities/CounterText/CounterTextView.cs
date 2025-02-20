@@ -3,6 +3,7 @@ using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
 using System;
 using TimeCounter.Commands;
+using TimeCounter.Events.CoreEvents;
 using TMPro;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ namespace TimeCounter.Entities.CounterText
             _context = context;
             _textMesh.SetText(string.Empty);
             RegisterCommandListeners();
+            _context.EventBusCore.Subscribe<TickSpeedUpdatedEvent>(OnTickSpeedUpdated);
         }
 
         public void OnCounterTextUpdated(string str)
@@ -42,8 +44,15 @@ namespace TimeCounter.Entities.CounterText
         }
         public void Dispose()
         {
+            _context.EventBusCore.Unsubscribe<TickSpeedUpdatedEvent>(OnTickSpeedUpdated);
             UnregisterCommandListeners();
         }
+
+        private void OnTickSpeedUpdated(TickSpeedUpdatedEvent @event)
+        {
+            _animator.speed = Mathf.Clamp(@event.UpdatedValue, 0.5f, 10.0f);
+        }
+
         private void RegisterCommandListeners()
         {
             _context.CommandManager.AddListener(new CommandBinding<AnimateCounterTextCommand>(OnExecuteUpdateCounterText, null));
