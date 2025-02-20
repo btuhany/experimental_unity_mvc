@@ -23,7 +23,7 @@ namespace TimeCounter.Entities.Counter
         {
             _tickCancellationTokenSource = new CancellationTokenSource();
         }
-        public void Initialize()
+        public void OnAwakeCallback()
         {
             _model.Setup(_context);
             _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
@@ -39,12 +39,16 @@ namespace TimeCounter.Entities.Counter
             //TODOBY
         }
 
-        public void Dispose()
+        public override void Dispose()
         {
             _context.EventBusGlobal.Unsubscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
             _modelSubDisposable.Dispose();
-            _model.Dispose();
             DeactivateTick();
+            base.Dispose();
+        }
+        public void OnDestroyCallback()
+        {
+            Dispose();
         }
         private void IncreaseTickSpeed(int value)
         {

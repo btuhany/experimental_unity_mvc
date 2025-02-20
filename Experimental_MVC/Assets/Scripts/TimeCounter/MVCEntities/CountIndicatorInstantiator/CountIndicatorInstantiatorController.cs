@@ -21,16 +21,21 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
             _indicatorRuntimeList = new();
             _indicatorFactory = factory;
         }
-        public void Initialize()
+        public void OnAwakeCallback()
         {
             _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
         }
-        public void Dispose()
+        public void OnDestroyCallback()
+        {
+            Dispose();
+        }
+        public override void Dispose()
         {
             _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
-            CleanUpIndicators();
+            DisposeAndClearIndicators();
+            base.Dispose();
         }
-        private void CleanUpIndicators()
+        private void DisposeAndClearIndicators()
         {
             for (int i = 0; i < _indicatorRuntimeList.Count; i++)
             {

@@ -20,5 +20,11 @@ namespace TimeCounter.Entities.Counter
         [Inject]
         public IDebugHelper Debug { get; }
 
+        public void Dispose()
+        {
+            EventBusGlobal.Dispose();
+            EventBusCore.Dispose();
+            Debug.Dispose();
+        }
     }
 }

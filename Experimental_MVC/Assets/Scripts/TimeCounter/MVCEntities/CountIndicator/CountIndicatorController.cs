@@ -24,11 +24,7 @@ namespace TimeCounter.Entities.CountIndicator
 
             _context.CommandManager.ExecuteCommand(new SetParentCommand() { Parent = initData.ParentTransform });
         }
-        public void Dispose()
-        {
-            _view.Dispose();
-            _model.Dispose();
-        }
+        
         public void DestroyEntityForRuntime()
         {
             _context.CommandManager.ExecuteCommand(new DestroyGameObjectCommand());

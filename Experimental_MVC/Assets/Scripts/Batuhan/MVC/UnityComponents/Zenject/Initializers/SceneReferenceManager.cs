@@ -24,21 +24,21 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         {
             for (int i = 0; i < _lifeCycleHandlers.Count; i++)
             {
-                _lifeCycleHandlers[i].Initialize();
+                _lifeCycleHandlers[i].OnAwakeCallback();
             }
         }
         public virtual void HandleOnStart()
         {
             for (int i = 0; i < _entryPoints.Count; i++)
             {
-                _entryPoints[i].Start();
+                _entryPoints[i].OnStartCallback();
             }
         }
         public virtual void HandleOnDestroy()
         {
             for (int i = 0; i < _lifeCycleHandlers.Count; i++)
             {
-                _lifeCycleHandlers[i].Dispose();
+                _lifeCycleHandlers[i].OnDestroyCallback();
             }
         }
     }

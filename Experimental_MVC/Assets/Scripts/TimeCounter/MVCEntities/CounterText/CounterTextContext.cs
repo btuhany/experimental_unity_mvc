@@ -21,5 +21,12 @@ namespace TimeCounter.Entities.CounterText
         public IDebugHelper Debug { get; }
         [Inject]
         public ICommandManager CommandManager { get; }
+
+        public void Dispose()
+        {
+            EventBusCore.Dispose();
+            Debug.Dispose();
+            CommandManager.Dispose();
+        }
     }
 }

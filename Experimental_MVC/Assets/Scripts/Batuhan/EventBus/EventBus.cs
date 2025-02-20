@@ -5,7 +5,7 @@ namespace Batuhan.EventBus
 {
     //Static implementations need bootstrapping to avoid allocations and potential performance spykes at runtime.
     //Using DI framework instead of a static class would be a better approach.
-    public interface IEventBus
+    public interface IEventBus : IDisposable
     {
         void Subscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;
         void Unsubscribe<TEvent>(Action<TEvent> callback) where TEvent : IEvent;

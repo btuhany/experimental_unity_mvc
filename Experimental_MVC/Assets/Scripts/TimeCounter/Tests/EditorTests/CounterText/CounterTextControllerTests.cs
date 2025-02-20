@@ -36,7 +36,7 @@ namespace TimeCounter.Tests
         [TearDown]
         public void TearDown()
         {
-            _controller.Dispose();
+            _controller.OnDestroyCallback();
         }
 
         //[Test]

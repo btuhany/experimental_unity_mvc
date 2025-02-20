@@ -1,15 +1,17 @@
 ﻿using Batuhan.MVC.Core;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.TimeCounter.Helper
 {
-    public interface IDebugHelper
+    public interface IDebugHelper : IDisposable
     {
         public void Log(string message);
         public void Log(string message, object callerObj = null);
     }
     public class DebugHelper : IDebugHelper
     {
+        //TODOBY Conditional attribute
         public void Log(string message, object callerObj = null)
         {
 #if UNITY_EDITOR
@@ -42,6 +44,9 @@ namespace Assets.Scripts.TimeCounter.Helper
 #if UNITY_EDITOR
             Debug.Log(message);
 #endif
+        }
+        public void Dispose()
+        {
         }
     }
 }

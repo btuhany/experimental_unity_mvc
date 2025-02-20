@@ -12,7 +12,7 @@ namespace TimeCounter.Entities.CounterText
         {
         }
         private DisposableBag _dataBindingDisposableBag;
-        public void Initialize()
+        public void OnAwakeCallback()
         {
             _model.Setup(_context);
             _view.Setup(_context);
@@ -21,7 +21,7 @@ namespace TimeCounter.Entities.CounterText
             SubscribeEvents();
         }
 
-        public void Dispose()
+        public void OnDestroyCallback()
         {
             _dataBindingDisposableBag.Dispose();
             _model.Dispose();

@@ -1,6 +1,8 @@
-﻿namespace Batuhan.MVC.Core
+﻿using System;
+
+namespace Batuhan.MVC.Core
 {
-    public interface IContext
+    public interface IContext : IDisposable
     {
     }
 }
