@@ -1,16 +1,14 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
-using System.Diagnostics;
 using TimeCounter.Entities.InputHandler;
-using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 
 namespace TimeCounter
 {
-    public class InputHandlerController : BaseControllerWithViewAndContext<IInputHandlerView, IInputHandlerContext>, ILifeCycleHandler
+    public class InputHandlerController : BaseControllerWithViewAndContext<IInputHandlerViewModel, IInputHandlerContext>, ILifeCycleHandler
     {
         private DisposableBag _disposableBag;
-        public InputHandlerController(IInputHandlerView model, IInputHandlerContext context) : base(model, context)
+        public InputHandlerController(IInputHandlerViewModel model, IInputHandlerContext context) : base(model, context)
         {
         }
 
@@ -26,6 +24,10 @@ namespace TimeCounter
             _view.SetMaxCountField.Subscribe(OnSetMaxCountFieldInput).AddTo(ref _disposableBag);
             _view.SetMinCountField.Subscribe(OnSetMinCountFieldInput).AddTo(ref _disposableBag);
             _view.SetCountField.Subscribe(OnSetCountFieldInput).AddTo(ref _disposableBag);
+
+            _view.SetEnableSetMaxCountButton(false);
+            _view.SetEnableSetMinCountButton(false);
+            _view.SetEnableSetCountButton(false);
         }
        
         public void OnDestroyCallback()
@@ -35,35 +37,68 @@ namespace TimeCounter
         }
         private void OnSpeedUpCommand()
         {
-            UnityEngine.Debug.Log("OnSpeedUpCommand");
+            _context.TickerModel.AddToTickSpeed(1);
         }
         private void OnSpeedDownCommand()
         {
-            UnityEngine.Debug.Log("OnSpeedDownCommand");
+            _context.TickerModel.AddToTickSpeed(-1);
         }
         private void OnSetMaxCommand()
         {
-            UnityEngine.Debug.Log("OnSetMaxCommand");
+            var currentText = _view.SetMaxCountField.CurrentValue;
+            if (int.TryParse(currentText, out int result))
+            {
+                _context.TickerModel.SetMaxTickCount(result);
+            }
         }
         private void OnSetMinCommand()
         {
-            UnityEngine.Debug.Log("OnSetMinCommand");
+            var currentText = _view.SetMinCountField.CurrentValue;
+            if (int.TryParse(currentText, out int result))
+            {
+                _context.TickerModel.SetMinTickCount(result);
+            }
         }
         private void OnSetCountCommand()
         {
-            UnityEngine.Debug.Log("OnSetCountCommand");
+            var currentText = _view.SetCountField.CurrentValue;
+            if (int.TryParse(currentText, out int result))
+            {
+                _context.TickerModel.TrySetTickCount(result);
+            }
         }
         private void OnSetMaxCountFieldInput(string value)
         {
-            UnityEngine.Debug.Log("On Set Max Count Field Input: " + value);
+            if (int.TryParse(value, out int result))
+            {
+                _view.SetEnableSetMaxCountButton(true);
+            }
+            else
+            {
+                _view.SetEnableSetMaxCountButton(false);
+            }
         }
         private void OnSetMinCountFieldInput(string value)
         {
-            UnityEngine.Debug.Log("OnSetMinCountFieldInput: " + value);
+            if (int.TryParse(value, out int result))
+            {
+                _view.SetEnableSetMinCountButton(true);
+            }
+            else
+            {
+                _view.SetEnableSetMinCountButton(false);
+            }
         }
         private void OnSetCountFieldInput(string value)
         {
-            UnityEngine.Debug.Log("OnSetCountFieldInput: " + value);
+            if (int.TryParse(value, out int result))
+            {
+                _view.SetEnableSetCountButton(true);
+            }
+            else
+            {
+                _view.SetEnableSetCountButton(false);
+            }
         }
     }
 }

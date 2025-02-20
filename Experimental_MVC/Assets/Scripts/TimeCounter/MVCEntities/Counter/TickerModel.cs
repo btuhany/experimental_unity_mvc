@@ -17,6 +17,7 @@ namespace TimeCounter.Entities.Counter
         bool IsMinTickCountReached();
         void SetMaxTickCount(int value);
         void SetMinTickCount(int value);
+        bool TrySetTickCount(int value);
         ReadOnlyReactiveProperty<int> TickCount { get; }
         ReadOnlyReactiveProperty<float> TickSpeed { get; }
     }
@@ -57,18 +58,7 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = _dataSO.TickCount.Value;
-            var newValue = Math.Max(oldValue + value, _dataSO.MinTickCount);
-            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
-
-            if (oldValue != newValue)
-            {
-                _dataSO.TickCount.Value = newValue;
-            }
-            else
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-            }
+            TrySetTickCount(_dataSO.TickCount.Value + value);
         }
         public bool IsMaxTickCountReached()
         {
@@ -86,22 +76,11 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = _dataSO.TickCount.Value;
-            var newValue = Math.Max(oldValue - value, _dataSO.MinTickCount);
-            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
-
-            if (oldValue != newValue)
-            {
-                _dataSO.TickCount.Value = newValue;
-            }
-            else
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-            }
+            TrySetTickCount(_dataSO.TickCount.Value - value);
         }
         public void AddToTickSpeed(float value)
         {
-            _dataSO.TickSpeed.Value += value;
+            _dataSO.TickSpeed.Value = UnityEngine.Mathf.Clamp(_dataSO.TickSpeed.Value + value, _dataSO.MinTickSpeed, _dataSO.MaxTickSpeed);
         }
 
         public void SetMaxTickCount(int value)
@@ -112,6 +91,18 @@ namespace TimeCounter.Entities.Counter
         public void SetMinTickCount(int value)
         {
             _dataSO.MinTickCount = value;
+        }
+
+        public bool TrySetTickCount(int value)
+        {
+            var oldValue = _dataSO.TickCount.Value;
+            var newValue = UnityEngine.Mathf.Clamp(value, _dataSO.MinTickCount, _dataSO.MaxTickCount);
+            if (oldValue != newValue)
+            {
+                _dataSO.TickCount.Value = newValue;
+                return true;
+            }
+            return false;
         }
     }
 }

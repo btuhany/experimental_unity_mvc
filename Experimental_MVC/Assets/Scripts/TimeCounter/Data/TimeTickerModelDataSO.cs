@@ -15,8 +15,10 @@ namespace TimeCounter.Data
         [SerializeField] private int _minTickCount = 0;
         [SerializeField] private int _initialTickCount= 0;
         [SerializeField] private float _initialTickSpeed= 1.0f;
+        [SerializeField] private float _maxTickSpeed = 100;
         [NonSerialized] private float _tickSpeed = 1.0f;
         [NonSerialized] private int _tickCount = 0;
+        private const float MIN_TICK_SPEED = 0.1f;
 
         public int MaxTickCount { get => _maxTickCount; set => _maxTickCount = value; }
         public int MinTickCount { get => _minTickCount; set => _minTickCount = value; }
@@ -25,6 +27,8 @@ namespace TimeCounter.Data
         public ReactiveProperty<int> TickCount { get; private set; }
 
         public ReactiveProperty<float> TickSpeed { get; private set; }
+        public float MaxTickSpeed { get => _maxTickSpeed; }
+        public float MinTickSpeed { get => MIN_TICK_SPEED; }
 
         private IDisposable _reactivePropertyDisposables;
         public void Initialize()

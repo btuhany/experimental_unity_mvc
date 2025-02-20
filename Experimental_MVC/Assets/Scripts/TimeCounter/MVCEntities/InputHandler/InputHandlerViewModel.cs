@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 namespace TimeCounter.Entities.InputHandler
 {
-    public interface IInputHandlerView : IView
+    //TODOBY ViewModel Concern
+    public interface IInputHandlerViewModel : IView
     {
         ReactiveCommand SpeedUpCommand { get; }
         ReactiveCommand SpeedDownCommand { get; }
@@ -19,8 +20,13 @@ namespace TimeCounter.Entities.InputHandler
         ReadOnlyReactiveProperty<string> SetMaxCountField { get; }
         ReadOnlyReactiveProperty<string> SetMinCountField { get; }
         ReadOnlyReactiveProperty<string> SetCountField { get; }
+
+        void SetEnableSetMaxCountButton(bool value);
+        void SetEnableSetMinCountButton(bool value);
+        void SetEnableSetCountButton(bool value);
     }
-    public class InputHandlerView : BaseViewMonoBehaviour, IInputHandlerView
+
+    public class InputHandlerViewModel : BaseViewMonoBehaviour, IInputHandlerViewModel
     {
         [SerializeField] private Button _speedUpButton;
         [SerializeField] private Button _speedDownButton;
@@ -35,7 +41,7 @@ namespace TimeCounter.Entities.InputHandler
         [SerializeField] private Button _setCountButton;
 
         private DisposableBag _disposables;
-        public override Type ContractTypeToBind => typeof(IInputHandlerView);
+        public override Type ContractTypeToBind => typeof(IInputHandlerViewModel);
 
         public ReactiveCommand SpeedUpCommand { get; private set; }
 
@@ -71,10 +77,6 @@ namespace TimeCounter.Entities.InputHandler
             SetMinCountField = _setMinCountField.onValueChanged.AsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
             SetCountField = _setCountField.onValueChanged.AsObservable().ToReadOnlyReactiveProperty().AddTo(ref _disposables);
         }
-        private void DebugLog()
-        {
-
-        }
         private void OnDestroy()
         {
             Dispose();
@@ -83,5 +85,18 @@ namespace TimeCounter.Entities.InputHandler
         {
             _disposables.Dispose();
         }
+        public void SetEnableSetMaxCountButton(bool value)
+        {
+            _setMaxCountButton.enabled = value;
+        }
+        public void SetEnableSetMinCountButton(bool value)
+        {
+            _setMinCountButton.enabled = value;
+        }
+        public void SetEnableSetCountButton(bool value)
+        {
+            _setCountButton.enabled = value;
+        }
+
     }
 }
