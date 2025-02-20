@@ -44,8 +44,11 @@ namespace Batuhan.EventBus
         }
         public void Dispose()
         {
-            CleanUp();
-            _bindings.Clear();
+            if (_category.CanBeDisposed)
+            {
+                CleanUp();
+                _bindings.Clear();
+            }
         }
         public void Publish<TEvent>(TEvent eventData) where TEvent : IEvent
         {

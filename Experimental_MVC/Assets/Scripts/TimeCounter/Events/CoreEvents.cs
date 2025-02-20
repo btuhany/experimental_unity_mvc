@@ -6,6 +6,8 @@ namespace TimeCounter.Events.CoreEvents
     public class Core : IEventCategory
     {
         public int ID => EventCategory.CoreEvents.ToID();
+
+        public bool CanBeDisposed => false;
     }
     public struct TickCountValueUpdatedEvent : IValueUpdatedEvent<int>
     {

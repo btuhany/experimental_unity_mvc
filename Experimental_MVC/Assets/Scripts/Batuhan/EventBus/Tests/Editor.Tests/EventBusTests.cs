@@ -10,6 +10,8 @@ namespace Batuhan.EventBus.EditorTests
         public class TestCategory : IEventCategory
         {
             public int ID => 1;
+
+            public bool CanBeDisposed => true;
         }
 
         public class TestEvent : IEvent

@@ -7,6 +7,8 @@ namespace TimeCounter.Events.ModelEvents
     public class Model : IEventCategory
     {
         public int ID => EventCategory.Model.ToID();
+
+        public bool CanBeDisposed => true;
     }
 
     public struct CounterValueUpdatedEvent : IEvent
