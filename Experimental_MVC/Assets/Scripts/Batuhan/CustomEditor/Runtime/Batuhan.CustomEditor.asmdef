@@ -1,9 +1,7 @@
 {
-    "name": "Batuhan.RuntimeClonableScriptableObjects",
-    "rootNamespace": "Batuhan.RuntimeClonableScriptableObjects",
-    "references": [
-        "GUID:f7b78693f1fd70647a1463fdd6284a3d"
-    ],
+    "name": "Batuhan.CustomEditor",
+    "rootNamespace": "Batuhan.CustomEditor",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
