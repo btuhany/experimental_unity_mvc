@@ -19,5 +19,10 @@ namespace TimeCounter.Entities.EntryPoint
         [Inject]
         public IDebugHelper Debug { get; }
 
+        public void Dispose()
+        {
+            EventBusGlobal.Dispose();
+            Debug.Dispose();
+        }
     }
 }

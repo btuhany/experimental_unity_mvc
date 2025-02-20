@@ -2,6 +2,14 @@ namespace Batuhan.CommandManager.TestCommands
 {
     public class OtherCommand : ICommand
     {
+        public void OnBindingExecute()
+        {
+        }
+
+        public void OnBindingUndo()
+        {
+        }
+
         public void OnExecute() { }
         public void OnUndo() { }
     }
@@ -10,6 +18,14 @@ namespace Batuhan.CommandManager.TestCommands
         public bool OnExecuteCalled { get; private set; }
         public bool OnUndoCalled { get; private set; }
 
+        public void OnBindingExecute()
+        {
+        }
+
+        public void OnBindingUndo()
+        {
+        }
+
         public void OnExecute() => OnExecuteCalled = true;
         public void OnUndo() => OnUndoCalled = true;
     }
@@ -17,6 +33,14 @@ namespace Batuhan.CommandManager.TestCommands
     {
         public bool ExecuteCalled { get; private set; }
         public bool UndoCalled { get; private set; }
+
+        public void OnBindingExecute()
+        {
+        }
+
+        public void OnBindingUndo()
+        {
+        }
 
         public void OnExecute()
         {

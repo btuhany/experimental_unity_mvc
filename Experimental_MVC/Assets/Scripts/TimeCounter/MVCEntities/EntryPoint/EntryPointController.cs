@@ -11,15 +11,16 @@ namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
         public EntryPointController(IEntryPointContext context) : base(context)
         {
         }
-        public void Initialize()
+        public void OnAwakeCallback()
         {
             _context.Debug.Log("Initialized!", this);
         }
-        public void Dispose()
+        public void OnDestroyCallback()
         {
             _context.Debug.Log("Disposed!", this);
+            Dispose();
         }
-        public void Start()
+        public void OnStartCallback()
         {
             _context.EventBusGlobal.Publish(new SceneInitializedEvent());
         }

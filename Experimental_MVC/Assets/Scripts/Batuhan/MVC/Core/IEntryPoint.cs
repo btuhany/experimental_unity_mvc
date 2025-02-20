@@ -2,6 +2,6 @@
 {
     public interface IEntryPoint
     {
-        void Start();
+        void OnStartCallback();
     }
 }

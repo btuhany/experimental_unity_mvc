@@ -16,5 +16,10 @@ namespace TimeCounter.Entities.CountIndicator
         public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
         [Inject]
         public ICommandManager CommandManager { get; }
+        public void Dispose()
+        {
+            EventBusModel.Dispose();
+            CommandManager.Dispose();
+        }
     }
 }

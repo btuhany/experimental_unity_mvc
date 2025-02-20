@@ -1,25 +1,30 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
+using R3;
+using System;
 using TimeCounter.Commands;
 using TimeCounter.Events.CoreEvents;
+
 namespace TimeCounter.Entities.CounterText
 {
-    public class CounterTextController : BaseController<ICounterTextModel, IViewContextual<ICounterTextContext>, ICounterTextContext>, ILifeCycleHandler
+    public class CounterTextController : BaseController<ICounterTextModel, ICounterTextView, ICounterTextContext>, ILifeCycleHandler
     {
-        public CounterTextController(ICounterTextModel model, IViewContextual<ICounterTextContext> view, ICounterTextContext context) : base(model, view, context)
+        public CounterTextController(ICounterTextModel model, ICounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
-
         }
-
-        public void Initialize()
+        private DisposableBag _dataBindingDisposableBag;
+        public void OnAwakeCallback()
         {
             _model.Setup(_context);
             _view.Setup(_context);
+            _model.CounterText.Subscribe(_view.OnCounterTextUpdated).AddTo(ref _dataBindingDisposableBag);
+            _model.AnimatorSpeed.Subscribe(_view.OnAnimatorPlaybackSpeedChanged).AddTo(ref _dataBindingDisposableBag);
             SubscribeEvents();
         }
 
-        public void Dispose()
+        public void OnDestroyCallback()
         {
+            _dataBindingDisposableBag.Dispose();
             _model.Dispose();
             _view.Dispose();
             UnsubscribeEvents();
@@ -27,19 +32,19 @@ namespace TimeCounter.Entities.CounterText
 
         private void SubscribeEvents()
         {
-            _context.EventBusCore.Subscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
-           
-        }
-        private void UnsubscribeEvents()
-        {
-            
-            _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnCountValueUpdated);
+            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
 
-        private void OnCountValueUpdated(TimeCountValueUpdatedEvent @event)
+        private void UnsubscribeEvents()
         {
-            _model.UpdateTextWithValue(@event.UpdatedValue);
-            _context.CommandManager.ExecuteCommand(new UpdateCounterTextCommand(_model.TEXT));
+            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
+        }
+
+        private void OnTickValueUpdated(TickCountValueUpdatedEvent @event)
+        {
+            _model.UpdateTextWithTickValue(@event.UpdatedValue);
+            if (@event.UpdatedValue > 0)
+                _context.CommandManager.ExecuteCommand(new AnimateCounterTextCommand(_model.TriggerHash, UnityEngine.AnimatorControllerParameterType.Trigger));
         }
     }
 }

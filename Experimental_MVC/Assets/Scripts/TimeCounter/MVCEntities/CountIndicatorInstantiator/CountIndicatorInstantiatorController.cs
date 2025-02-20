@@ -21,16 +21,21 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
             _indicatorRuntimeList = new();
             _indicatorFactory = factory;
         }
-        public void Initialize()
+        public void OnAwakeCallback()
         {
-            _context.EventBusCore.Subscribe<TimeCountValueUpdatedEvent>(OnTimeCountValueUpdated);
+            _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
         }
-        public void Dispose()
+        public void OnDestroyCallback()
         {
-            _context.EventBusCore.Unsubscribe<TimeCountValueUpdatedEvent>(OnTimeCountValueUpdated);
-            CleanUpIndicators();
+            Dispose();
         }
-        private void CleanUpIndicators()
+        public override void Dispose()
+        {
+            _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTimeCountValueUpdated);
+            DisposeAndClearIndicators();
+            base.Dispose();
+        }
+        private void DisposeAndClearIndicators()
         {
             for (int i = 0; i < _indicatorRuntimeList.Count; i++)
             {
@@ -38,17 +43,40 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
             }
             _indicatorRuntimeList.Clear();
         }
-        private void OnTimeCountValueUpdated(TimeCountValueUpdatedEvent @event)
+        private void OnTimeCountValueUpdated(TickCountValueUpdatedEvent @event)
+        {
+            var tickCount = @event.UpdatedValue;
+            var indicatorCount = _indicatorRuntimeList.Count;
+
+            if (tickCount > indicatorCount)
+            {
+                var difference = tickCount - indicatorCount;
+                for (int i = 0; i < difference; i++)
+                {
+                    CreateAndInitializeNewIndicator(indicatorCount + i);
+                }
+            }
+            else if (tickCount < indicatorCount)
+            {
+                var difference = indicatorCount - tickCount;
+                for (int i = 0; i < difference; i++)
+                {
+                    var lastIndicatorIndex = _indicatorRuntimeList.Count - 1;
+                    _indicatorRuntimeList[lastIndicatorIndex].DestroyEntityForRuntime();
+                    _indicatorRuntimeList.RemoveAt(lastIndicatorIndex);
+                }
+            }
+        }
+        private void CreateAndInitializeNewIndicator(int index)
         {
             CountIndicatorCommonData commonData = new CountIndicatorCommonData();
-            var index = _indicatorRuntimeList.Count;
             commonData.Index = index;
 
             var randomColor = UnityEngine.Random.ColorHSV();
             randomColor.a = 1.0f;
             commonData.Color = randomColor;
 
-            commonData.Position = _model.CalcAndGetNextPosition();
+            commonData.Position = _model.CalcPosition(index);
 
             CountIndicatorInitData creationData = new CountIndicatorInitData();
             creationData.CommonData = commonData;

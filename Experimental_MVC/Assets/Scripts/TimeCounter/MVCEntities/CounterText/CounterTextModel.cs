@@ -1,35 +1,44 @@
 ﻿using Batuhan.MVC.Core;
+using R3;
 
 namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextModel :  IModelContextual<ICounterTextContext>
     {
-        public void UpdateTextWithValue(int value);
-        public string TEXT { get; }
+        public void UpdateTextWithTickValue(int value);
+        ReactiveProperty<string> CounterText { get; }
+        ReactiveProperty<float> AnimatorSpeed { get; set; }
+        public int TriggerHash { get; }
     }
     public class CounterTextModel : ICounterTextModel
     {
-        private string _textStr;
-        private const string _prefix = "EXPERIMENTAL_MVC: ";
+
         private ICounterTextContext _context;
         public ICounterTextContext Context => _context;
 
-        //TODOBY
-        public string TEXT => _textStr;
+        public ReactiveProperty<string> CounterText { get; private set; }
+        public ReactiveProperty<float> AnimatorSpeed { get; set; }
+
+        private readonly int _triggerHash = UnityEngine.Animator.StringToHash("trigger");
+
+        public int TriggerHash => _triggerHash;
 
         public void Setup(ICounterTextContext context)
         {
             _context = context;
             _context.Debug.Log("Setup", this);
+            CounterText = new(string.Empty);
+            AnimatorSpeed = new(1);
         }
 
         public void Dispose()
         {
+            CounterText?.Dispose();
         }
 
-        public void UpdateTextWithValue(int value)
+        public void UpdateTextWithTickValue(int value)
         {
-            _textStr = _prefix + value.ToString();
+            CounterText.Value = value.ToString();
         }
     }
 }

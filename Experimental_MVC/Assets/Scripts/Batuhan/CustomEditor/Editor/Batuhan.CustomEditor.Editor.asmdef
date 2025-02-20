@@ -1,0 +1,18 @@
+{
+    "name": "Batuhan.CustomEditor.Editor",
+    "rootNamespace": "Batuhan.CustomEditor.Editor",
+    "references": [
+        "GUID:f7b78693f1fd70647a1463fdd6284a3d"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

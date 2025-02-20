@@ -66,6 +66,7 @@ namespace Batuhan.CommandManager
                     binding.Execute(command);
                 }
             }
+            command.OnExecute();
             _executedCommands.Push(command);
         }
 
@@ -79,6 +80,7 @@ namespace Batuhan.CommandManager
                     binding.Undo(command);
                 }
             }
+            command.OnUndo();
         }
         public void UndoLastExecutedCommand()
         {

@@ -1,0 +1,23 @@
+﻿using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents.Zenject;
+using TimeCounter.Data;
+using TimeCounter.Entities.Counter;
+using UnityEngine;
+using Zenject;
+
+namespace TimeCounter.Installers
+{
+    [CreateAssetMenu(fileName = "TimeTickerInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/TimeTickerInstaller")]
+    internal class TickerInstaller : BaseEntityInstallerSO
+    {
+        [SerializeField] private TimeTickerModelDataSO _modelDataSO;
+        public override void InstallFrom(DiContainer container)
+        {
+            container.Bind<ITickerContext>().To<TickerContext>().AsTransient();
+            container.Bind<ITickerModel>().To<TickerModel>().AsTransient();
+            container.Bind<ILifeCycleHandler>().To<TickerController>().AsTransient();
+            container.Bind<TimeTickerModelDataSO>().FromScriptableObject(_modelDataSO).AsTransient();
+
+        }
+    }
+}

@@ -8,8 +8,6 @@ namespace TimeCounter.Entities.CounterText
 {
     public interface ICounterTextContext : IContext
     {
-        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }
-        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
         public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         public ICommandManager CommandManager { get; }
         public IDebugHelper Debug { get; }
@@ -18,14 +16,17 @@ namespace TimeCounter.Entities.CounterText
     internal class CounterTextContext : ICounterTextContext
     {
         [Inject]
-        public IEventBus<Events.GlobalEvents.Global> EventBusGlobal { get; }        
-        [Inject]
-        public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
-        [Inject]
         public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         [Inject]
         public IDebugHelper Debug { get; }
         [Inject]
         public ICommandManager CommandManager { get; }
+
+        public void Dispose()
+        {
+            EventBusCore.Dispose();
+            Debug.Dispose();
+            CommandManager.Dispose();
+        }
     }
 }

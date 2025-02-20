@@ -2,7 +2,7 @@
 
 namespace Batuhan.CommandManager
 {
-    public interface ICommandManager
+    public interface ICommandManager : IDisposable
     {
         void AddListener<TCommand>(CommandBinding<TCommand> binding) where TCommand : ICommand;
         void RemoveListener<TCommand>(CommandBinding<TCommand> binding) where TCommand : ICommand;

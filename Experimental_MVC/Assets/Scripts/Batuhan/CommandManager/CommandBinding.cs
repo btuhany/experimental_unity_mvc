@@ -32,7 +32,7 @@ namespace Batuhan.CommandManager
             if (command is TCommand typedCommand)
             {
                 _execute?.Invoke(typedCommand);
-                command.OnExecute();
+                command.OnBindingExecute();
             }
             else
             {
@@ -45,7 +45,7 @@ namespace Batuhan.CommandManager
             if (command is TCommand typedCommand)
             {
                 _undo?.Invoke(typedCommand);
-                command.OnUndo();
+                command.OnBindingUndo();
             }
             else
             {

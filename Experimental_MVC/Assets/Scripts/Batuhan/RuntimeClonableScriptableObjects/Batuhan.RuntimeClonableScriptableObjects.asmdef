@@ -1,3 +1,16 @@
 {
-	"name": "Batuhan.RuntimeClonableScriptableObjects"
+    "name": "Batuhan.RuntimeClonableScriptableObjects",
+    "rootNamespace": "Batuhan.RuntimeClonableScriptableObjects",
+    "references": [
+        "GUID:f7b78693f1fd70647a1463fdd6284a3d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

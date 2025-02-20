@@ -15,5 +15,11 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
         public IEventBus<Events.CoreEvents.Core> EventBusCore { get; }
         [Inject]
         public IEventBus<Events.ModelEvents.Model> EventBusModel { get; }
+
+        public void Dispose()
+        {
+            EventBusCore.Dispose();
+            EventBusModel.Dispose();
+        }
     }
 }
