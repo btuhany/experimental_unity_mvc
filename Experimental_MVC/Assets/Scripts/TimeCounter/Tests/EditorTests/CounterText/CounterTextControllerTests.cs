@@ -1,12 +1,8 @@
 using NSubstitute;
 using NUnit.Framework;
-using TimeCounter.Events.ModelEvents;
-using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Entities.CounterText;
 using Batuhan.EventBus;
 using Batuhan.CommandManager;
-using System;
-using Batuhan.MVC.Core;
 using TimeCounter.Events.CoreEvents;
 using Assets.Scripts.TimeCounter.Helper;
 
@@ -36,7 +32,7 @@ namespace TimeCounter.Tests
         [TearDown]
         public void TearDown()
         {
-            _controller.OnDestroyCallback();
+            _controller.Dispose();
         }
 
         //[Test]

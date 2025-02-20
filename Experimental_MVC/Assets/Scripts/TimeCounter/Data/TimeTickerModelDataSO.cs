@@ -46,17 +46,18 @@ namespace TimeCounter.Data
         }
 
 #if UNITY_EDITOR
-        [Button("UPDATE TICK SPEED RUNTIME DATA")]
-        private void EDITOR_UpdateRuntimeSpeedDataToInitials()
-        {
-            if (TickSpeed != null)
-                TickSpeed.Value = _initialTickSpeed;
-        }
+
         [Button("UPDATE TICK COUNT RUNTIME DATA")]
         private void EDITOR_UpdateRuntimeCountDataToInitials()
         {
             if (TickSpeed != null)
                 TickCount.Value = _initialTickCount;
+        }
+        [Button("UPDATE TICK SPEED RUNTIME DATA")]
+        private void EDITOR_UpdateRuntimeSpeedDataToInitials()
+        {
+            if (TickSpeed != null)
+                TickSpeed.Value = _initialTickSpeed;
         }
     }
 #endif

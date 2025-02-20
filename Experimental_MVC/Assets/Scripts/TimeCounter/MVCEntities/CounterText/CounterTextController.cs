@@ -32,14 +32,19 @@ namespace TimeCounter.Entities.CounterText
 
         private void SubscribeEvents()
         {
+            _context.EventBusCore.Subscribe<TickSpeedUpdatedEvent>(OnTickSpeedUpdated);
             _context.EventBusCore.Subscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
-
         private void UnsubscribeEvents()
         {
+            _context.EventBusCore.Unsubscribe<TickSpeedUpdatedEvent>(OnTickSpeedUpdated);
             _context.EventBusCore.Unsubscribe<TickCountValueUpdatedEvent>(OnTickValueUpdated);
         }
 
+        private void OnTickSpeedUpdated(TickSpeedUpdatedEvent @event)
+        {
+            _model.UpdateAnimatorSpeed(@event.UpdatedValue);
+        }
         private void OnTickValueUpdated(TickCountValueUpdatedEvent @event)
         {
             _model.UpdateTextWithTickValue(@event.UpdatedValue);
