@@ -11,7 +11,7 @@ namespace TimeCounter.Entities.CounterText
     public interface ICounterTextView : IViewContextual<ICounterTextContext>
     {
         void OnCounterTextUpdated(string str);
-        //Animator Animator { get; }
+        void OnAnimatorPlaybackSpeedChanged(float speed);
     }
     internal class CounterTextView : BaseViewMonoBehaviour, ICounterTextView
     {
@@ -35,6 +35,10 @@ namespace TimeCounter.Entities.CounterText
         public void OnCounterTextUpdated(string str)
         {
             _textMesh.SetText(str);
+        }
+        public void OnAnimatorPlaybackSpeedChanged(float speed)
+        {
+            _animator.speed = speed;
         }
         public void Dispose()
         {

@@ -7,6 +7,7 @@ namespace TimeCounter.Entities.CounterText
     {
         public void UpdateTextWithTickValue(int value);
         ReactiveProperty<string> CounterText { get; }
+        ReactiveProperty<float> AnimatorSpeed { get; set; }
         public int TriggerHash { get; }
     }
     public class CounterTextModel : ICounterTextModel
@@ -16,6 +17,7 @@ namespace TimeCounter.Entities.CounterText
         public ICounterTextContext Context => _context;
 
         public ReactiveProperty<string> CounterText { get; private set; }
+        public ReactiveProperty<float> AnimatorSpeed { get; set; }
 
         private readonly int _triggerHash = UnityEngine.Animator.StringToHash("trigger");
 
@@ -26,6 +28,7 @@ namespace TimeCounter.Entities.CounterText
             _context = context;
             _context.Debug.Log("Setup", this);
             CounterText = new(string.Empty);
+            AnimatorSpeed = new(1);
         }
 
         public void Dispose()
