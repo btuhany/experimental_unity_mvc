@@ -9,10 +9,10 @@ namespace Batuhan.RuntimeCopyScriptableObjects
     public class RuntimeClonableSOManager : MonoBehaviour
     {
 #if UNITY_EDITOR
-        private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/Runtime";
+        private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/RuntimeResources";
         private const string FOLDER_NAME = "ScriptableObjects";
-        private const string FULL_PATH = "Assets/Runtime/ScriptableObjects";
-        private const string INSTATIATED_SO_SUFFIX = "_Runtime.asset";
+        private const string FULL_PATH = "Assets/RuntimeResources/ScriptableObjects";
+        private const string INSTATIATED_SO_SUFFIX = "_RuntimeResource.asset";
         private bool _isRegisteredToEditorAppEvent = false;
         private List<RuntimeClonableScriptableObject> _runtimeClonedBaseSOList = new List<RuntimeClonableScriptableObject>();
         private void Awake()
