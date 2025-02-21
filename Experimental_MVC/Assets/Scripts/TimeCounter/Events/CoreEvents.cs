@@ -29,6 +29,10 @@ namespace TimeCounter.Events.CoreEvents
             UpdatedValue = updatedValue;
         }
     }
+    public struct StartStopCounterEvent : IEvent
+    {
+        public int CategoryID => Categories.EventCategory.CoreEvents.ToID();
+    }
     public interface IValueUpdatedEvent<T> : IEvent
     {
         public T UpdatedValue { get; set; }

@@ -1,7 +1,9 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
+using System;
 using TimeCounter.Entities.InputHandler;
+using TimeCounter.Events.CoreEvents;
 
 namespace TimeCounter
 {
@@ -14,6 +16,7 @@ namespace TimeCounter
 
         public void OnAwakeCallback()
         {
+            _view.StartStopCounterCommand.Subscribe(_ => OnStartStopCounterCommand()).AddTo(ref _disposableBag);
             _view.SpeedUpCommand.Subscribe(_ => OnSpeedUpCommand()).AddTo(ref _disposableBag);
             _view.SpeedDownCommand.Subscribe(_ => OnSpeedDownCommand()).AddTo(ref _disposableBag);
 
@@ -29,7 +32,7 @@ namespace TimeCounter
             _view.SetEnableSetMinCountButton(false);
             _view.SetEnableSetCountButton(false);
         }
-       
+
         public void OnDestroyCallback()
         {
             _disposableBag.Dispose();
@@ -99,6 +102,11 @@ namespace TimeCounter
             {
                 _view.SetEnableSetCountButton(false);
             }
+        }
+        private void OnStartStopCounterCommand()
+        {
+            _context.EventBusCore.Publish(new StartStopCounterEvent());
+            _view.HandleOnStartStopButtonView(_context.TickerModel.IsTickEnabled);
         }
     }
 }

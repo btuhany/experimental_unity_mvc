@@ -1,8 +1,6 @@
 using Batuhan.MVC.Core;
 using Batuhan.RuntimeCopyScriptableObjects;
-using Cysharp.Threading.Tasks;
 using R3;
-using System;
 using TimeCounter.Data;
 
 namespace TimeCounter.Entities.Counter
@@ -20,6 +18,7 @@ namespace TimeCounter.Entities.Counter
         bool TrySetTickCount(int value);
         ReadOnlyReactiveProperty<int> TickCount { get; }
         ReadOnlyReactiveProperty<float> TickSpeed { get; }
+        bool IsTickEnabled { get; set; }
     }
     public class TickerModel : ITickerModel
     {
@@ -31,6 +30,8 @@ namespace TimeCounter.Entities.Counter
         public ReadOnlyReactiveProperty<int> TickCount => _dataSO.TickCount;
 
         public ReadOnlyReactiveProperty<float> TickSpeed => _dataSO.TickSpeed;
+
+        public bool IsTickEnabled { get => _dataSO.IsTickEnabled; set => _dataSO.IsTickEnabled = value; }
 
         [Zenject.Inject]
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)

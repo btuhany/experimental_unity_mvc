@@ -20,6 +20,7 @@ namespace TimeCounter.Data
         [NonSerialized] private int _tickCount = 0;
         private const float MIN_TICK_SPEED = 0.1f;
 
+        public bool IsTickEnabled { get; set; }
         public int MaxTickCount { get => _maxTickCount; set => _maxTickCount = value; }
         public int MinTickCount { get => _minTickCount; set => _minTickCount = value; }
         public bool MaxTickCountReached => _maxTickCount == _tickCount;
@@ -35,6 +36,7 @@ namespace TimeCounter.Data
         {
             _tickSpeed = 1.0f;
             _tickCount = _initialTickCount;
+            IsTickEnabled = false;
 
             var disposableBuilder = Disposable.CreateBuilder();
             TickCount = new ReactiveProperty<int>(_tickCount).AddTo(ref disposableBuilder);
