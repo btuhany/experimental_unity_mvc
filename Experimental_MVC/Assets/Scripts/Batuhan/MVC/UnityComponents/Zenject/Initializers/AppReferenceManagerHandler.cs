@@ -17,13 +17,13 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         private IAppReferenceManager _projectReferenceManager;
 
         [Inject]
-        private List<IAppLifeCycleManaged> _projectLifeCycleManagedsToAdd;
+        private List<IAppLifeCycleManaged> _projectLifeCycleManagedsToAdd = new List<IAppLifeCycleManaged>();
 
         public IAppReferenceManager ReferenceManager => _projectReferenceManager;
 
         public List<IAppLifeCycleManaged> ProjectLifeCycleManagedsToAdd => _projectLifeCycleManagedsToAdd;
 
-        private void Awake()
+        protected virtual void Start()
         {
             UpdateProjectLifeCycleReferences();
         }
