@@ -1,7 +1,6 @@
-﻿
-namespace Batuhan.MVC.Core
+﻿namespace Batuhan.MVC.Core
 {
-    public interface IProjectLifeCycleManaged : ISceneLifeCycleManaged
+    public interface IProjectLifeCycleManaged : ILifeCycleManaged
     {
 
     }
