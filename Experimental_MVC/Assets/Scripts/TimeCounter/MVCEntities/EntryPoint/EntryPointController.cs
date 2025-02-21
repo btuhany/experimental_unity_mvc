@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
 {
-    internal class EntryPointController : BaseController<IEntryPointContext>, ILifeCycleHandler, IEntryPoint
+    internal class EntryPointController : BaseController<IEntryPointContext>, ISceneLifeCycleManaged, IEntryPoint
     {
         public EntryPointController(IEntryPointContext context) : base(context)
         {

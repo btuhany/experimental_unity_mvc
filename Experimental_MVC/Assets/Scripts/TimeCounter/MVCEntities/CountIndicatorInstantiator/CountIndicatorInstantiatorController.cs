@@ -7,7 +7,7 @@ using TimeCounter.Events.CoreEvents;
 namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
     internal class CountIndicatorInstantiatorController : 
-        BaseController<ICountIndicatorInstantiatorModel, ICountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ILifeCycleHandler
+        BaseController<ICountIndicatorInstantiatorModel, ICountIndicatorInstantiatorView, ICountIndicatorInstantiatorContext>, ISceneLifeCycleManaged
     {
         private CountIndicatorController.Factory _indicatorFactory;
         private List<CountIndicatorController> _indicatorRuntimeList;

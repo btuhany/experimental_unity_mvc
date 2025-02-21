@@ -7,7 +7,7 @@ using TimeCounter.Events.CoreEvents;
 
 namespace TimeCounter
 {
-    public class InputHandlerController : BaseControllerWithViewAndContext<IInputHandlerViewModel, IInputHandlerContext>, ILifeCycleHandler
+    public class InputHandlerController : BaseControllerWithViewAndContext<IInputHandlerViewModel, IInputHandlerContext>, ISceneLifeCycleManaged
     {
         private DisposableBag _disposableBag;
         public InputHandlerController(IInputHandlerViewModel model, IInputHandlerContext context) : base(model, context)

@@ -15,7 +15,7 @@ namespace TimeCounter.Installers
         {
             container.Bind<ITickerContext>().To<TickerContext>().AsTransient();
             container.Bind<ITickerModel>().To<TickerModel>().AsSingle();
-            container.Bind<ILifeCycleHandler>().To<TickerController>().AsTransient();
+            container.Bind<ISceneLifeCycleManaged>().To<TickerController>().AsTransient();
             container.Bind<TimeTickerModelDataSO>().FromScriptableObject(_modelDataSO).AsTransient();
 
         }

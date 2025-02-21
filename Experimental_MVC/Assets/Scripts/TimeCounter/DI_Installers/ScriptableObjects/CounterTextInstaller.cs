@@ -13,7 +13,7 @@ namespace TimeCounter.Installers
         {
             container.Bind<ICounterTextContext>().To<CounterTextContext>().AsTransient();
             container.Bind<ICounterTextModel>().To<CounterTextModel>().AsTransient();
-            container.Bind<ILifeCycleHandler>().To<CounterTextController>().AsTransient();
+            container.Bind<ISceneLifeCycleManaged>().To<CounterTextController>().AsTransient();
         }
     }
 }

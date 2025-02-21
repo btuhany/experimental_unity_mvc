@@ -14,7 +14,7 @@ namespace TimeCounter.Entities.Counter
         Increasing = 0,
         Decreasing = 1
     }
-    public class TickerController : BaseControllerWithModelAndContext<ITickerModel, ITickerContext>, ILifeCycleHandler
+    public class TickerController : BaseControllerWithModelAndContext<ITickerModel, ITickerContext>, ISceneLifeCycleManaged
     {
         private CancellationTokenSource _tickCancellationTokenSource;
         private IDisposable _modelSubDisposable;

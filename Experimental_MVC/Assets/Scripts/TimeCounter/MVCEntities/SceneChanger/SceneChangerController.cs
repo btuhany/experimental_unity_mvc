@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace TimeCounter.Entities.SceneChanger
 {
-    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, ILifeCycleHandler
+    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, ISceneLifeCycleManaged
     {
         private IDisposable _viewModelSubDisposable;
         public SceneChangerController(ISceneChangerViewModel view) : base(view)

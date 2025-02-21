@@ -13,7 +13,7 @@ namespace TimeCounter.Installers
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<ILifeCycleHandler>().To<InputHandlerController>().AsSingle();
+            container.Bind<ISceneLifeCycleManaged>().To<InputHandlerController>().AsSingle();
             container.Bind<IInputHandlerContext>().To<InputHandlerContext>().AsSingle();
         }
     }

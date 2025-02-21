@@ -7,7 +7,7 @@ using TimeCounter.Events.CoreEvents;
 
 namespace TimeCounter.Entities.CounterText
 {
-    public class CounterTextController : BaseController<ICounterTextModel, ICounterTextView, ICounterTextContext>, ILifeCycleHandler
+    public class CounterTextController : BaseController<ICounterTextModel, ICounterTextView, ICounterTextContext>, ISceneLifeCycleManaged
     {
         public CounterTextController(ICounterTextModel model, ICounterTextView view, ICounterTextContext context) : base(model, view, context)
         {
