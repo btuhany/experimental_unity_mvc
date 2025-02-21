@@ -14,6 +14,24 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         public void AddToProjectLifeCycleReferences(IAppLifeCycleManaged projectLifeCycle)
         {
             _projectLifeCycleReferences.Add(projectLifeCycle);
+            projectLifeCycle.OnAwakeCallback();
+            projectLifeCycle.DestroyDelegate = OnDestroyDelegateInvoked;
+        }
+        public void OnDestroyDelegateInvoked(IAppLifeCycleManaged appLifeCycleManaged)
+        {
+            RemoveFromProjectLifeCycleReferences(appLifeCycleManaged);
+        }
+        private void RemoveFromProjectLifeCycleReferences(IAppLifeCycleManaged appLifeCycleManaged)
+        {
+            appLifeCycleManaged.OnDestroyCallback();
+            _projectLifeCycleReferences?.Remove(appLifeCycleManaged);
+        }
+        public void InvokeOnDestroyCallbacks()
+        {
+            for (int i = 0; i < _projectLifeCycleReferences.Count; i++)
+            {
+                _projectLifeCycleReferences[i].OnDestroyCallback();
+            }
         }
     }
 }

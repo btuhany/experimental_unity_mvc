@@ -11,6 +11,12 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         IAppReferenceManager ReferenceManager { get; }
         List<IAppLifeCycleManaged> ProjectLifeCycleManagedsToAdd { get; }
     }
+
+    /// <summary>
+    /// During scene transitions, other objects can be added as app references.
+    /// IAppReferenceManager should be resolved from the Project Context.
+    /// </summary>
+    /// 
     public abstract class AppReferenceManagerHandler : MonoBehaviour, IAppReferencesManagerHandler
     {
         [Inject]
