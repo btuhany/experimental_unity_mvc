@@ -5,9 +5,9 @@ namespace ExperimentalMVC.App
 {
     public class ExperimentalMVCReferenceManagerHandler : AppReferenceManagerHandler
     {
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
             var refManager = ReferenceManager as ExperimentalMVCReferenceManager;
             if (ReferenceManager == null)
             {
