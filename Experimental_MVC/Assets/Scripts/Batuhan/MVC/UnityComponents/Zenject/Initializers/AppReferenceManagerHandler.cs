@@ -6,12 +6,12 @@ using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    public interface IAppReferencesInitializer
+    public interface IAppReferencesManagerHandler
     {
         IAppReferenceManager ReferenceManager { get; }
         List<IAppLifeCycleManaged> ProjectLifeCycleManagedsToAdd { get; }
     }
-    public abstract class AppReferenceManagerHandler : MonoBehaviour, IAppReferencesInitializer
+    public abstract class AppReferenceManagerHandler : MonoBehaviour, IAppReferencesManagerHandler
     {
         [Inject]
         private IAppReferenceManager _projectReferenceManager;
