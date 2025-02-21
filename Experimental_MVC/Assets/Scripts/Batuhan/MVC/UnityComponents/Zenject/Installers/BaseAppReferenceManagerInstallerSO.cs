@@ -1,11 +1,11 @@
 using Zenject;
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    public abstract class BaseAppReferenceManagerInstallerSO : BaseEntityInstallerSO
+    public abstract class BaseAppReferenceManagerInstallerSO : ScriptableObjectInstaller
     {
-        public override void InstallFrom(DiContainer container)
+        public override void InstallBindings()
         {
-            container.Bind<IAppReferenceManager>().To<AppReferenceManager>().AsSingle();
+            Container.Bind<IAppReferenceManager>().To<AppReferenceManager>().AsSingle();
         }
     }
 
