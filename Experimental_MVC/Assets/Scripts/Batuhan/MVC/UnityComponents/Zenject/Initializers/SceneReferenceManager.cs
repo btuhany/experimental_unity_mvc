@@ -1,10 +1,15 @@
 ﻿using Batuhan.MVC.Core;
-using Batuhan.MVC.UnityComponents.Core;
 using System.Collections.Generic;
 using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
+    public interface ISceneReferenceManager
+    {
+        void HandleOnAwake();
+        void HandleOnStart();
+        void HandleOnDestroy();
+    }
     public class SceneReferenceManager : ISceneReferenceManager
     {
         [Inject]

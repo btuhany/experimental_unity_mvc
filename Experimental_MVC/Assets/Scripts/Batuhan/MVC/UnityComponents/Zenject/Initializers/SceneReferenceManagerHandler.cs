@@ -1,20 +1,19 @@
-using Batuhan.MVC.UnityComponents.Core;
 using UnityEngine;
 using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    public abstract class SceneReferencesInitializer : MonoBehaviour, ISceneInitializer
+    public interface ISceneReferenceManagerHandler
     {
-        private SceneReferenceManager _referenceManager;
-
-        public SceneReferenceManager ReferenceManager => _referenceManager;
-
+        ISceneReferenceManager ReferenceManager { get; }
+    }
+    //TODOBY not sure about the name
+    public abstract class SceneReferenceManagerHandler : MonoBehaviour, ISceneReferenceManagerHandler
+    {
         [Inject]
-        public void Construct(SceneReferenceManager refHolder)
-        {
-            _referenceManager = refHolder;
-        }
+        private ISceneReferenceManager _referenceManager;
+
+        public ISceneReferenceManager ReferenceManager => _referenceManager;
 
         private void Awake()
         {

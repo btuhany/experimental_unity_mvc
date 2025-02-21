@@ -2,7 +2,7 @@
 
 namespace TimeCounter.Entities.Initializer
 {
-    public class TimeCounterSceneInitializer : SceneReferencesInitializer
+    public class TimeCounterSceneInitializer : SceneReferenceManagerHandler
     {
     }
     public class TimeCounterSceneReferenceManager : SceneReferenceManager
