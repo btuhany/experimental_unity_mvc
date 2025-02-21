@@ -1,5 +1,4 @@
 ﻿using Batuhan.MVC.Core;
-using Batuhan.MVC.UnityComponents.Core;
 using System.Collections.Generic;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
