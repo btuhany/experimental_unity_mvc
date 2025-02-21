@@ -1,0 +1,16 @@
+{
+    "name": "ExperimentalMVC.App",
+    "rootNamespace": "ExperimentalMVC.App",
+    "references": [
+        "GUID:c45f13d17ab96864a8e024e15e4c7ad3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
