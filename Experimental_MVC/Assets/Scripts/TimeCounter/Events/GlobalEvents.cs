@@ -6,6 +6,8 @@ namespace TimeCounter.Events.GlobalEvents
     public class Global : IEventCategory
     {
         public int ID => EventCategory.Global.ToID();
+
+        public bool CanBeDisposed => false;
     }
     public struct SceneInitializedEvent : IEvent
     {

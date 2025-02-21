@@ -1,8 +1,6 @@
 using Batuhan.MVC.Core;
 using Batuhan.RuntimeCopyScriptableObjects;
-using Cysharp.Threading.Tasks;
 using R3;
-using System;
 using TimeCounter.Data;
 
 namespace TimeCounter.Entities.Counter
@@ -12,12 +10,15 @@ namespace TimeCounter.Entities.Counter
         void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager);
         void IncreaseCounter(int value);
         void DecreaseCounter(int value);
-        void IncreaseTickSpeed(float value);
+        void AddToTickSpeed(float value);
         bool IsMaxTickCountReached();
         bool IsMinTickCountReached();
-
+        void SetMaxTickCount(int value);
+        void SetMinTickCount(int value);
+        bool TrySetTickCount(int value);
         ReadOnlyReactiveProperty<int> TickCount { get; }
         ReadOnlyReactiveProperty<float> TickSpeed { get; }
+        bool IsTickEnabled { get; set; }
     }
     public class TickerModel : ITickerModel
     {
@@ -30,16 +31,18 @@ namespace TimeCounter.Entities.Counter
 
         public ReadOnlyReactiveProperty<float> TickSpeed => _dataSO.TickSpeed;
 
+        public bool IsTickEnabled { get => _dataSO.IsTickEnabled; set => _dataSO.IsTickEnabled = value; }
+
         [Zenject.Inject]
         public void CreateData(TimeTickerModelDataSO initialData, RuntimeClonableSOManager clonableSOManager)
         {
             _dataSO = clonableSOManager.CreateModelDataSOInstance(initialData);
-            _dataSO.Initialize();
         }
 
         public void Setup(ITickerContext context)
         {
             _context = context;
+            _dataSO.Initialize();
             _context.Debug.Log("Setup", this);
         }
 
@@ -55,18 +58,7 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = _dataSO.TickCount.Value;
-            var newValue = Math.Max(oldValue + value, _dataSO.MinTickCount);
-            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
-
-            if (oldValue != newValue)
-            {
-                _dataSO.TickCount.Value = newValue;
-            }
-            else
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-            }
+            TrySetTickCount(_dataSO.TickCount.Value + value);
         }
         public bool IsMaxTickCountReached()
         {
@@ -84,22 +76,33 @@ namespace TimeCounter.Entities.Counter
                 return;
             }
 
-            var oldValue = _dataSO.TickCount.Value;
-            var newValue = Math.Max(oldValue - value, _dataSO.MinTickCount);
-            newValue = Math.Min(newValue, _dataSO.MaxTickCount);
+            TrySetTickCount(_dataSO.TickCount.Value - value);
+        }
+        public void AddToTickSpeed(float value)
+        {
+            _dataSO.TickSpeed.Value = UnityEngine.Mathf.Clamp(_dataSO.TickSpeed.Value + value, _dataSO.MinTickSpeed, _dataSO.MaxTickSpeed);
+        }
 
+        public void SetMaxTickCount(int value)
+        {
+            _dataSO.MaxTickCount = value;
+        }
+
+        public void SetMinTickCount(int value)
+        {
+            _dataSO.MinTickCount = value;
+        }
+
+        public bool TrySetTickCount(int value)
+        {
+            var oldValue = _dataSO.TickCount.Value;
+            var newValue = UnityEngine.Mathf.Clamp(value, _dataSO.MinTickCount, _dataSO.MaxTickCount);
             if (oldValue != newValue)
             {
                 _dataSO.TickCount.Value = newValue;
+                return true;
             }
-            else
-            {
-                _context.Debug.Log("Unable to update counter value", this);
-            }
-        }
-        public void IncreaseTickSpeed(float value)
-        {
-            _dataSO.TickSpeed.Value += value;
+            return false;
         }
     }
 }

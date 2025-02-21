@@ -21,17 +21,31 @@ namespace TimeCounter.Entities.Counter
         private TickCountType _tickCountingType;
         public TickerController(ITickerModel model, ITickerContext context) : base(model, context)
         {
-            _tickCancellationTokenSource = new CancellationTokenSource();
+           
         }
         public void OnAwakeCallback()
         {
             _model.Setup(_context);
             _context.EventBusGlobal.Subscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
+            _context.EventBusCore.Subscribe<StartStopCounterEvent>(HandleOnStartStopCounter);
 
             var modelDisposableBuilder = Disposable.CreateBuilder();
             _model.TickCount.Subscribe(HandleOnTickCountValueUpdated).AddTo(ref modelDisposableBuilder);
             _model.TickSpeed.Subscribe(HandleOnTickSpeedValueUpdated).AddTo(ref modelDisposableBuilder);
             _modelSubDisposable = modelDisposableBuilder.Build();
+        }
+
+        private void HandleOnStartStopCounter(StartStopCounterEvent @event)
+        {
+            _model.IsTickEnabled = !_model.IsTickEnabled;
+            if (_model.IsTickEnabled)
+            {
+                StartTick();
+            }
+            else
+            {
+                StopTick();
+            }
         }
 
         private void HandleOnTickSpeedValueUpdated(float value)
@@ -42,17 +56,14 @@ namespace TimeCounter.Entities.Counter
         public override void Dispose()
         {
             _context.EventBusGlobal.Unsubscribe<SceneInitializedEvent>(HandleOnSceneInitialized);
+            _context.EventBusCore.Unsubscribe<StartStopCounterEvent>(HandleOnStartStopCounter);
             _modelSubDisposable.Dispose();
-            DeactivateTick();
+            StopTick();
             base.Dispose();
         }
         public void OnDestroyCallback()
         {
             Dispose();
-        }
-        private void IncreaseTickSpeed(int value)
-        {
-           _model.IncreaseTickSpeed(value);
         }
         private void HandleOnTickCountValueUpdated(int newValue)
         {
@@ -61,14 +72,12 @@ namespace TimeCounter.Entities.Counter
 
         private void HandleOnSceneInitialized(SceneInitializedEvent @event)
         {
-            ActivateTick().Forget();
         }
         private void HandleOnTick()
         {
             CheckHasCountingTypeChanged();
             HandleCounter();
         }
-
         private void CheckHasCountingTypeChanged()
         {
             if (_model.IsMaxTickCountReached())
@@ -87,6 +96,11 @@ namespace TimeCounter.Entities.Counter
                 _model.DecreaseCounter(1);
             }
         }
+        private void StartTick()
+        {
+            _tickCancellationTokenSource = new CancellationTokenSource();
+            ActivateTick().Forget();
+        }
         private async UniTask ActivateTick()
         {
             while (true)
@@ -101,7 +115,7 @@ namespace TimeCounter.Entities.Counter
                 HandleOnTick();
             }
         }
-        private void DeactivateTick()
+        private void StopTick()
         {
             _tickCancellationTokenSource?.Cancel();
             _tickCancellationTokenSource?.Dispose();

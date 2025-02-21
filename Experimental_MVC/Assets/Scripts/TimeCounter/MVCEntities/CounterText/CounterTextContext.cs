@@ -24,7 +24,6 @@ namespace TimeCounter.Entities.CounterText
 
         public void Dispose()
         {
-            EventBusCore.Dispose();
             Debug.Dispose();
             CommandManager.Dispose();
         }

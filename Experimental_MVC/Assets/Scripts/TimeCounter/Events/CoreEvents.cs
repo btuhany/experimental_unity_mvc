@@ -6,6 +6,8 @@ namespace TimeCounter.Events.CoreEvents
     public class Core : IEventCategory
     {
         public int ID => EventCategory.CoreEvents.ToID();
+
+        public bool CanBeDisposed => false;
     }
     public struct TickCountValueUpdatedEvent : IValueUpdatedEvent<int>
     {
@@ -26,6 +28,10 @@ namespace TimeCounter.Events.CoreEvents
         {
             UpdatedValue = updatedValue;
         }
+    }
+    public struct StartStopCounterEvent : IEvent
+    {
+        public int CategoryID => Categories.EventCategory.CoreEvents.ToID();
     }
     public interface IValueUpdatedEvent<T> : IEvent
     {

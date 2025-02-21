@@ -18,7 +18,6 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
 
         public void Dispose()
         {
-            EventBusCore.Dispose();
             EventBusModel.Dispose();
         }
     }
