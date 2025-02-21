@@ -16,9 +16,6 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         [Inject]
         private List<IEntryPoint> _entryPoints;
 
-        public List<ILifeCycleHandler> LifeCycleHandlers => throw new System.NotImplementedException();
-
-        public List<IEntryPoint> EntryPoints => throw new System.NotImplementedException();
 
         public virtual void HandleOnAwake()
         {
@@ -41,5 +38,6 @@ namespace Batuhan.MVC.UnityComponents.Zenject
                 _lifeCycleHandlers[i].OnDestroyCallback();
             }
         }
+
     }
 }
