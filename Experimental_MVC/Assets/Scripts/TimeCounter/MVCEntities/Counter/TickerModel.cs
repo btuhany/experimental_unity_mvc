@@ -48,7 +48,6 @@ namespace TimeCounter.Entities.Counter
 
         public void Dispose()
         {
-            UnityEngine.Debug.Log("dISPOSESESESESE");
             _dataSO.Dispose();
         }
         public void IncreaseCounter(int value = 1)

@@ -12,8 +12,8 @@ namespace TimeCounter.Installers
         public override void InstallFrom(DiContainer container)
         {
             container.Bind<ICountIndicatorInstantiatorContext>().To<CountIndicatorInstantiatorContext>().AsTransient();
+            container.Bind<ICountIndicatorInstantiatorModel>().To<CountIndicatorInstantiatorModel>().AsTransient();
             container.Bind<ILifeCycleHandler>().To<CountIndicatorInstantiatorController>().AsTransient();
-            container.Bind<CountIndicatorInstantiatorModel>().AsTransient();
         }
     }
 }

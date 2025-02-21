@@ -1,11 +1,14 @@
-﻿using Batuhan.MVC.Base;
+﻿using Batuhan.MVC.Core;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 
 namespace TimeCounter.Entities.CountIndicatorInstantiator
 {
-    internal class CountIndicatorInstantiatorModel : BaseModel<ICountIndicatorInstantiatorContext>
+    public interface ICountIndicatorInstantiatorModel : IModel
+    {
+        Vector3 CalcPosition(int index);
+    }
+    internal class CountIndicatorInstantiatorModel : ICountIndicatorInstantiatorModel
     {
         private const float INITIAL_RADIUS = 2.0f;
         private const float RADIUS_INCREASE_VALUE = 1.0f;
@@ -15,7 +18,7 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
         private float _cosAngle = 0;
         private float _sinAngle = 0;
 
-        public UnityEngine.Vector3 CalcPosition(int index)
+        public Vector3 CalcPosition(int index)
         {
             _cosAngle = (COS_INTERVAL * index);
             _sinAngle = (SIN_INTERVAL * index);
@@ -27,12 +30,16 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
             _cosAngle %= 360.0f;
             _sinAngle %= 360.0f;
 
-            var xPos = UnityEngine.Mathf.Cos(_cosAngle * Mathf.PI / 180.0f);
-            var yPos = UnityEngine.Mathf.Sin(_sinAngle * Mathf.PI / 180.0f);
+            var xPos = Mathf.Cos(_cosAngle * Mathf.PI / 180.0f);
+            var yPos = Mathf.Sin(_sinAngle * Mathf.PI / 180.0f);
 
-            var posVec2 = new UnityEngine.Vector2(xPos, yPos).normalized * radius;
+            var posVec2 = new Vector2(xPos, yPos).normalized * radius;
 
-            return new UnityEngine.Vector3(posVec2.x, posVec2.y, 1.0f);
+            return new Vector3(posVec2.x, posVec2.y, 1.0f);
+        }
+
+        public void Dispose()
+        {
         }
     }
 }
