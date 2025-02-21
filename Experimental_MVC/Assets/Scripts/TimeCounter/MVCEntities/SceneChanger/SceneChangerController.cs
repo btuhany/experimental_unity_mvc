@@ -1,6 +1,7 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.CompilerServices;
 using R3;
 using System;
 using UnityEngine;
@@ -8,23 +9,25 @@ using UnityEngine.SceneManagement;
 
 namespace TimeCounter.Entities.SceneChanger
 {
-    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, ISceneLifeCycleManaged
+    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, IAppLifeCycleManaged
     {
         private IDisposable _viewModelSubDisposable;
+        private DestroyThis _destroyDelegate;
+        public DestroyThis DestroyDelegate { get => _destroyDelegate; set => _destroyDelegate = value; }
+
         public SceneChangerController(ISceneChangerViewModel view) : base(view)
         {
         }
 
-        public void OnAwakeCallback()
+        public void Initialize()
         {
             _viewModelSubDisposable = _view.OnButtonClickedCommand.Subscribe(_ => OnButtonClicked());
         }
-
-        public void OnDestroyCallback()
+        public override void Dispose()
         {
+            base.Dispose();
             _viewModelSubDisposable?.Dispose();
         }
-
         private void OnButtonClicked()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;

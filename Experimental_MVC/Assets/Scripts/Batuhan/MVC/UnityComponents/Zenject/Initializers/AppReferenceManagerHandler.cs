@@ -29,7 +29,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
 
         public List<IAppLifeCycleManaged> ProjectLifeCycleManagedsToAdd => _projectLifeCycleManagedsToAdd;
 
-        protected virtual void Awake()
+        protected virtual void Start()
         {
             UpdateProjectLifeCycleReferences();
         }

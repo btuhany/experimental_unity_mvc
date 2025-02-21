@@ -5,9 +5,9 @@ namespace ExperimentalMVC.App
 {
     public class ExperimentalMVCReferenceManagerHandler : AppReferenceManagerHandler
     {
-        protected override void Awake()
+        protected override void Start()
         {
-            base.Awake();
+            base.Start();
             var refManager = ReferenceManager as ExperimentalMVCReferenceManager;
             if (ReferenceManager == null)
             {
@@ -20,6 +20,7 @@ namespace ExperimentalMVC.App
                 Debug.Log("random int set: " + refManager.randomInt);
             }
             Debug.Log("random int get: " + refManager.randomInt);
+            Debug.Log("App cycle managed count: " + refManager.GetAppLifeCycleManagedCount());
         }
     }
 }
