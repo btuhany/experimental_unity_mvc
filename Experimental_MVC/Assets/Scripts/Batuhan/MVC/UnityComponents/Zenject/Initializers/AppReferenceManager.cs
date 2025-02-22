@@ -6,28 +6,26 @@ namespace Batuhan.MVC.UnityComponents.Zenject
 {
     public interface IAppReferenceManager : IDisposable
     {
-        void AddToProjectLifeCycleReferences(IAppLifeCycleManaged projectLifeCycle);
-        void OnDestroyDelegateInvoked(IAppLifeCycleManaged appLifeCycleManaged);
+        void AddToAppLifeCycle(IAppLifeCycleManaged projectLifeCycle);
         int GetAppLifeCycleManagedCount();
+        void OnApplicationQuitCallback();
     }
+    /// <summary>
+    /// Should be installed at project context to keep just a single persistent object between scenes.
+    /// </summary>
     public class AppReferenceManager : IAppReferenceManager
     {
         private List<IAppLifeCycleManaged> _projectLifeCycleReferences = new List<IAppLifeCycleManaged>();
         
-        public void AddToProjectLifeCycleReferences(IAppLifeCycleManaged projectLifeCycle)
+        public void AddToAppLifeCycle(IAppLifeCycleManaged projectLifeCycle)
         {
             _projectLifeCycleReferences.Add(projectLifeCycle);
             projectLifeCycle.Initialize();
-            projectLifeCycle.DestroyDelegate = OnDestroyDelegateInvoked;
+            projectLifeCycle.RemoveFromAppLifeCycleAction = OnRemoveFromAppLifeCycleCallback;
         }
-        public void OnDestroyDelegateInvoked(IAppLifeCycleManaged appLifeCycleManaged)
+        public void OnApplicationQuitCallback()
         {
-            RemoveFromProjectLifeCycleReferences(appLifeCycleManaged);
-        }
-        private void RemoveFromProjectLifeCycleReferences(IAppLifeCycleManaged appLifeCycleManaged)
-        {
-            appLifeCycleManaged.Dispose();
-            _projectLifeCycleReferences?.Remove(appLifeCycleManaged);
+            Dispose();
         }
         public void Dispose()
         {
@@ -37,10 +35,18 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             }
             _projectLifeCycleReferences.Clear();
         }
-
         public int GetAppLifeCycleManagedCount()
         {
             return _projectLifeCycleReferences.Count;
+        }
+        private void OnRemoveFromAppLifeCycleCallback(IAppLifeCycleManaged appLifeCycleManaged)
+        {
+            RemoveFromProjectLifeCycle(appLifeCycleManaged);
+        }
+        private void RemoveFromProjectLifeCycle(IAppLifeCycleManaged appLifeCycleManaged)
+        {
+            appLifeCycleManaged.Dispose();
+            _projectLifeCycleReferences?.Remove(appLifeCycleManaged);
         }
     }
 }

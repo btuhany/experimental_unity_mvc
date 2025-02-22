@@ -1,12 +1,11 @@
 ﻿using System;
-using Zenject;
 
 namespace Batuhan.MVC.Core
 {
-    public delegate void DestroyThis(IAppLifeCycleManaged appLifeCyleManaged);
+    public delegate void AppLifeCycleManagedDelegate(IAppLifeCycleManaged appLifeCyleManaged);
     public interface IAppLifeCycleManaged : IDisposable
     {
-        public DestroyThis DestroyDelegate { get; set; }
+        public AppLifeCycleManagedDelegate RemoveFromAppLifeCycleAction { get; set; }
         void Initialize();
     }
 }

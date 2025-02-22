@@ -10,7 +10,7 @@ namespace TimeCounter.Installers
         public override void InstallBindings()
         {
             EventBusInstaller.Install(Container);
-            Container.Bind<ISceneReferenceManager>().To<TimeCounterSceneReferenceManager>().AsSingle();
+            Container.Bind<ISceneLifeCycleManager>().To<TimeCounterSceneReferenceManager>().AsSingle();
             Container.Bind<ICommandManager>().To<CommandManager>().AsTransient();
             Container.Bind<IDebugHelper>().To<DebugHelper>().AsSingle();
         }
