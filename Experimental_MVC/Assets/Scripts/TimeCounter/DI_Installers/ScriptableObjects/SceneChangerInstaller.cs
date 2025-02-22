@@ -1,5 +1,4 @@
-﻿
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using TimeCounter.Entities.SceneChanger;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace TimeCounter.Installers
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<ISceneLifeCycleManaged>().To<SceneChangerController>().AsSingle(); //TODOBY DDOL
+            container.Bind<IAppLifeCycleManaged>().To<SceneChangerController>().AsSingle(); //TODOBY DDOL
         }
     }
 }

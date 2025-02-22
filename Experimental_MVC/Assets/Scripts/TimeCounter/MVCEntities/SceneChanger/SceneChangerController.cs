@@ -1,7 +1,6 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.CompilerServices;
 using R3;
 using System;
 using UnityEngine;
@@ -12,8 +11,8 @@ namespace TimeCounter.Entities.SceneChanger
     public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, IAppLifeCycleManaged
     {
         private IDisposable _viewModelSubDisposable;
-        private DestroyThis _destroyDelegate;
-        public DestroyThis DestroyDelegate { get => _destroyDelegate; set => _destroyDelegate = value; }
+        private AppLifeCycleManagedDelegate _destroyDelegate;
+        public AppLifeCycleManagedDelegate RemoveFromAppLifeCycleAction { get => _destroyDelegate; set => _destroyDelegate = value; }
 
         public SceneChangerController(ISceneChangerViewModel view) : base(view)
         {
