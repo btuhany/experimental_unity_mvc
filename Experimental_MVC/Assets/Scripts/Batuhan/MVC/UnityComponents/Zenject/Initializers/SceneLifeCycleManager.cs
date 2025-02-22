@@ -32,8 +32,6 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         /// </summary>
         [Inject]
         private IAppReferenceManager _appReferenceManager;
-
-        public List<ISceneLifeCycleManaged> SceneReferences => _sceneReferences;
         private void Awake()
         {
             HandleSceneReferencesOnAwakeCallbacks();

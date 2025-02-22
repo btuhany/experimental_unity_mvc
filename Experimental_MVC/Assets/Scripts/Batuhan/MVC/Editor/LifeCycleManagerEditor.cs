@@ -61,13 +61,74 @@ namespace Batuhan.MVC.Editor
         }
         private void OnGUI()
         {
+            DrawHeader("LIFE CYCLE INSPECTOR");
+
+            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
+
+            DrawMonoLifeCycleManager();
+
+            DrawSeperationLine();
+
+            DrawIViewInspector();
+
+            EditorGUILayout.EndScrollView();
+        }
+
+        private static void DrawSeperationLine()
+        {
+            EditorGUILayout.Space();
+            EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 2), Color.gray);
+            EditorGUILayout.Space();
+        }
+
+        private void DrawIViewInspector()
+        {
+            DrawHeader("ALL VIEWS (IView) IN SCENE");
+
+            var allViews = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
+                            .Where(m => m is IView)
+                            .Cast<IView>()
+                            .ToList();
+
+            EditorGUILayout.Space();
+
+            if (allViews.Any())
+            {
+                foreach (var view in allViews)
+                {
+                    ShowObject((view as MonoBehaviour).gameObject);
+                }
+            }
+            else
+            {
+                EditorGUILayout.LabelField("There is no IView in scene.");
+            }
+        }
+        private void ShowObject(GameObject gameObject)
+        {
+            bool guiState = GUI.enabled;
+            GUI.enabled = false;
+
+            EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
+
+            GUI.enabled = guiState;
+        }
+        private void DrawMonoLifeCycleManager()
+        {
+            GUIStyle subHeader = new GUIStyle(EditorStyles.boldLabel)
+            {
+                fontSize = 12,
+                normal = { textColor = Color.white },
+            };
+
+            EditorGUILayout.LabelField("From Scene Life Cycle Manager:", subHeader);
+
             if (_sceneLifeCycleManager == null)
             {
                 EditorGUILayout.LabelField("Manager does not exist!");
                 return;
             }
 
-            _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
             var injectedFields = GetInjectedFields(_sceneLifeCycleManager);
             if (injectedFields != null)
@@ -78,8 +139,18 @@ namespace Batuhan.MVC.Editor
                     ShowInjectedField(field.Name, value);
                 }
             }
+        }
 
-            EditorGUILayout.EndScrollView();
+        private void DrawHeader(string header)
+        {
+            GUIStyle headerStyle = new GUIStyle(EditorStyles.boldLabel)
+            {
+                fontSize = 16,
+                normal = { textColor = Color.white },
+                alignment = TextAnchor.MiddleCenter
+            };
+
+            EditorGUILayout.LabelField(header, headerStyle);
         }
         private FieldInfo[] GetInjectedFields(object obj)
         {
