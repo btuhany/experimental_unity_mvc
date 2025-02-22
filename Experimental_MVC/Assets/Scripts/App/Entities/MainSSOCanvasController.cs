@@ -5,7 +5,6 @@ namespace ExperimentalMVC.App.Entities
 {
     public class MainSSOCanvasController : BaseControllerWithViewOnly<IMainSSOCanvasView>, IAppLifeCycleManaged
     {
-        public int RandomInt;
         public MainSSOCanvasController(IMainSSOCanvasView view) : base(view)
         {
 
@@ -15,22 +14,10 @@ namespace ExperimentalMVC.App.Entities
 
         public void Initialize()
         {
-            RandomInt = UnityEngine.Random.Range(1, 100);
-            _view.TestLog("controller init with random int: " + RandomInt);
-            _view.Controller = this;
-            //DestoryAfterSomeTime().Forget();
         }
-
-        public void OnDestroyCallback()
+        public override void Dispose()
         {
-            Dispose();
+            base.Dispose();
         }
-
-        //private async UniTask DestoryAfterSomeTime()
-        //{
-        //    await UniTask.Delay(2000);
-        //    UnityEngine.Debug.Log("DestoryAfterSomeTime");
-        //    RemoveFromAppLifeCycleAction?.Invoke(this);
-        //}
     }
 }
