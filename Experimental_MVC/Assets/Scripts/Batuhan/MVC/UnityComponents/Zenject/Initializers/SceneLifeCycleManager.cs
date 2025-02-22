@@ -8,6 +8,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
     /// <summary>
     /// Every scene should contain this object's instance.
     /// Every scene context should install the dependencies.
+    /// Should be executed after all objects in the scene are executed. (because of view mono behaviours)
     /// </summary>
     public class SceneLifeCycleManager : MonoBehaviour
     {
@@ -51,6 +52,9 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         }
         private void HandleSceneReferencesOnAwakeCallbacks()
         {
+            if (_sceneReferences is null)
+                return;
+
             for (int i = 0; i < _sceneReferences.Count; i++)
             {
                 _sceneReferences[i].OnAwakeCallback();
@@ -58,6 +62,9 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         }
         private void HandleSceneReferencesOnStartCallbacks()
         {
+            if (_sceneEntryPoints is null)
+                return;
+
             for (int i = 0; i < _sceneEntryPoints.Count; i++)
             {
                 _sceneEntryPoints[i].OnStartCallback();
@@ -65,6 +72,9 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         }
         private void HandleSceneReferencesOnDestroyCallbacks()
         {
+            if (_sceneReferences is null)
+                return;
+
             for (int i = 0; i < _sceneReferences.Count; i++)
             {
                 _sceneReferences[i].OnDestroyCallback();
@@ -72,6 +82,9 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         }
         private void HandleReferencesToAddAppLifeCycle()
         {
+            if (_referencesToAddAppLifeCycle is null)
+                return;
+
             for (int i = 0; i < _referencesToAddAppLifeCycle.Count; i++)
             {
                 var referenceToAdd = _referencesToAddAppLifeCycle[i];

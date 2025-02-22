@@ -1,7 +1,9 @@
+using UnityEngine;
 using Zenject;
 namespace Batuhan.MVC.UnityComponents.Zenject
 {
-    public abstract class BaseAppReferenceManagerInstallerSO : ScriptableObjectInstaller
+    [CreateAssetMenu(fileName = "CoreAppInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CoreAppInstaller")]
+    public class CoreAppInstallerSO : ScriptableObjectInstaller
     {
         public override void InstallBindings()
         {
