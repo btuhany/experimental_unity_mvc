@@ -1,10 +1,9 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
-using Cysharp.Threading.Tasks;
 
 namespace ExperimentalMVC.App.Entities
 {
-    public class MainSSOCanvasController : BaseControllerWithViewOnly<IMainSSOCanvasView>, ISceneLifeCycleManaged
+    public class MainSSOCanvasController : BaseControllerWithViewOnly<IMainSSOCanvasView>, IAppLifeCycleManaged
     {
         public int RandomInt;
         public MainSSOCanvasController(IMainSSOCanvasView view) : base(view)
@@ -12,13 +11,9 @@ namespace ExperimentalMVC.App.Entities
 
         }
 
+        public AppLifeCycleManagedDelegate RemoveFromAppLifeCycleAction { get; set; }
 
         public void Initialize()
-        {
-            
-        }
-
-        public void OnAwakeCallback()
         {
             RandomInt = UnityEngine.Random.Range(1, 100);
             _view.TestLog("controller init with random int: " + RandomInt);

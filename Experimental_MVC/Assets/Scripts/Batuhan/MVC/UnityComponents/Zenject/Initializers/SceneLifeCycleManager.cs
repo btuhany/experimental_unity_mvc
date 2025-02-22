@@ -33,6 +33,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         [Inject]
         private IAppReferenceManager _appReferenceManager;
 
+        public List<ISceneLifeCycleManaged> SceneReferences => _sceneReferences;
         private void Awake()
         {
             HandleSceneReferencesOnAwakeCallbacks();

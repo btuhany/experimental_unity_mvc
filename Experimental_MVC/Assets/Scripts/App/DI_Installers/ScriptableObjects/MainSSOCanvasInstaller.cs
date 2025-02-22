@@ -11,7 +11,7 @@ namespace ExperimentalMVC.App.Installers
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<ISceneLifeCycleManaged>().To<MainSSOCanvasController>().AsSingle();            
+            container.Bind<IAppLifeCycleManaged>().To<MainSSOCanvasController>().AsSingle();            
         }
     }
 }

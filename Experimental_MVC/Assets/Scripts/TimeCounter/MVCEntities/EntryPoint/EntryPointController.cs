@@ -1,10 +1,8 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
-using TimeCounter.Entities.EntryPoint;
 using TimeCounter.Events.GlobalEvents;
-using Zenject;
 
-namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
+namespace TimeCounter.Entities.EntryPoint
 {
     internal class EntryPointController : BaseController<IEntryPointContext>, ISceneLifeCycleManaged, IEntryPoint
     {

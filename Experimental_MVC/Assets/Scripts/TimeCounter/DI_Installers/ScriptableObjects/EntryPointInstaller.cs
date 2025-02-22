@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.TimeCounter.Entities.EntryPoint;
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using TimeCounter.Entities.EntryPoint;
 using UnityEngine;

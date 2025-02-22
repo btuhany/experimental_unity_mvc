@@ -7,7 +7,6 @@ namespace Batuhan.MVC.UnityComponents.Zenject
     public interface IAppReferenceManager : IDisposable
     {
         void AddToAppLifeCycle(IAppLifeCycleManaged projectLifeCycle);
-        int GetAppLifeCycleManagedCount();
         void OnApplicationQuitCallback();
     }
     /// <summary>
@@ -15,11 +14,11 @@ namespace Batuhan.MVC.UnityComponents.Zenject
     /// </summary>
     public class AppReferenceManager : IAppReferenceManager
     {
-        private List<IAppLifeCycleManaged> _projectLifeCycleReferences = new List<IAppLifeCycleManaged>();
+        private List<IAppLifeCycleManaged> _appLifeCycleReferences = new List<IAppLifeCycleManaged>();
         
         public void AddToAppLifeCycle(IAppLifeCycleManaged projectLifeCycle)
         {
-            _projectLifeCycleReferences.Add(projectLifeCycle);
+            _appLifeCycleReferences.Add(projectLifeCycle);
             projectLifeCycle.Initialize();
             projectLifeCycle.RemoveFromAppLifeCycleAction = OnRemoveFromAppLifeCycleCallback;
         }
@@ -29,15 +28,11 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         }
         public void Dispose()
         {
-            for (int i = 0; i < _projectLifeCycleReferences.Count; i++)
+            for (int i = 0; i < _appLifeCycleReferences.Count; i++)
             {
-                _projectLifeCycleReferences[i].Dispose();
+                _appLifeCycleReferences[i].Dispose();
             }
-            _projectLifeCycleReferences.Clear();
-        }
-        public int GetAppLifeCycleManagedCount()
-        {
-            return _projectLifeCycleReferences.Count;
+            _appLifeCycleReferences.Clear();
         }
         private void OnRemoveFromAppLifeCycleCallback(IAppLifeCycleManaged appLifeCycleManaged)
         {
@@ -46,7 +41,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         private void RemoveFromProjectLifeCycle(IAppLifeCycleManaged appLifeCycleManaged)
         {
             appLifeCycleManaged.Dispose();
-            _projectLifeCycleReferences?.Remove(appLifeCycleManaged);
+            _appLifeCycleReferences?.Remove(appLifeCycleManaged);
         }
     }
 }
