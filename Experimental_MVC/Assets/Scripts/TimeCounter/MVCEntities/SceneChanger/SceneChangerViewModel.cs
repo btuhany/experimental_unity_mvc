@@ -30,7 +30,7 @@ namespace TimeCounter.Entities.SceneChanger
         {
             Dispose();
         }
-        public void Dispose()
+        public override void Dispose()
         {
             _disposable?.Dispose();
         }

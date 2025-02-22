@@ -18,7 +18,7 @@ namespace ExperimentalMVC.App.Entities
         public override Type ContractTypeToBind => typeof(IMainSSOCanvasView);
         private int _testRandomInt = 0;
         public MainSSOCanvasController Controller { get; set; }
-        public void Dispose()
+        public override void Dispose()
         {
             Debug.Log("MainSSOCanvasView disposed");
         }

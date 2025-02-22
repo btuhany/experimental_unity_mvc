@@ -19,7 +19,7 @@ namespace TimeCounter.Entities.CountIndicatorInstantiator
 
         public ICountIndicatorInstantiatorContext Context => _context;
 
-        public void Dispose()
+        public override void Dispose()
         {
         }
 
