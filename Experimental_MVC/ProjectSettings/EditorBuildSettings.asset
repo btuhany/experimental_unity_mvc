@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GameAssets/Scenes/SnakeExample.unity
     guid: ef821c0e00e88ac4695ef4f04e8b1d46
+  - enabled: 1
+    path: Assets/GameAssets/Scenes/FinalScene.unity
+    guid: 70fc02fc58207f44abe86eab359fe2b7
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

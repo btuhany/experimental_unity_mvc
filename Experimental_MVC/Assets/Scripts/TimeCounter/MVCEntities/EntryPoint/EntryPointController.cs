@@ -13,11 +13,9 @@ namespace Assets.Scripts.TimeCounter.Entities.EntryPoint
         }
         public void OnAwakeCallback()
         {
-            _context.Debug.Log("Initialized!", this);
         }
         public void OnDestroyCallback()
         {
-            _context.Debug.Log("Disposed!", this);
             Dispose();
         }
         public void OnStartCallback()

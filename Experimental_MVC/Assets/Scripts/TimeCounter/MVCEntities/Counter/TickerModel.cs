@@ -43,7 +43,6 @@ namespace TimeCounter.Entities.Counter
         {
             _context = context;
             _dataSO.Initialize();
-            _context.Debug.Log("Setup", this);
         }
 
         public void Dispose()
