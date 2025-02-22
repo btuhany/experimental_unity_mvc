@@ -23,12 +23,8 @@ namespace TimeCounter.Entities.SceneChanger
             _disposable = _button.onClick.AsObservable().Subscribe(_ => OnButtonClickedCommand.Execute(Unit.Default));
 
             //GameObject already is a child of DDOL Object : UIMainCanvasSSO
-            //transform.SetParent(null);
-            //DontDestroyOnLoad(this);
-        }
-        private void OnDestroy()
-        {
-            Dispose();
+            transform.SetParent(null);
+            DontDestroyOnLoad(this);
         }
         public override void Dispose()
         {
