@@ -61,15 +61,31 @@ namespace Batuhan.MVC.Editor
         }
         private void OnGUI()
         {
-            DrawHeader("LIFE CYCLE INSPECTOR");
+            EditorGUILayout.Space();
 
             _scrollPosition = EditorGUILayout.BeginScrollView(_scrollPosition);
 
+            EditorGUILayout.BeginVertical(GUI.skin.box);
             DrawMonoLifeCycleManager();
-
+            EditorGUILayout.EndVertical();
             DrawSeperationLine();
 
-            DrawIViewInspector();
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            DrawHeader($"ALL VIEWS (IView) IN SCENE");
+            DrawInspectorOfGameObjectCastType<IView>();
+            EditorGUILayout.EndVertical();
+            DrawSeperationLine();
+
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            DrawHeader($"ALL MODELS (IModel) IN SCENE");
+            DrawInspectorOfGameObjectCastType<IModel>();
+            EditorGUILayout.EndVertical();
+            DrawSeperationLine();
+
+            EditorGUILayout.BeginVertical(GUI.skin.box);
+            DrawHeader($"ALL CONTROLLER (IController) IN SCENE");
+            DrawInspectorOfGameObjectCastType<IController>();
+            EditorGUILayout.EndVertical();
 
             EditorGUILayout.EndScrollView();
         }
@@ -77,17 +93,15 @@ namespace Batuhan.MVC.Editor
         private static void DrawSeperationLine()
         {
             EditorGUILayout.Space();
-            EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 2), Color.gray);
+            EditorGUI.DrawRect(EditorGUILayout.GetControlRect(false, 1), Color.gray);
             EditorGUILayout.Space();
         }
 
-        private void DrawIViewInspector()
+        private void DrawInspectorOfGameObjectCastType<T>()
         {
-            DrawHeader("ALL VIEWS (IView) IN SCENE");
-
             var allViews = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)
-                            .Where(m => m is IView)
-                            .Cast<IView>()
+                            .Where(m => m is T)
+                            .Cast<T>()
                             .ToList();
 
             EditorGUILayout.Space();
@@ -101,27 +115,38 @@ namespace Batuhan.MVC.Editor
             }
             else
             {
-                EditorGUILayout.LabelField("There is no IView in scene.");
+                EditorGUILayout.LabelField($"There is no {typeof(T)} in scene.");
             }
         }
+
         private void ShowObject(GameObject gameObject)
         {
-            bool guiState = GUI.enabled;
+            bool isDDOL = IsDontDestroyOnLoad(gameObject);
+            string label = gameObject.name;
+            if (isDDOL)
+            {
+                label += " [DDOL]";
+            }
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(label, GUILayout.MaxWidth(200));
+
+            GUILayout.Space(10);
+
+            bool oldEnabled = GUI.enabled;
             GUI.enabled = false;
-
             EditorGUILayout.ObjectField(gameObject, typeof(GameObject), true);
+            GUI.enabled = oldEnabled;
 
-            GUI.enabled = guiState;
+            EditorGUILayout.EndHorizontal();
+        }
+
+        private bool IsDontDestroyOnLoad(GameObject obj)
+        {
+            return obj.scene.name == "DontDestroyOnLoad" || obj.scene.buildIndex == -1;
         }
         private void DrawMonoLifeCycleManager()
         {
-            GUIStyle subHeader = new GUIStyle(EditorStyles.boldLabel)
-            {
-                fontSize = 12,
-                normal = { textColor = Color.white },
-            };
-
-            EditorGUILayout.LabelField("From Scene Life Cycle Manager:", subHeader);
+            DrawHeader("SCENE LIFE CYCLE MANAGER INSPECTOR");
 
             if (_sceneLifeCycleManager == null)
             {
@@ -131,14 +156,26 @@ namespace Batuhan.MVC.Editor
 
 
             var injectedFields = GetInjectedFields(_sceneLifeCycleManager);
+            AppReferenceManager appReferenceManager = null;
             if (injectedFields != null)
             {
                 foreach (var field in injectedFields)
                 {
                     object value = field.GetValue(_sceneLifeCycleManager);
-                    ShowInjectedField(field.Name, value);
+
+                    if (field.FieldType == typeof(IAppReferenceManager))
+                    {
+                        appReferenceManager = value as AppReferenceManager;
+                    }
+                    else 
+                    {
+                        ShowField(field.Name, value);
+                    }
                 }
             }
+
+            ShowField("App References That Added From This Scene", _sceneLifeCycleManager.AppReferencesAddedToAppLifeCycle, new GUIStyleState() { textColor = Color.magenta});
+            DrawAppLifeCycleManager(appReferenceManager);
         }
 
         private void DrawHeader(string header)
@@ -159,7 +196,7 @@ namespace Batuhan.MVC.Editor
                       .Where(f => f.GetCustomAttribute(typeof(InjectAttribute)) != null)
                       .ToArray();
         }
-        private void ShowInjectedField(string fieldName, object value)
+        private void ShowField(string fieldName, object value, GUIStyleState overrideStyleState = null)
         {
             fieldName = SplitCamelCase(fieldName);
             if (fieldName.StartsWith("_"))
@@ -171,7 +208,8 @@ namespace Batuhan.MVC.Editor
             var headerStyle = new GUIStyle(EditorStyles.boldLabel)
             {
                 fontSize = 14,
-                normal = { textColor = Color.green }
+                fontStyle = FontStyle.BoldAndItalic,
+                alignment = TextAnchor.MiddleLeft
             };
             EditorGUILayout.LabelField(fieldName, headerStyle);
 
@@ -181,38 +219,41 @@ namespace Batuhan.MVC.Editor
                 foreach (var item in collection)
                 {
                     count++;
-                    ShowObject(item);
+                    ShowFieldObject(item, overrideStyleState);
                 }
                 if (count == 0)
                 {
                     EditorGUILayout.LabelField("- There is no object");
                 }
             }
-            else if (value is AppReferenceManager appManager)
-            {
-                ShowAppLifeCycleReferences(appManager);
-            }
             else
             {
-                ShowObject(value);
+                ShowFieldObject(value);
             }
         }
 
-        private void ShowAppLifeCycleReferences(AppReferenceManager appManager)
+        private void DrawAppLifeCycleManager(AppReferenceManager appManager)
         {
+            DrawHeader("APP LIFE CYCLE MANAGER INSPECTOR");
+
+            if (appManager == null)
+            {
+                EditorGUILayout.LabelField("Manager does not exist!");
+                return;
+            }
+
             FieldInfo field = typeof(AppReferenceManager)
                     .GetField("_appLifeCycleReferences", BindingFlags.NonPublic | BindingFlags.Instance);
 
             if (field != null)
             {
                 var references = field.GetValue(appManager) as IEnumerable<IAppLifeCycleManaged>;
-                EditorGUILayout.LabelField("App Life Cycle References", EditorStyles.boldLabel);
 
                 if (references != null)
                 {
                     foreach (var reference in references)
                     {
-                        ShowObject(reference);
+                        ShowFieldObject(reference);
                     }
                 }
                 else
@@ -226,12 +267,12 @@ namespace Batuhan.MVC.Editor
         {
             return System.Text.RegularExpressions.Regex.Replace(input, "(\\B[A-Z])", " $1");
         }
-        private void ShowObject(object obj)
+        private void ShowFieldObject(object obj, GUIStyleState overrideInstanceStyleState = null)
         {
             var nullStyle = new GUIStyle()
             {
                 fontSize = 14,
-                normal = { textColor = Color.red }
+                normal = { textColor = Color.magenta }
             };
 
             var instanceStyle = new GUIStyle()
@@ -239,6 +280,10 @@ namespace Batuhan.MVC.Editor
                 fontSize = 14,
                 normal = { textColor = Color.white }
             };
+            if (overrideInstanceStyleState != null)
+            {
+                instanceStyle.normal = overrideInstanceStyleState;
+            }
 
             if (obj == null)
             {
@@ -250,7 +295,7 @@ namespace Batuhan.MVC.Editor
             }
             else
             {
-                EditorGUILayout.LabelField($"- {obj.GetType().FullName}", instanceStyle);
+                EditorGUILayout.LabelField($"- {obj.GetType().Name}", instanceStyle);
             }
         }
     }

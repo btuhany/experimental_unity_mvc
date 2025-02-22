@@ -32,6 +32,10 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         /// </summary>
         [Inject]
         private IAppReferenceManager _appReferenceManager;
+
+#if UNITY_EDITOR
+        public List<IAppLifeCycleManaged> AppReferencesAddedToAppLifeCycle;
+#endif
         private void Awake()
         {
             HandleSceneReferencesOnAwakeCallbacks();
@@ -84,10 +88,16 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             if (_referencesToAddAppLifeCycle is null)
                 return;
 
+#if UNITY_EDITOR
+            AppReferencesAddedToAppLifeCycle = new List<IAppLifeCycleManaged>();
+#endif
             for (int i = 0; i < _referencesToAddAppLifeCycle.Count; i++)
             {
                 var referenceToAdd = _referencesToAddAppLifeCycle[i];
                 _appReferenceManager.AddToAppLifeCycle(referenceToAdd);
+#if UNITY_EDITOR
+                AppReferencesAddedToAppLifeCycle.Add(referenceToAdd);
+#endif
             }
             _referencesToAddAppLifeCycle.Clear();
         }
