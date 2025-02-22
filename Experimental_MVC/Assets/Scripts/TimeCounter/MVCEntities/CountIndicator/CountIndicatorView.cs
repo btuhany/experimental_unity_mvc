@@ -36,7 +36,7 @@ namespace TimeCounter.Entities.CountIndicator
         {
             Destroy(gameObject);
         }
-        public void Dispose()
+        public override void Dispose()
         {
             _context.EventBusModel.Unsubscribe<CountIndicatorDataUpdatedEvent>(OnIndicatorDataUpdated);
             _context.CommandManager.RemoveListenerFromExecuteCallback<SetParentCommand>(OnSetParentCommand);

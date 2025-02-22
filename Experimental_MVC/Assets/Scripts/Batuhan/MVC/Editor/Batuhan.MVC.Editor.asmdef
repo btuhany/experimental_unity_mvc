@@ -1,0 +1,18 @@
+{
+    "name": "Batuhan.MVC.Editor",
+    "rootNamespace": "Batuhan.MVC.Editor",
+    "references": [
+        "GUID:9fbf827aa7b5c75418fbd639c7b71010"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

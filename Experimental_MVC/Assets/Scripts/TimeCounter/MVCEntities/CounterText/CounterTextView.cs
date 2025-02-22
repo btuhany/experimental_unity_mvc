@@ -40,7 +40,7 @@ namespace TimeCounter.Entities.CounterText
         {
             _animator.speed = speed;
         }
-        public void Dispose()
+        public override void Dispose()
         {
             UnregisterCommandListeners();
         }

@@ -95,7 +95,7 @@ namespace TimeCounter.Entities.InputHandler
         {
             Dispose();
         }
-        public void Dispose()
+        public override void Dispose()
         {
             _disposables.Dispose();
         }

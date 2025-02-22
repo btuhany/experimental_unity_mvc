@@ -21,12 +21,12 @@ namespace TimeCounter.Entities.SceneChanger
         {
             OnButtonClickedCommand = new ReactiveCommand();
             _disposable = _button.onClick.AsObservable().Subscribe(_ => OnButtonClickedCommand.Execute(Unit.Default));
+
+            //GameObject already is a child of DDOL Object : UIMainCanvasSSO
+            transform.SetParent(null);
+            DontDestroyOnLoad(this);
         }
-        private void OnDestroy()
-        {
-            Dispose();
-        }
-        public void Dispose()
+        public override void Dispose()
         {
             _disposable?.Dispose();
         }

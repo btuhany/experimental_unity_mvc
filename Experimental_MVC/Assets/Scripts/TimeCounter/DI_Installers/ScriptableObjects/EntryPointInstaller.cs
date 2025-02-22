@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.TimeCounter.Entities.EntryPoint;
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using TimeCounter.Entities.EntryPoint;
 using UnityEngine;
@@ -13,7 +12,7 @@ namespace TimeCounter.Installers
         public override void InstallFrom(DiContainer container)
         {
             container.Bind<EntryPointController>().AsSingle();
-            container.Bind<ILifeCycleHandler>().To<EntryPointController>().FromResolve();
+            container.Bind<ISceneLifeCycleManaged>().To<EntryPointController>().FromResolve();
             container.Bind<IEntryPoint>().To<EntryPointController>().FromResolve();
 
             container.Bind<IEntryPointContext>().To<EntryPointContext>().AsTransient();

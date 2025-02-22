@@ -31,7 +31,6 @@ namespace TimeCounter.Entities.CounterText
         public void Setup(ICounterTextContext context)
         {
             _context = context;
-            _context.Debug.Log("Setup", this);
             CounterText = new(string.Empty);
             _animatorSpeed = new (INITIAL_ANIMATOR_SPEED);
         }

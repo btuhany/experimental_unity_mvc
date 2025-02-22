@@ -13,7 +13,7 @@ namespace TimeCounter.Installers
         {
             container.Bind<ICountIndicatorInstantiatorContext>().To<CountIndicatorInstantiatorContext>().AsTransient();
             container.Bind<ICountIndicatorInstantiatorModel>().To<CountIndicatorInstantiatorModel>().AsTransient();
-            container.Bind<ILifeCycleHandler>().To<CountIndicatorInstantiatorController>().AsTransient();
+            container.Bind<ISceneLifeCycleManaged>().To<CountIndicatorInstantiatorController>().AsTransient();
         }
     }
 }

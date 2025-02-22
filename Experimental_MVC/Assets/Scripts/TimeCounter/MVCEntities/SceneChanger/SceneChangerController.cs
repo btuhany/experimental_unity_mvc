@@ -8,23 +8,25 @@ using UnityEngine.SceneManagement;
 
 namespace TimeCounter.Entities.SceneChanger
 {
-    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, ILifeCycleHandler
+    public class SceneChangerController : BaseControllerWithViewOnly<ISceneChangerViewModel>, IAppLifeCycleManaged
     {
         private IDisposable _viewModelSubDisposable;
+        private AppLifeCycleManagedDelegate _destroyDelegate;
+        public AppLifeCycleManagedDelegate RemoveFromAppLifeCycleAction { get => _destroyDelegate; set => _destroyDelegate = value; }
+
         public SceneChangerController(ISceneChangerViewModel view) : base(view)
         {
         }
 
-        public void OnAwakeCallback()
+        public void Initialize()
         {
             _viewModelSubDisposable = _view.OnButtonClickedCommand.Subscribe(_ => OnButtonClicked());
         }
-
-        public void OnDestroyCallback()
+        public override void Dispose()
         {
+            base.Dispose();
             _viewModelSubDisposable?.Dispose();
         }
-
         private void OnButtonClicked()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
