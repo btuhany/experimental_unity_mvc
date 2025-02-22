@@ -71,19 +71,19 @@ namespace Batuhan.MVC.Editor
             DrawSeperationLine();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            DrawHeader($"ALL VIEWS (IView) IN SCENE");
+            DrawHeader($"ALL VIEW MONOBEHAVIOURS (IView) IN SCENE");
             DrawInspectorOfGameObjectCastType<IView>();
             EditorGUILayout.EndVertical();
             DrawSeperationLine();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            DrawHeader($"ALL MODELS (IModel) IN SCENE");
+            DrawHeader($"ALL MODEL MONOBEHAVIOURS (IModel) IN SCENE");
             DrawInspectorOfGameObjectCastType<IModel>();
             EditorGUILayout.EndVertical();
             DrawSeperationLine();
 
             EditorGUILayout.BeginVertical(GUI.skin.box);
-            DrawHeader($"ALL CONTROLLER (IController) IN SCENE");
+            DrawHeader($"ALL CONTROLLER MONOBEHAVIOURS (IController) IN SCENE");
             DrawInspectorOfGameObjectCastType<IController>();
             EditorGUILayout.EndVertical();
 
