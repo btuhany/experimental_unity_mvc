@@ -10,7 +10,7 @@ namespace Batuhan.MVC.UnityComponents.Zenject
         void OnApplicationQuitCallback();
     }
     /// <summary>
-    /// Should be installed at project context to keep just a single persistent object between scenes.
+    /// Should be installed at project context to keep just a single persistent object between scenes and at whoel lifetime of the app
     /// </summary>
     public class AppReferenceManager : IAppReferenceManager
     {
