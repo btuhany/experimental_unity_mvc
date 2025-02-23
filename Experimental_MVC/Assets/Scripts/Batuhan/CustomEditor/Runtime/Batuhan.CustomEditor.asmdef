@@ -1,7 +1,9 @@
 {
     "name": "Batuhan.CustomEditor",
     "rootNamespace": "Batuhan.CustomEditor",
-    "references": [],
+    "references": [
+        ""
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
