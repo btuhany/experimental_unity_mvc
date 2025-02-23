@@ -65,15 +65,15 @@ namespace Batuhan.MVC.Base
     public abstract class BaseControllerWithViewOnly<TView> : IController, IDisposable
       where TView : IView
     {
-        protected readonly TView _view;
+        protected readonly TView _viewModel;
 
         public BaseControllerWithViewOnly(TView view)
         {
-            _view = view;
+            _viewModel = view;
         }
         public virtual void Dispose()
         {
-            _view.Dispose();
+            _viewModel.Dispose();
         }
     }
     public abstract class BaseController<TContext> : IController, IDisposable
