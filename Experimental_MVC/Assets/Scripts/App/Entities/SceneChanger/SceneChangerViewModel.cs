@@ -9,26 +9,49 @@ namespace TimeCounter.Entities.SceneChanger
 {
     public interface ISceneChangerViewModel : IView
     {
-        ReactiveCommand OnButtonClickedCommand { get; }
+        ReactiveCommand OnNextSceneButtonClicked { get; }
+        ReactiveCommand OnPrevSceneButtonClicked { get; }
+        void SetActiveNextSceneButtonGameObject(bool active);
+        void SetActivePrevSceneButtonGameObject(bool active);
     }
-    public class SceneChangerViewModel : BaseViewMonoBehaviour, ISceneChangerViewModel
+    public class SceneChangerViewModel : BaseSingletonViewMonoBehaviour<SceneChangerViewModel>, ISceneChangerViewModel
     {
-        [SerializeField] private Button _button;
-        public ReactiveCommand OnButtonClickedCommand { get; private set; }
+        [SerializeField] private Button _nextSceneButton;
+        [SerializeField] private Button _previousSceneButton;
+        public ReactiveCommand OnNextSceneButtonClicked { get; private set; }
         public override Type ContractTypeToBind => typeof(ISceneChangerViewModel);
+
+        public ReactiveCommand OnPrevSceneButtonClicked { get; private set; }
+
         private IDisposable _disposable;
         private void Awake()
         {
-            OnButtonClickedCommand = new ReactiveCommand();
-            _disposable = _button.onClick.AsObservable().Subscribe(_ => OnButtonClickedCommand.Execute(Unit.Default));
+            if (!TrySetSingletonAsDDOL(true))
+            {
+                return;
+            }
 
-            //GameObject already is a child of DDOL Object : UIMainCanvasSSO
-            transform.SetParent(null);
-            DontDestroyOnLoad(this);
+            OnNextSceneButtonClicked = new ReactiveCommand();
+            OnPrevSceneButtonClicked = new ReactiveCommand();
+
+            var disposableBuilder = Disposable.CreateBuilder();
+            _nextSceneButton.onClick.AsObservable().Subscribe(_ => OnNextSceneButtonClicked.Execute(Unit.Default)).AddTo(ref disposableBuilder);
+            _previousSceneButton.onClick.AsObservable().Subscribe(_ => OnPrevSceneButtonClicked.Execute(Unit.Default)).AddTo(ref disposableBuilder);
+
+            _disposable = disposableBuilder.Build();
         }
         public override void Dispose()
         {
             _disposable?.Dispose();
+            base.Dispose();
+        }
+        public void SetActiveNextSceneButtonGameObject(bool active)
+        {
+            _nextSceneButton.gameObject.SetActive(active);
+        }
+        public void SetActivePrevSceneButtonGameObject(bool active)
+        {
+            _previousSceneButton.gameObject.SetActive(active);
         }
     }
 }

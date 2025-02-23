@@ -11,7 +11,7 @@ namespace TimeCounter.Installers
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<IAppLifeCycleManaged>().To<SceneChangerController>().AsSingle(); //TODOBY DDOL
+            container.Bind<IAppLifeCycleManaged>().To<SceneChangerController>().AsSingle();
         }
     }
 }

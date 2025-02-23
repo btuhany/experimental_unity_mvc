@@ -1,5 +1,7 @@
 ﻿using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
+using Batuhan.MVC.UnityComponents.Zenject;
+using System;
 
 namespace ExperimentalMVC.App.Entities
 {
@@ -11,6 +13,10 @@ namespace ExperimentalMVC.App.Entities
         }
 
         public AppLifeCycleManagedDelegate RemoveFromAppLifeCycleAction { get; set; }
+
+        public ReferenceAllocationMode AllocationMode => ReferenceAllocationMode.Singleton;
+
+        public Type AllocationRegistrationType => typeof(MainSSOCanvasController);
 
         public void Initialize()
         {

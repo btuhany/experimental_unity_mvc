@@ -1,21 +1,23 @@
 using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Base;
-using Cysharp.Threading.Tasks;
 using System;
+using System.Diagnostics;
 
 namespace ExperimentalMVC.App.Entities
 {
     public interface IMainSSOCanvasView : IView
     {
     }
-    public class MainSSOCanvasView : BaseViewMonoBehaviour, IMainSSOCanvasView
+    public class MainSSOCanvasView : BaseSingletonViewMonoBehaviour<MainSSOCanvasView>, IMainSSOCanvasView
     {
         public override Type ContractTypeToBind => typeof(IMainSSOCanvasView);
 
         private void Awake()
         {
-            transform.SetParent(null);
-            DontDestroyOnLoad(this);
+            if (!TrySetSingletonAsDDOL(true))
+            {
+                return;
+            }
         }
       
     }
