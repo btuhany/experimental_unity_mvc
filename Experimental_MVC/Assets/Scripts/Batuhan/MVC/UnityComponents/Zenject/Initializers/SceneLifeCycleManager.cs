@@ -1,6 +1,7 @@
 ﻿using Batuhan.MVC.Core;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Batuhan.MVC.UnityComponents.Zenject
@@ -94,9 +95,10 @@ namespace Batuhan.MVC.UnityComponents.Zenject
             for (int i = 0; i < _referencesToAddAppLifeCycle.Count; i++)
             {
                 var referenceToAdd = _referencesToAddAppLifeCycle[i];
-                _appReferenceManager.AddToAppLifeCycle(referenceToAdd);
+                bool isAdded = _appReferenceManager.AddToAppLifeCycle(referenceToAdd);
 #if UNITY_EDITOR
-                AppReferencesAddedToAppLifeCycle.Add(referenceToAdd);
+                if (isAdded)
+                    AppReferencesAddedToAppLifeCycle.Add(referenceToAdd);
 #endif
             }
             _referencesToAddAppLifeCycle.Clear();
