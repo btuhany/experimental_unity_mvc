@@ -2,7 +2,6 @@ using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using Cysharp.Threading.Tasks;
-using ExperimentalMVC.App.Entities;
 using R3;
 using System;
 using UnityEngine;
@@ -29,19 +28,24 @@ namespace TimeCounter.Entities.SceneChanger
             _viewModel.OnNextSceneButtonClicked.Subscribe(_ => OnNextButtonClicked()).AddTo(ref disposableBuilder);
             _viewModel.OnPrevSceneButtonClicked.Subscribe(_ => OnPrevButtonClicked()).AddTo(ref disposableBuilder);
             _viewModelSubDisposable = disposableBuilder.Build();
+            HandleButtonActiveStates(SceneManager.GetActiveScene().buildIndex);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void OnSceneLoaded(Scene sceneData, LoadSceneMode loadSceneMode)
         {
-            int buildIndex = sceneData.buildIndex;
-            if (buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+            HandleButtonActiveStates(sceneData.buildIndex);
+        }
+
+        private void HandleButtonActiveStates(int activeSceneBuildIndex)
+        {
+            if (activeSceneBuildIndex == SceneManager.sceneCountInBuildSettings - 1)
             {
                 //Handle last scene operations
                 _viewModel.SetActiveNextSceneButtonGameObject(false);
                 _viewModel.SetActivePrevSceneButtonGameObject(true);
             }
-            else if (buildIndex == 0)
+            else if (activeSceneBuildIndex == 0)
             {
                 //Handle first scene operations
                 _viewModel.SetActiveNextSceneButtonGameObject(true);
@@ -53,6 +57,7 @@ namespace TimeCounter.Entities.SceneChanger
                 _viewModel.SetActivePrevSceneButtonGameObject(true);
             }
         }
+
         private void OnPrevButtonClicked()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
