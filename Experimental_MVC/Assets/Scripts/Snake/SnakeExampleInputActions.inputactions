@@ -1,0 +1,45 @@
+{
+    "name": "SnakeExampleInputActions",
+    "maps": [
+        {
+            "name": "SnakeScene",
+            "id": "c087ee97-e091-4cb0-8a03-7b18c9799b6a",
+            "actions": [
+                {
+                    "name": "MoveUp",
+                    "type": "Button",
+                    "id": "a4652a9c-0ea2-4fe0-90fa-4b1f5ed0e567",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c8f5d3f0-f05e-4cb2-8c47-92e9a496df8f",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ed5b369-d4a4-41d1-adee-ed22d86441b9",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MoveUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
