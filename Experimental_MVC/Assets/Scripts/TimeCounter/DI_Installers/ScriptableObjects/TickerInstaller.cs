@@ -7,7 +7,7 @@ using Zenject;
 
 namespace TimeCounter.Installers
 {
-    [CreateAssetMenu(fileName = "TimeTickerInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/TimeTickerInstaller")]
+    [CreateAssetMenu(fileName = "TimeTickerInstaller", menuName = "Scriptable Objects/TimeCounterExample/Installers/TimeTickerInstaller")]
     internal class TickerInstaller : BaseEntityInstallerSO
     {
         [SerializeField] private TimeTickerModelDataSO _modelDataSO;

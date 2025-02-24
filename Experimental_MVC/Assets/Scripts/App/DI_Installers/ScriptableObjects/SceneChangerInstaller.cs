@@ -6,7 +6,7 @@ using Zenject;
 
 namespace TimeCounter.Installers
 {
-    [CreateAssetMenu(fileName = "SceneChangerInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/SceneChangerInstaller")]
+    [CreateAssetMenu(fileName = "SceneChangerInstaller", menuName = "Scriptable Objects/App/Installers/SceneChangerInstaller")]
     public class SceneChangerInstaller : BaseEntityInstallerSO
     {
         public override void InstallFrom(DiContainer container)

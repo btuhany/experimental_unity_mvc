@@ -6,7 +6,7 @@ using Zenject;
 
 namespace ExperimentalMVC.App.Installers
 {
-    [CreateAssetMenu(fileName = "MainSSOCanvasInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/MainSSOCanvasInstaller")]
+    [CreateAssetMenu(fileName = "MainSSOCanvasInstaller", menuName = "Scriptable Objects/App/Installers/MainSSOCanvasInstaller")]
     public class MainSSOCanvasInstaller : BaseEntityInstallerSO
     {
         public override void InstallFrom(DiContainer container)
