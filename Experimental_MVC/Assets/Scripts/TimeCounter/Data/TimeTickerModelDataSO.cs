@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace TimeCounter.Data
 {
-    [CreateAssetMenu(fileName = "CounterTextDataSO", menuName = "Scriptable Objects/Batuhan/Model_DataSO/TimeTickerModelDataSO")]
+    [CreateAssetMenu(fileName = "CounterTextDataSO", menuName = "Scriptable Objects/TimeCounterExample/ModelData/TimeTickerModelDataSO")]
     public class TimeTickerModelDataSO : RuntimeClonableScriptableObject, IDisposable
     {
         //TODOBY SERIALIZED REACTIVE PROPERTY
