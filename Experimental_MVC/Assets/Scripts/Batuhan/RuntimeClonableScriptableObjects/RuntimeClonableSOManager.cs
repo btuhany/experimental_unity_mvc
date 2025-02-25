@@ -9,6 +9,7 @@ namespace Batuhan.RuntimeCopyScriptableObjects
     public class RuntimeClonableSOManager : MonoBehaviour
     {
 #if UNITY_EDITOR
+        private static RuntimeClonableSOManager _instance;
         private const string RUNTIME_CLONES_FOLDER_PATH = "Assets/RuntimeResources";
         private const string FOLDER_NAME = "ScriptableObjects";
         private const string FULL_PATH = "Assets/RuntimeResources/ScriptableObjects";
@@ -17,6 +18,18 @@ namespace Batuhan.RuntimeCopyScriptableObjects
         private List<RuntimeClonableScriptableObject> _runtimeClonedBaseSOList = new List<RuntimeClonableScriptableObject>();
         private void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+            else if (_instance == null)
+            {
+                _instance = this;
+                transform.SetParent(null);
+                DontDestroyOnLoad(gameObject);
+            }
+
             if (!_isRegisteredToEditorAppEvent)
             {
                 EditorApplication.playModeStateChanged += OnPlayModeStateChanged;

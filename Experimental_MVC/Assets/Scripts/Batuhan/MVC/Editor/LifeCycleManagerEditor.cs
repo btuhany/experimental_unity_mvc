@@ -17,7 +17,7 @@ namespace Batuhan.MVC.Editor
         private Vector2 _scrollPosition;
         private SceneLifeCycleManager _sceneLifeCycleManager;
 
-        [MenuItem("Batuhan.MVC/Debug/LifeCycleInspector")]
+        [MenuItem("Batuhan/MVC/LifeCycleInspector")]
         public static void ShowWindow()
         {
             LifeCycleManagerEditor window = GetWindow<LifeCycleManagerEditor>("Life Cycle Inspector");

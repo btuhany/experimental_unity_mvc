@@ -6,7 +6,7 @@ using Zenject;
 
 namespace TimeCounter.Installers
 {
-    [CreateAssetMenu(fileName = "CountIndicatorInstantiatorInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CountIndicatorInstantiatorInstaller")]
+    [CreateAssetMenu(fileName = "CountIndicatorInstantiatorInstaller", menuName = "Scriptable Objects/TimeCounterExample/Installers/CountIndicatorInstantiatorInstaller")]
     internal class CountIndicatorInstantiatorInstaller : BaseEntityInstallerSO
     {
         public override void InstallFrom(DiContainer container)

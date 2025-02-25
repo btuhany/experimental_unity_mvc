@@ -6,7 +6,7 @@ using Batuhan.MVC.Core;
 
 namespace TimeCounter.Installers
 {
-    [CreateAssetMenu(fileName = "CounterEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CounterEntityInstaller")]
+    [CreateAssetMenu(fileName = "CounterEntityInstaller", menuName = "Scriptable Objects/TimeCounterExample/Installers/CounterEntityInstaller")]
     internal class CounterTextInstaller : BaseEntityInstallerSO
     {
         public override void InstallFrom(DiContainer container)

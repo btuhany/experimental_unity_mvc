@@ -5,7 +5,7 @@ using Zenject;
 
 namespace TimeCounter.Installers
 {
-    [CreateAssetMenu(fileName = "CircleEntityInstaller", menuName = "Scriptable Objects/Batuhan/MVC/Installers/CircleEntityInstaller")]
+    [CreateAssetMenu(fileName = "CircleEntityInstaller", menuName = "Scriptable Objects/TimeCounterExample/Installers/CircleEntityInstaller")]
     internal class CountIndicatorInstaller : BaseEntityInstallerSO
     {
         [SerializeField] private CountIndicatorView _circleViewPrefab;
