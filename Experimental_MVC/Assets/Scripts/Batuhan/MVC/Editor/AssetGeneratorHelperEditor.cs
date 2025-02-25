@@ -14,13 +14,18 @@ namespace Batuhan.MVC.Editor
             NewController,
             NewModel,
             NewView,
+            NewContext,
         }
         [MenuItem("Assets/Create/Batuhan/MVC/New Controller Script", false, 1)]
         private static void CreateNewController()
         {
             CreateAndOpenScriptFromTemplate(TemplateType.NewController, "NewController.cs");
         }
-
+        [MenuItem("Assets/Create/Batuhan/MVC/New Context Script", false, 1)]
+        private static void CreateNewContext()
+        {
+            CreateAndOpenScriptFromTemplate(TemplateType.NewContext, "NewContext.cs");
+        }
         [MenuItem("Assets/Create/Batuhan/MVC/New Model Script", false, 1)]
         private static void CreateNewModel()
         {
@@ -115,6 +120,14 @@ namespace {defaultNamespace}.Entities.NewEntity
 namespace {defaultNamespace}.Entities.NewEntity 
 {{ 
     public class NewView : IView
+    {{ 
+    }} 
+}}";
+                case TemplateType.NewContext:
+                    return @$"using Batuhan.MVC.Core;
+namespace {defaultNamespace}.Entities.NewEntity 
+{{ 
+    public class NewContext : IContext
     {{ 
     }} 
 }}";
