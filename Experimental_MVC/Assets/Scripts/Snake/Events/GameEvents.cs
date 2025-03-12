@@ -1,5 +1,5 @@
 ﻿using Batuhan.EventBus;
-using SnakeExample.Entities.NewEntity;
+using SnakeExample.Entities.GameManager;
 
 namespace SnakeExample.Events
 {
@@ -12,6 +12,6 @@ namespace SnakeExample.Events
     public struct GameStateChanged : IEvent
     {
         public int CategoryID => (int) EventCategory.Game;
-        public GameManagerModel.GameState NewState;
+        public GameState NewState;
     }
 }

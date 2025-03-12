@@ -2,7 +2,6 @@
 using TimeCounter.Events.CoreEvents;
 using TimeCounter.Events.GlobalEvents;
 using TimeCounter.Events.ModelEvents;
-using UnityEngine.UIElements;
 using Zenject;
 
 namespace TimeCounter.Installers
