@@ -11,7 +11,8 @@ namespace SnakeExample.Entities.InputReader
     }
     public class InputReaderContext : IInputReaderContext
     {
-        [Inject] IEventBus<GameEvent> EventBus { get; }
+        [Inject] public IEventBus<GameEvent> EventBus { get; }
+
         public void Dispose()
         {
         }
