@@ -14,6 +14,7 @@ namespace SnakeExample.Entities.Snake
         private readonly ReactiveProperty<Vector2Int> _gridPos = new ReactiveProperty<Vector2Int>();
         private Vector2Int _direction;
         private int _speed;
+        public Action OnStop;
         public Vector2Int GridPos
         {
             get => _gridPos.Value;
@@ -29,8 +30,9 @@ namespace SnakeExample.Entities.Snake
             GridPos = configDataSO.SnakeStartPos;
             GridPosReactive = _gridPos.ToReadOnlyReactiveProperty();
         }
-        public void Initialize()
+        public void Initialize(Action onStopCallback)
         {
+            OnStop = onStopCallback;
             _gridModel.Grid.TrySetElement(GridPos.x, GridPos.y, this);
         }
         public void Dispose()
@@ -41,14 +43,19 @@ namespace SnakeExample.Entities.Snake
 
         public void OnTick()
         {
-            _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
-            GridPos += _direction * _speed;
-
-            if (_gridModel.Grid.TrySetElement(GridPos.x, GridPos.y, this))
+            var nextPos = GridPos + _direction * _speed;
+            if (_gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this))
             {
-                return;
+                _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
+                GridPos = nextPos;
             }
-            Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
+            else
+            {
+                Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
+                _speed = 0;
+                _direction = Vector2Int.zero;
+                OnStop?.Invoke();
+            }
         }
         internal void OnMoveDirAction(Vector2Int dir)
         {

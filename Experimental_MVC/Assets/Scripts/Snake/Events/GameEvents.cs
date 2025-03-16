@@ -18,4 +18,8 @@ namespace SnakeExample.Events
     {
         public int CategoryID => (int)EventCategory.Game;
     }
+    public struct SnakeStoppedEvent : IEvent
+    {
+        public int CategoryID => (int)EventCategory.Game;
+    }
 }

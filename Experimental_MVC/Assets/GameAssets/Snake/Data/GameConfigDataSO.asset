@@ -12,4 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1631c117ee0188a4cbafb8b8f3ebee92, type: 3}
   m_Name: GameConfigDataSO
   m_EditorClassIdentifier: 
-  TickIntervalsMillisecond: 1000
+  GridWidth: 100
+  GridHeight: 100
+  GridCellSize: 0.2
+  GridOriginPos: {x: 0, y: 0, z: 0}
+  TickIntervalsMillisecond: 200
+  SnakeStartPos: {x: 50, y: 50}
+  SnakeStartDir: {x: 1, y: 0}
+  SnakeSpeed: 1

@@ -35,8 +35,12 @@ namespace SnakeExample.Entities.Snake
         }
         private void Initialize()
         {
-            _model.Initialize();
+            _model.Initialize(OnStop);
             _model.GridPosReactive.Subscribe(_view.OnGridPosUpdated).AddTo(_disposableBag);
+        }
+        private void OnStop()
+        {
+            _context.EventBus.Publish(new SnakeStoppedEvent());
         }
     }
 }

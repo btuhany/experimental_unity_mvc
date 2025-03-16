@@ -3,6 +3,7 @@ using Batuhan.MVC.Core;
 using Cysharp.Threading.Tasks;
 using SnakeExample.Config;
 using SnakeExample.Events;
+using System;
 using Zenject;
 
 namespace SnakeExample.Tick
@@ -14,13 +15,24 @@ namespace SnakeExample.Tick
         private bool _isRunning = false;
         public void OnAwakeCallback()
         {
-            _isRunning = true;
-            TickAsync().Forget();
+            _eventBus.Subscribe<GameStateChanged>(OnGameStateChanged);
         }
 
         public void OnDestroyCallback()
         {
-            _isRunning = false;
+            _eventBus.Unsubscribe<GameStateChanged>(OnGameStateChanged);
+        }
+        private void OnGameStateChanged(GameStateChanged changed)
+        {
+            if (changed.NewState == Entities.GameManager.GameState.Started)
+            {
+                _isRunning = true;
+                TickAsync().Forget();
+            }
+            else
+            {
+                _isRunning = false;
+            }
         }
 
         private async UniTaskVoid TickAsync()

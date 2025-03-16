@@ -20,12 +20,20 @@ namespace SnakeExample.Entities.GameManager
             _model.Initialize();
             _model.ChangeGameState(GameState.PressAny);
 
+            _context.EventGameBus.Subscribe<SnakeStoppedEvent>(OnSnakeStopped);
             _context.InputSource.OnPressAnyAction += OnInput;
             UnityEngine.Debug.Log("Game manager controller awake!");
         }
+
+        private void OnSnakeStopped(SnakeStoppedEvent @event)
+        {
+            _model.ChangeGameState(GameState.GameOver);
+        }
+
         public void OnDestroyCallback()
         {
             _context.InputSource.OnPressAnyAction -= OnInput;
+            _context.EventGameBus.Unsubscribe<SnakeStoppedEvent>(OnSnakeStopped);
         }
         private void OnInput()
         {

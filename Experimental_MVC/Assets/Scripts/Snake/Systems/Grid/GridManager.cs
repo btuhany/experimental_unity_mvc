@@ -19,6 +19,14 @@ namespace SnakeExample.Grid
         public GridSystem(int width, int height, float cellSize, Vector3 origin, IWorldCoordinateConverter worldConverter) : base(width, height, cellSize, origin, worldConverter)
         {
         }
+        public override bool TrySetElement(int x, int y, IGridObject element)
+        {
+            if (!IsOccupied(x, y))
+            {
+                return base.TrySetElement(x, y, element);
+            }
+            return false;
+        }
     }
     internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper
     {
