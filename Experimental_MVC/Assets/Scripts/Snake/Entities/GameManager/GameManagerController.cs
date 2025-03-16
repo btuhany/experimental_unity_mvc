@@ -2,6 +2,7 @@ using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
 using SnakeExample.Events;
+using System;
 namespace SnakeExample.Entities.GameManager 
 {
     public class GameManagerController : BaseControllerWithModelAndContext<IGameManagerModel, IGameManagerContext>, ISceneLifeCycleManaged
@@ -18,11 +19,21 @@ namespace SnakeExample.Entities.GameManager
         {
             _model.Initialize();
             _model.ChangeGameState(GameState.PressAny);
+
+            _context.InputSource.OnPressAnyAction += OnInput;
             UnityEngine.Debug.Log("Game manager controller awake!");
         }
-
         public void OnDestroyCallback()
         {
+            _context.InputSource.OnPressAnyAction -= OnInput;
+        }
+        private void OnInput()
+        {
+            if (_model.GameState.CurrentValue == GameState.PressAny)
+            {
+                _model.ChangeGameState(GameState.Started);
+                UnityEngine.Debug.Log("STATE CHANGED!");
+            }
         }
         private void OnGameStateChanged(GameState state)
         {

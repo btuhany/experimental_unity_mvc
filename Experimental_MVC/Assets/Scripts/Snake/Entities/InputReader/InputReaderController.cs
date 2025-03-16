@@ -1,14 +1,17 @@
+using Batuhan.EventBus;
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using ExperimentalMVC.SnakeExample;
 using SnakeExample.Events;
-using System;
+using SnakeExample.Input;
 using UnityEngine.InputSystem;
+using Zenject;
 
 namespace SnakeExample.Entities.InputReader
 {
     public class InputReaderController : BaseController<IInputReaderContext>, ISceneLifeCycleManaged, SnakeExampleInputActions.ISnakeSceneActions
     {
+        [Inject] private IGameInputDispatcher _inputDispatcher;
         private bool _canRead;
         private SnakeExampleInputActions _inputActions;
         private SnakeExampleInputActions.SnakeSceneActions _snakeSceneActions;
@@ -41,7 +44,7 @@ namespace SnakeExample.Entities.InputReader
         public void OnMoveUp(InputAction.CallbackContext context)
         {
             if (context.performed)
-                UnityEngine.Debug.Log("Move Up performed");
+                _inputDispatcher.DispatchInput(InputType.Up);
         }
     }
 }

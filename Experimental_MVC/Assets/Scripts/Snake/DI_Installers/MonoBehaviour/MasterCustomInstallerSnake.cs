@@ -3,6 +3,7 @@ using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using SnakeExample.Events;
 using SnakeExample.Grid;
+using SnakeExample.Input;
 using SnakeExample.Tick;
 
 namespace SnakeExample.Installers
@@ -19,6 +20,10 @@ namespace SnakeExample.Installers
             Container.Bind<IGridViewHelper>().To<GridManager>().FromResolve();
 
             Container.Bind<ISceneLifeCycleManaged>().To<TickManager>().AsSingle();
+
+            Container.Bind<GameInputDispatcher>().AsSingle();
+            Container.Bind<IGameInputDispatcher>().To<GameInputDispatcher>().FromResolve();
+            Container.Bind<IGlobalInputActionEventSource>().To<GameInputDispatcher>().FromResolve();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Batuhan.GridSystem.WorldGrid;
 using Batuhan.MVC.Core;
+using SnakeExample.Config;
 using UnityEngine;
 
 namespace SnakeExample.Grid
@@ -19,9 +20,9 @@ namespace SnakeExample.Grid
     {
         private GridSystem _grid;
 
-        public GridManager()
+        public GridManager(GameConfigDataSO configData)
         {
-            _grid = new GridSystem(10, 10, 1f, Vector3.zero, new VerticalConverter());
+            _grid = new GridSystem(configData.GridWidth, configData.GridHeight, configData.GridCellSize, configData.GridOriginPos, new VerticalConverter());
         }
         public void OnAwakeCallback()
         {
