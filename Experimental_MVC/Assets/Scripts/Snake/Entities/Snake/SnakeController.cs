@@ -8,7 +8,6 @@ namespace SnakeExample.Entities.Snake
 {
     internal class SnakeController : BaseController<SnakeModel, SnakeView, SnakeContext>, ISceneLifeCycleManaged
     {
-        [Inject] private Grid.GridManager _gridManager;
         private readonly CompositeDisposable _disposableBag = new CompositeDisposable();
         public SnakeController(SnakeModel model, SnakeView view, SnakeContext context) : base(model, view, context)
         {

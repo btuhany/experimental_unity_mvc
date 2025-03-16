@@ -76,7 +76,7 @@ namespace Batuhan.RuntimeCopyScriptableObjects
 
             foreach (var so in _runtimeClonedBaseSOList)
             {
-                so.RuntimeClone = null;
+                so.EDITOR_RuntimeClone = null;
             }
             _runtimeClonedBaseSOList.Clear();
         }
@@ -100,7 +100,7 @@ namespace Batuhan.RuntimeCopyScriptableObjects
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            baseData.RuntimeClone = copyData;
+            baseData.EDITOR_RuntimeClone = copyData;
             _runtimeClonedBaseSOList.Add(baseData);
 
             copyData.EDITOR_ShowRuntimeClone = false;

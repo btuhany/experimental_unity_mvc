@@ -3,6 +3,7 @@ using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using SnakeExample.Events;
 using SnakeExample.Grid;
+using SnakeExample.Tick;
 
 namespace SnakeExample.Installers
 {
@@ -17,6 +18,7 @@ namespace SnakeExample.Installers
             Container.Bind<ISceneLifeCycleManaged>().To<GridManager>().FromResolve();
             Container.Bind<IGridViewHelper>().To<GridManager>().FromResolve();
 
+            Container.Bind<ISceneLifeCycleManaged>().To<TickManager>().AsSingle();
         }
     }
 }
