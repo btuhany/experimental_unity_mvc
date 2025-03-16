@@ -46,5 +46,29 @@ namespace SnakeExample.Entities.InputReader
             if (context.performed)
                 _inputDispatcher.DispatchInput(InputType.Up);
         }
+
+        public void OnAny(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                _inputDispatcher.DispatchInput(InputType.Any);
+        }
+
+        public void OnMoveDown(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                _inputDispatcher.DispatchInput(InputType.Down);
+        }
+
+        public void OnMoveLeft(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                _inputDispatcher.DispatchInput(InputType.Left);
+        }
+
+        public void OnMoveRight(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+                _inputDispatcher.DispatchInput(InputType.Right);
+        }
     }
 }

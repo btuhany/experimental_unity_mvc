@@ -6,6 +6,7 @@ namespace SnakeExample.Input
 {
     public enum InputType
     {
+        Any,
         Up,
         Down,
         Left,
