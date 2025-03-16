@@ -1,5 +1,4 @@
-﻿
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
 using Batuhan.MVC.UnityComponents.Zenject;
 using SnakeExample.Entities.Snake;
 using UnityEngine;
