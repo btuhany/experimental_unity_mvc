@@ -4,7 +4,7 @@ using UnityEngine;
 namespace SnakeExample.Config
 {
     [CreateAssetMenu(fileName = "GameConfigDataSO", menuName = "Scriptable Objects/SnakeExample/Data/GameConfigDataSO")]
-    internal class GameConfigDataSO : ScriptableObject
+    public class GameConfigDataSO : ScriptableObject
     {
         [Header("Grid")]
         public int GridWidth = 5;
@@ -13,6 +13,10 @@ namespace SnakeExample.Config
         public Vector3 GridOriginPos = Vector3.zero;
         [Header("Tick")]
         public int TickIntervalsMillisecond;
+        [Header("Snake")]
+        public Vector2Int SnakeStartPos = Vector2Int.zero;
+        public Vector2Int SnakeStartDir = Vector2Int.right;
+        public int SnakeSpeed = 1;
 
     }
 }

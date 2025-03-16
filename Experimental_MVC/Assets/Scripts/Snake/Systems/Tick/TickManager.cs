@@ -28,7 +28,7 @@ namespace SnakeExample.Tick
             while (_isRunning)
             {
                 _eventBus.Publish(new TickEvent());
-                UnityEngine.Debug.Log("Tick");
+                //UnityEngine.Debug.Log("Tick");
                 await UniTask.Delay(_configData.TickIntervalsMillisecond);
             }
         }

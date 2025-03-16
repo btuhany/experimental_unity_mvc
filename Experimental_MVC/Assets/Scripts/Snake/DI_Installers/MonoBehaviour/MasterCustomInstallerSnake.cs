@@ -18,11 +18,13 @@ namespace SnakeExample.Installers
             Container.Bind<GridManager>().AsSingle();
             Container.Bind<ISceneLifeCycleManaged>().To<GridManager>().FromResolve();
             Container.Bind<IGridViewHelper>().To<GridManager>().FromResolve();
+            Container.Bind<IGridModelHelper>().To<GridManager>().FromResolve();
 
             Container.Bind<ISceneLifeCycleManaged>().To<TickManager>().AsSingle();
 
             Container.Bind<GameInputDispatcher>().AsSingle();
             Container.Bind<IGameInputDispatcher>().To<GameInputDispatcher>().FromResolve();
+            Container.Bind<ISnakeActionEventSource>().To<GameInputDispatcher>().FromResolve();
             Container.Bind<IGlobalInputActionEventSource>().To<GameInputDispatcher>().FromResolve();
         }
     }

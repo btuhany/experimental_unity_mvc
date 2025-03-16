@@ -9,6 +9,10 @@ namespace SnakeExample.Grid
     {
         Vector3 GetWorldPositionCenter(int x, int y);
     }
+    internal interface IGridModelHelper
+    {
+        GridSystem Grid { get; }
+    }
 
     internal class GridSystem : WorldGrid2D<IGridObject>
     {
@@ -16,9 +20,11 @@ namespace SnakeExample.Grid
         {
         }
     }
-    internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper
+    internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper
     {
         private GridSystem _grid;
+
+        public GridSystem Grid => _grid;
 
         public GridManager(GameConfigDataSO configData)
         {
