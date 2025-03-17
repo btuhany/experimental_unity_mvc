@@ -1,5 +1,3 @@
-using Batuhan.EventBus;
-using SnakeExample.Events;
 using SnakeExample.Grid;
 using UnityEngine;
 using Zenject;

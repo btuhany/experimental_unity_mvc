@@ -10,6 +10,7 @@ namespace Batuhan.GridSystem.WorldGrid
         private readonly Vector3 _origin;
         private readonly IWorldCoordinateConverter _worldConverter;
         public readonly Vector3 Forward;
+        public float CellSize => _cellSize;
         public WorldGrid2D(int width, int height, float cellSize, Vector3 origin, IWorldCoordinateConverter worldConverter) : base(width, height)
         {
             _cellSize = cellSize;

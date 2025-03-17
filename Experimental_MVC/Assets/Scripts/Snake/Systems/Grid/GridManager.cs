@@ -8,6 +8,9 @@ namespace SnakeExample.Grid
     internal interface IGridViewHelper
     {
         Vector3 GetWorldPositionCenter(int x, int y);
+        Vector3 GetMaxBoundaryPos();
+        Vector3 GetMinBoundaryPos();
+        float CellSize { get; }
     }
     internal interface IGridModelHelper
     {
@@ -34,6 +37,8 @@ namespace SnakeExample.Grid
 
         public GridSystem Grid => _grid;
 
+        public float CellSize => _grid.CellSize;
+
         public GridManager(GameConfigDataSO configData)
         {
             _grid = new GridSystem(configData.GridWidth, configData.GridHeight, configData.GridCellSize, configData.GridOriginPos, new VerticalConverter());
@@ -47,5 +52,9 @@ namespace SnakeExample.Grid
         {
         }
         public Vector3 GetWorldPositionCenter(int x, int y) => _grid.GetWorldPositionCenter(x, y);
+
+        public Vector3 GetMaxBoundaryPos() => _grid.GetWorldPositionCenter(_grid.Width, _grid.Height);
+
+        public Vector3 GetMinBoundaryPos() => _grid.GetWorldPositionCenter(-1, -1);
     }
 }
