@@ -4,15 +4,13 @@ using UnityEngine;
 
 namespace SnakeExample.Entities.ObstacleManager
 {
-    internal class ObstacleManagerView : BaseViewMonoBehaviour
+    internal class BoundaryManagerView : BaseViewMonoBehaviour
     {
         [SerializeField] private GameObject _boundaryPrefab;
-        public override Type ContractTypeToBind => typeof(ObstacleManagerView);
+        public override Type ContractTypeToBind => typeof(BoundaryManagerView);
 
         public void ConstructBoundaryObstacles(Vector3 maxPos, Vector3 minPos, float cellSize)
         {
-            Debug.Log("MaxPos: " + maxPos);
-            Debug.Log("MinPos: " + minPos);
             float scaleX = maxPos.x - minPos.x;
             var lower = Instantiate(_boundaryPrefab, transform);
             lower.transform.localScale = new Vector3(scaleX, cellSize, 1);

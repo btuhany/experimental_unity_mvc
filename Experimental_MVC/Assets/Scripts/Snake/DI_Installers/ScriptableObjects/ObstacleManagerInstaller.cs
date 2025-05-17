@@ -11,8 +11,7 @@ namespace SnakeExample.Installers
     {
         public override void InstallFrom(DiContainer container)
         {
-            container.Bind<ISceneLifeCycleManaged>().To<ObstacleManagerController>().AsSingle();
-            container.Bind<ObstacleManagerContext>().AsTransient();
+            container.Bind<ISceneLifeCycleManaged>().To<BoundaryManagerController>().AsSingle();
         }
     }
 }

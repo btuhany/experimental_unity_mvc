@@ -12,8 +12,8 @@ namespace SnakeExample.Entities.Snake
     {
         [Inject] private IGridModelHelper _gridModel;
         private readonly ReactiveProperty<Vector2Int> _gridPos = new ReactiveProperty<Vector2Int>();
-        private Vector2Int _direction;
-        private int _speed;
+        public Vector2Int Direction { get; private set; }
+        public int Speed { get; private set; }
         public Action OnStop;
         public Vector2Int GridPos
         {
@@ -21,12 +21,14 @@ namespace SnakeExample.Entities.Snake
             set => _gridPos.Value = value;
         }
 
+        public GridObjectType ObjectType => GridObjectType.Snake;
+
         public ReadOnlyReactiveProperty<Vector2Int> GridPosReactive { get; }
 
         public SnakeModel(GameConfigDataSO configDataSO)
         {
-            _direction = configDataSO.SnakeStartDir;
-            _speed = configDataSO.SnakeSpeed;
+            Direction = configDataSO.SnakeStartDir;
+            Speed = configDataSO.SnakeSpeed;
             GridPos = configDataSO.SnakeStartPos;
             GridPosReactive = _gridPos.ToReadOnlyReactiveProperty();
         }
@@ -41,9 +43,8 @@ namespace SnakeExample.Entities.Snake
             GridPosReactive?.Dispose();
         }
 
-        public void OnTick()
+        public void Move(Vector2Int nextPos)
         {
-            var nextPos = GridPos + _direction * _speed;
             if (_gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this))
             {
                 _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
@@ -52,14 +53,14 @@ namespace SnakeExample.Entities.Snake
             else
             {
                 Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
-                _speed = 0;
-                _direction = Vector2Int.zero;
+                Speed = 0;
+                Direction = Vector2Int.zero;
                 OnStop?.Invoke();
             }
         }
         internal void OnMoveDirAction(Vector2Int dir)
         {
-            _direction = dir;
+            Direction = dir;
         }
     }
 }

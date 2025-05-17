@@ -2,9 +2,7 @@ using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
 using SnakeExample.Events;
-using System;
 using UnityEngine;
-using Zenject;
 
 namespace SnakeExample.Entities.Snake
 {
@@ -20,23 +18,29 @@ namespace SnakeExample.Entities.Snake
         {
             _context.InputEventSource.OnMoveDirAction += _model.OnMoveDirAction;
             _context.EventBus.Subscribe<TickEvent>(OnTick);
-            Initialize();
+            _context.EventBus.Subscribe<SceneInitializationEvent>(OnSceneInitializationComplete);
         }
-
         public void OnDestroyCallback()
         {
             _context.InputEventSource.OnMoveDirAction -= _model.OnMoveDirAction;
             _context.EventBus.Unsubscribe<TickEvent>(OnTick);
+            _context.EventBus.Unsubscribe<SceneInitializationEvent>(OnSceneInitializationComplete);
             _disposableBag.Dispose();
+        }
+        private void OnSceneInitializationComplete(SceneInitializationEvent obj)
+        {
+            Debug.Log("OnSceneInitializationComplete");
+            _model.Initialize(OnStop);
+            _model.GridPosReactive.Subscribe(_view.OnGridPosUpdated).AddTo(_disposableBag);
+        }
+        private void Move()
+        {
+            var nextPos = _model.GridPos + _model.Direction * _model.Speed;
+            _model.Move(nextPos);
         }
         private void OnTick(TickEvent @event)
         {
-            _model.OnTick();
-        }
-        private void Initialize()
-        {
-            _model.Initialize(OnStop);
-            _model.GridPosReactive.Subscribe(_view.OnGridPosUpdated).AddTo(_disposableBag);
+            Move();
         }
         private void OnStop()
         {

@@ -6,10 +6,13 @@
         "UnityEditor.TestRunner",
         "ExperimentalMVC.TimeCounter",
         "TNRD.NSubstitute",
+        "Batuhan.RuntimeClonableScriptableObjects",
+        "Batuhan.CommandManager.Runtime",
+        "Batuhan.EventBus.Runtime",
+        "Batuhan.MVC.Runtime",
         "Batuhan.MVC",
         "Batuhan.EventBus",
-        "Batuhan.CommandManager",
-        "Batuhan.RuntimeClonableScriptableObjects"
+        "Batuhan.CommandManager"
     ],
     "includePlatforms": [
         "Editor"

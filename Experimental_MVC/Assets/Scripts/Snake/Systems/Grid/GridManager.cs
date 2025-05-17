@@ -2,6 +2,7 @@
 using Batuhan.MVC.Core;
 using SnakeExample.Config;
 using UnityEngine;
+using Zenject;
 
 namespace SnakeExample.Grid
 {
@@ -33,19 +34,16 @@ namespace SnakeExample.Grid
     }
     internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper
     {
+        [Inject] private GameConfigDataSO _configData;
         private GridSystem _grid;
-
         public GridSystem Grid => _grid;
 
         public float CellSize => _grid.CellSize;
-
-        public GridManager(GameConfigDataSO configData)
-        {
-            _grid = new GridSystem(configData.GridWidth, configData.GridHeight, configData.GridCellSize, configData.GridOriginPos, new VerticalConverter());
-        }
+        
         public void OnAwakeCallback()
         {
-            
+            _grid = new GridSystem(_configData.GridWidth, _configData.GridHeight, _configData.GridCellSize, 
+                _configData.GridOriginPos, new VerticalConverter());
         }
 
         public void OnDestroyCallback()

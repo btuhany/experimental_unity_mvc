@@ -9,6 +9,11 @@ namespace SnakeExample.Events
 
         public bool CanBeDisposed => true;
     }
+
+    public struct SceneInitializationEvent : IEvent
+    {
+        public int CategoryID => (int) EventCategory.Game;
+    }
     public struct GameStateChanged : IEvent
     {
         public int CategoryID => (int) EventCategory.Game;

@@ -8,7 +8,7 @@ using Zenject;
 
 namespace SnakeExample.Tick
 {
-    internal class TickManager : IController, ISceneLifeCycleManaged
+    internal class TickManager : IController, ISceneLifeCycleManaged, IEntryPoint
     {
         [Inject] private GameConfigDataSO _configData;
         [Inject] private IEventBus<GameEvent> _eventBus;
@@ -43,6 +43,11 @@ namespace SnakeExample.Tick
                 //UnityEngine.Debug.Log("Tick");
                 await UniTask.Delay(_configData.TickIntervalsMillisecond);
             }
+        }
+
+        public void OnStartCallback()
+        {
+            _eventBus.Publish(new SceneInitializationEvent());
         }
     }
 }

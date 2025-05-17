@@ -20,7 +20,9 @@ namespace SnakeExample.Installers
             Container.Bind<IGridViewHelper>().To<GridManager>().FromResolve();
             Container.Bind<IGridModelHelper>().To<GridManager>().FromResolve();
 
-            Container.Bind<ISceneLifeCycleManaged>().To<TickManager>().AsSingle();
+            Container.Bind<TickManager>().AsSingle();
+            Container.Bind<ISceneLifeCycleManaged>().To<TickManager>().FromResolve();
+            Container.Bind<IEntryPoint>().To<TickManager>().FromResolve();
 
             Container.Bind<GameInputDispatcher>().AsSingle();
             Container.Bind<IGameInputDispatcher>().To<GameInputDispatcher>().FromResolve();
