@@ -21,6 +21,8 @@ namespace SnakeExample.Entities.Snake
             set => _gridPos.Value = value;
         }
 
+        public bool IsOnGrid { get; set; }
+
         public GridObjectType ObjectType => GridObjectType.Snake;
 
         public ReadOnlyReactiveProperty<Vector2Int> GridPosReactive { get; }
@@ -45,12 +47,10 @@ namespace SnakeExample.Entities.Snake
 
         public void Move(Vector2Int nextPos)
         {
-            if (_gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this))
-            {
-                _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
-                GridPos = nextPos;
-            }
-            else
+            _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
+            var isSet = _gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this);
+            
+            if (!isSet)
             {
                 Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
                 Speed = 0;

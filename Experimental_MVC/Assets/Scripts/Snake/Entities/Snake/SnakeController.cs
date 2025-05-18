@@ -22,9 +22,9 @@ namespace SnakeExample.Entities.Snake
         }
         public void OnDestroyCallback()
         {
-            _context.InputEventSource.OnMoveDirAction -= _model.OnMoveDirAction;
-            _context.EventBus.Unsubscribe<TickEvent>(OnTick);
             _context.EventBus.Unsubscribe<SceneInitializationEvent>(OnSceneInitializationComplete);
+            _context.EventBus.Unsubscribe<TickEvent>(OnTick);
+            _context.InputEventSource.OnMoveDirAction -= _model.OnMoveDirAction;
             _disposableBag.Dispose();
         }
         private void OnSceneInitializationComplete(SceneInitializationEvent obj)

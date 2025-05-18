@@ -1,5 +1,5 @@
-﻿using Batuhan.GridSystem.WorldGrid;
-using Batuhan.MVC.Core;
+﻿using Batuhan.MVC.Core;
+using BatuhanYigit.Grid2D.Runtime;
 using SnakeExample.Config;
 using UnityEngine;
 using Zenject;
@@ -27,9 +27,24 @@ namespace SnakeExample.Grid
         {
             if (!IsOccupied(x, y))
             {
-                return base.TrySetElement(x, y, element);
+                if (base.TrySetElement(x, y, element))
+                {
+                    element.GridPos = new Vector2Int(x, y);
+                    element.IsOnGrid = true;
+                    return true;
+                }
             }
+            Debug.LogError("Can't set element");
             return false;
+        }
+
+        public override bool TryRemoveElement(int x, int y)
+        {
+            var element = GetElement(x, y);
+            if (element != null)
+                element.IsOnGrid = false;
+            
+            return base.TryRemoveElement(x, y);
         }
     }
     internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper
@@ -38,10 +53,11 @@ namespace SnakeExample.Grid
         private GridSystem _grid;
         public GridSystem Grid => _grid;
 
-        public float CellSize => _grid.CellSize;
+        public float CellSize { get; private set; }
         
         public void OnAwakeCallback()
         {
+            CellSize = _configData.GridCellSize;
             _grid = new GridSystem(_configData.GridWidth, _configData.GridHeight, _configData.GridCellSize, 
                 _configData.GridOriginPos, new VerticalConverter());
         }
