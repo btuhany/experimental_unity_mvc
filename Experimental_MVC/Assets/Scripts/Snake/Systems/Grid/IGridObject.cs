@@ -9,10 +9,11 @@ namespace SnakeExample.Grid
         Obstacle = 2,
         Food = 3
     }
-    internal interface IGridObject
+    public interface IGridObject
     {
         Vector2Int GridPos { get; set; }
         bool IsOnGrid { get; set; }
         GridObjectType ObjectType { get; }
+        void OnRemovedFromGrid();
     }
 }

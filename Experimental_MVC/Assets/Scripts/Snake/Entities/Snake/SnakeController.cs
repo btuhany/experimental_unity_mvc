@@ -33,14 +33,14 @@ namespace SnakeExample.Entities.Snake
             _model.Initialize(OnStop);
             _model.GridPosReactive.Subscribe(_view.OnGridPosUpdated).AddTo(_disposableBag);
         }
-        private void Move()
-        {
-            var nextPos = _model.GridPos + _model.Direction * _model.Speed;
-            _model.Move(nextPos);
-        }
         private void OnTick(TickEvent @event)
         {
             Move();
+        }
+        private void Move()
+        {
+            var nextPos = _model.GridPos + _model.Direction;
+            _model.Move(nextPos);
         }
         private void OnStop()
         {

@@ -13,12 +13,12 @@ namespace SnakeExample.Grid
         Vector3 GetMinBoundaryPos();
         float CellSize { get; }
     }
-    internal interface IGridModelHelper
+    public interface IGridModelHelper
     {
         GridSystem Grid { get; }
     }
 
-    internal class GridSystem : WorldGrid2D<IGridObject>
+    public class GridSystem : WorldGrid2D<IGridObject>
     {
         public GridSystem(int width, int height, float cellSize, Vector3 origin, IWorldCoordinateConverter worldConverter) : base(width, height, cellSize, origin, worldConverter)
         {
@@ -41,10 +41,18 @@ namespace SnakeExample.Grid
         public override bool TryRemoveElement(int x, int y)
         {
             var element = GetElement(x, y);
-            if (element != null)
-                element.IsOnGrid = false;
-            
-            return base.TryRemoveElement(x, y);
+
+            if (base.TryRemoveElement(x, y))
+            {
+                if (element != null)
+                {
+                    element.IsOnGrid = false;
+                    element.OnRemovedFromGrid();
+                }
+                return true;
+            }
+
+            return false;
         }
     }
     internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper

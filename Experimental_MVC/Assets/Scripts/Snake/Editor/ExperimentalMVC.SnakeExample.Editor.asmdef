@@ -1,0 +1,20 @@
+{
+    "name": "ExperimentalMVC.SnakeExample.Editor",
+    "rootNamespace": "SnakeExample.Editor",
+    "references": [
+        "GUID:062242c87ce8eb549bd16655b5d29c90",
+        "GUID:f0914947f308e034187a28ae57e25ad1",
+        "GUID:f7f341471c3c5db419e24bd738e25019"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

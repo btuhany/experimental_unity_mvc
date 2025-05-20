@@ -11,6 +11,7 @@ namespace SnakeExample.Tick
     internal class TickManager : IController, ISceneLifeCycleManaged, IEntryPoint
     {
         [Inject] private GameConfigDataSO _configData;
+        [Inject] private GameData _gameData;
         [Inject] private IEventBus<GameEvent> _eventBus;
         private bool _isRunning = false;
         public void OnAwakeCallback()
@@ -41,7 +42,7 @@ namespace SnakeExample.Tick
             {
                 _eventBus.Publish(new TickEvent());
                 //UnityEngine.Debug.Log("Tick");
-                await UniTask.Delay(_configData.TickIntervalsMillisecond);
+                await UniTask.Delay((int)(_configData.TickIntervalsMillisecond / _gameData.TickSpeedDivider));
             }
         }
 

@@ -16,7 +16,7 @@ namespace SnakeExample.Config
         [Header("Snake")]
         public Vector2Int SnakeStartPos = Vector2Int.zero;
         public Vector2Int SnakeStartDir = Vector2Int.right;
-        public int SnakeSpeed = 1;
+        public float SnakeSpeedAddition = 0.2f;
 
     }
 }

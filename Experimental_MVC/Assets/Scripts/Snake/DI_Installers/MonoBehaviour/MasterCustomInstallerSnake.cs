@@ -28,6 +28,8 @@ namespace SnakeExample.Installers
             Container.Bind<IGameInputDispatcher>().To<GameInputDispatcher>().FromResolve();
             Container.Bind<ISnakeActionEventSource>().To<GameInputDispatcher>().FromResolve();
             Container.Bind<IGlobalInputActionEventSource>().To<GameInputDispatcher>().FromResolve();
+
+            Container.Bind<GameData>().AsSingle();
         }
     }
 }
