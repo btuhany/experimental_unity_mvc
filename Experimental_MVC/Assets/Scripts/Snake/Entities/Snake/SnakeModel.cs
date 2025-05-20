@@ -14,6 +14,7 @@ namespace SnakeExample.Entities.Snake
         [Inject] private GameData _gameData;
         [Inject] private IGridModelHelper _gridModel;
         private readonly ReactiveProperty<Vector2Int> _gridPos = new ReactiveProperty<Vector2Int>();
+        private readonly ReactiveProperty<int> _tailSize  = new ReactiveProperty<int>();
         public Vector2Int Direction { get; private set; }
         public float SpeedAdditionOnEat { get; private set; }
         public Action OnStop;
@@ -32,6 +33,7 @@ namespace SnakeExample.Entities.Snake
         }
 
         public ReadOnlyReactiveProperty<Vector2Int> GridPosReactive { get; }
+        public ReadOnlyReactiveProperty<int> TailSize { get; private set;}
 
         public SnakeModel(GameConfigDataSO configDataSO)
         {
@@ -39,6 +41,9 @@ namespace SnakeExample.Entities.Snake
             SpeedAdditionOnEat = configDataSO.SnakeSpeedAddition;
             GridPos = configDataSO.SnakeStartPos;
             GridPosReactive = _gridPos.ToReadOnlyReactiveProperty();
+
+            _tailSize.Value = 0;
+            TailSize = _tailSize.ToReadOnlyReactiveProperty();
         }
         public void Initialize(Action onStopCallback)
         {
@@ -61,7 +66,7 @@ namespace SnakeExample.Entities.Snake
                 if (element.ObjectType == GridObjectType.Food)
                 {
                     isFoodEaten = true;
-                    _gridModel.Grid.TryRemoveElement(element.GridPos.x, element.GridPos.y);
+                    _gridModel.Grid.TryRemoveElement(element.GridPos.x, element.GridPos.y);  //triggers food eaten callback
                 }
             }
             
@@ -84,6 +89,7 @@ namespace SnakeExample.Entities.Snake
 
         private void ProcessFood()
         {
+            _tailSize.Value++;
             _gameData.TickSpeedDivider += SpeedAdditionOnEat;
         }
 

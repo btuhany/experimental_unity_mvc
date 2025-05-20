@@ -29,9 +29,9 @@ namespace SnakeExample.Entities.Snake
         }
         private void OnSceneInitializationComplete(SceneInitializationEvent obj)
         {
-            Debug.Log("OnSceneInitializationComplete");
             _model.Initialize(OnStop);
             _model.GridPosReactive.Subscribe(_view.OnGridPosUpdated).AddTo(_disposableBag);
+            _model.TailSize.Subscribe(_view.OnTailSizeChanged).AddTo(_disposableBag);
         }
         private void OnTick(TickEvent @event)
         {

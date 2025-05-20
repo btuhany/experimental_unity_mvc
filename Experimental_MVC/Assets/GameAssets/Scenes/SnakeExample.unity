@@ -479,6 +479,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a828337b3cdeec4f90aba7eded492a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _snakeTailView: {fileID: 3364885408335279967, guid: a9519299874bc6043ad5f24edb45c3bb, type: 3}
 --- !u!4 &1321771916
 Transform:
   m_ObjectHideFlags: 0
