@@ -101,6 +101,42 @@ namespace ExperimentalMVC.SnakeExample
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Any"",
+                    ""type"": ""Button"",
+                    ""id"": ""64eaf3aa-4646-4e70-9627-63138ac6be8c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""b2f23f84-fb52-4ec3-a203-cb8738b48065"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""15cb02b2-ef6f-4ecc-9f71-a98c31d7d3f2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""81f1f1ce-df31-4071-a7d9-bf6cd81a329b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -125,6 +161,83 @@ namespace ExperimentalMVC.SnakeExample
                     ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3798defe-1ae3-46c2-a482-27379bc54431"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Any"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6ada9024-eca8-4363-a8fa-7ca5591b4885"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c82e225-f6d7-4988-97f2-0738161f39ea"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""434ec351-802c-4092-80fb-20ee5ffcbf62"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12676293-abbf-4b2a-ad7b-67bdfdf89ae4"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d092f79-3455-4e6b-a198-0c64b62c0fa9"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c13d61a8-beaa-44e3-b07b-90a249d89f6d"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -134,6 +247,10 @@ namespace ExperimentalMVC.SnakeExample
             // SnakeScene
             m_SnakeScene = asset.FindActionMap("SnakeScene", throwIfNotFound: true);
             m_SnakeScene_MoveUp = m_SnakeScene.FindAction("MoveUp", throwIfNotFound: true);
+            m_SnakeScene_Any = m_SnakeScene.FindAction("Any", throwIfNotFound: true);
+            m_SnakeScene_MoveDown = m_SnakeScene.FindAction("MoveDown", throwIfNotFound: true);
+            m_SnakeScene_MoveLeft = m_SnakeScene.FindAction("MoveLeft", throwIfNotFound: true);
+            m_SnakeScene_MoveRight = m_SnakeScene.FindAction("MoveRight", throwIfNotFound: true);
         }
 
         ~@SnakeExampleInputActions()
@@ -215,6 +332,10 @@ namespace ExperimentalMVC.SnakeExample
         private readonly InputActionMap m_SnakeScene;
         private List<ISnakeSceneActions> m_SnakeSceneActionsCallbackInterfaces = new List<ISnakeSceneActions>();
         private readonly InputAction m_SnakeScene_MoveUp;
+        private readonly InputAction m_SnakeScene_Any;
+        private readonly InputAction m_SnakeScene_MoveDown;
+        private readonly InputAction m_SnakeScene_MoveLeft;
+        private readonly InputAction m_SnakeScene_MoveRight;
         /// <summary>
         /// Provides access to input actions defined in input action map "SnakeScene".
         /// </summary>
@@ -230,6 +351,22 @@ namespace ExperimentalMVC.SnakeExample
             /// Provides access to the underlying input action "SnakeScene/MoveUp".
             /// </summary>
             public InputAction @MoveUp => m_Wrapper.m_SnakeScene_MoveUp;
+            /// <summary>
+            /// Provides access to the underlying input action "SnakeScene/Any".
+            /// </summary>
+            public InputAction @Any => m_Wrapper.m_SnakeScene_Any;
+            /// <summary>
+            /// Provides access to the underlying input action "SnakeScene/MoveDown".
+            /// </summary>
+            public InputAction @MoveDown => m_Wrapper.m_SnakeScene_MoveDown;
+            /// <summary>
+            /// Provides access to the underlying input action "SnakeScene/MoveLeft".
+            /// </summary>
+            public InputAction @MoveLeft => m_Wrapper.m_SnakeScene_MoveLeft;
+            /// <summary>
+            /// Provides access to the underlying input action "SnakeScene/MoveRight".
+            /// </summary>
+            public InputAction @MoveRight => m_Wrapper.m_SnakeScene_MoveRight;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -259,6 +396,18 @@ namespace ExperimentalMVC.SnakeExample
                 @MoveUp.started += instance.OnMoveUp;
                 @MoveUp.performed += instance.OnMoveUp;
                 @MoveUp.canceled += instance.OnMoveUp;
+                @Any.started += instance.OnAny;
+                @Any.performed += instance.OnAny;
+                @Any.canceled += instance.OnAny;
+                @MoveDown.started += instance.OnMoveDown;
+                @MoveDown.performed += instance.OnMoveDown;
+                @MoveDown.canceled += instance.OnMoveDown;
+                @MoveLeft.started += instance.OnMoveLeft;
+                @MoveLeft.performed += instance.OnMoveLeft;
+                @MoveLeft.canceled += instance.OnMoveLeft;
+                @MoveRight.started += instance.OnMoveRight;
+                @MoveRight.performed += instance.OnMoveRight;
+                @MoveRight.canceled += instance.OnMoveRight;
             }
 
             /// <summary>
@@ -273,6 +422,18 @@ namespace ExperimentalMVC.SnakeExample
                 @MoveUp.started -= instance.OnMoveUp;
                 @MoveUp.performed -= instance.OnMoveUp;
                 @MoveUp.canceled -= instance.OnMoveUp;
+                @Any.started -= instance.OnAny;
+                @Any.performed -= instance.OnAny;
+                @Any.canceled -= instance.OnAny;
+                @MoveDown.started -= instance.OnMoveDown;
+                @MoveDown.performed -= instance.OnMoveDown;
+                @MoveDown.canceled -= instance.OnMoveDown;
+                @MoveLeft.started -= instance.OnMoveLeft;
+                @MoveLeft.performed -= instance.OnMoveLeft;
+                @MoveLeft.canceled -= instance.OnMoveLeft;
+                @MoveRight.started -= instance.OnMoveRight;
+                @MoveRight.performed -= instance.OnMoveRight;
+                @MoveRight.canceled -= instance.OnMoveRight;
             }
 
             /// <summary>
@@ -320,6 +481,34 @@ namespace ExperimentalMVC.SnakeExample
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMoveUp(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Any" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnAny(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "MoveDown" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMoveDown(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "MoveLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMoveLeft(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "MoveRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnMoveRight(InputAction.CallbackContext context);
         }
     }
 }

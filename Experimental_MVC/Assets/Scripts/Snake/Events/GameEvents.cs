@@ -1,5 +1,5 @@
 ﻿using Batuhan.EventBus;
-using SnakeExample.Entities.NewEntity;
+using SnakeExample.Entities.GameManager;
 
 namespace SnakeExample.Events
 {
@@ -9,9 +9,23 @@ namespace SnakeExample.Events
 
         public bool CanBeDisposed => true;
     }
+
+    public struct SceneInitializationEvent : IEvent
+    {
+        public int CategoryID => (int) EventCategory.Game;
+    }
     public struct GameStateChanged : IEvent
     {
         public int CategoryID => (int) EventCategory.Game;
-        public GameManagerModel.GameState NewState;
+        public GameState NewState;
+    }
+    
+    public struct TickEvent : IEvent
+    {
+        public int CategoryID => (int)EventCategory.Game;
+    }
+    public struct SnakeStoppedEvent : IEvent
+    {
+        public int CategoryID => (int)EventCategory.Game;
     }
 }

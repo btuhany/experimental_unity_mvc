@@ -25,8 +25,8 @@ namespace TimeCounter.Entities.SceneChanger
         public void Initialize()
         {
             var disposableBuilder = Disposable.CreateBuilder();
-            _viewModel.OnNextSceneButtonClicked.Subscribe(_ => OnNextButtonClicked()).AddTo(ref disposableBuilder);
-            _viewModel.OnPrevSceneButtonClicked.Subscribe(_ => OnPrevButtonClicked()).AddTo(ref disposableBuilder);
+            _view.OnNextSceneButtonClicked.Subscribe(_ => OnNextButtonClicked()).AddTo(ref disposableBuilder);
+            _view.OnPrevSceneButtonClicked.Subscribe(_ => OnPrevButtonClicked()).AddTo(ref disposableBuilder);
             _viewModelSubDisposable = disposableBuilder.Build();
             HandleButtonActiveStates(SceneManager.GetActiveScene().buildIndex);
             SceneManager.sceneLoaded += OnSceneLoaded;
@@ -42,19 +42,19 @@ namespace TimeCounter.Entities.SceneChanger
             if (activeSceneBuildIndex == SceneManager.sceneCountInBuildSettings - 1)
             {
                 //Handle last scene operations
-                _viewModel.SetActiveNextSceneButtonGameObject(false);
-                _viewModel.SetActivePrevSceneButtonGameObject(true);
+                _view.SetActiveNextSceneButtonGameObject(false);
+                _view.SetActivePrevSceneButtonGameObject(true);
             }
             else if (activeSceneBuildIndex == 0)
             {
                 //Handle first scene operations
-                _viewModel.SetActiveNextSceneButtonGameObject(true);
-                _viewModel.SetActivePrevSceneButtonGameObject(false);
+                _view.SetActiveNextSceneButtonGameObject(true);
+                _view.SetActivePrevSceneButtonGameObject(false);
             }
             else
             {
-                _viewModel.SetActiveNextSceneButtonGameObject(true);
-                _viewModel.SetActivePrevSceneButtonGameObject(true);
+                _view.SetActiveNextSceneButtonGameObject(true);
+                _view.SetActivePrevSceneButtonGameObject(true);
             }
         }
 

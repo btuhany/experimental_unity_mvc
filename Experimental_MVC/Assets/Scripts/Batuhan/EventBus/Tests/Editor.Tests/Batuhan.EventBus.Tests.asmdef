@@ -4,8 +4,9 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
-        "Batuhan.EventBus",
-        "TNRD.NSubstitute"
+        "TNRD.NSubstitute",
+        "Batuhan.EventBus.Runtime",
+        "Batuhan.EventBus"
     ],
     "includePlatforms": [
         "Editor"
