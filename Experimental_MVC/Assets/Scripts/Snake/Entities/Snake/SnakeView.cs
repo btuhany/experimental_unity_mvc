@@ -16,9 +16,16 @@ namespace SnakeExample.Entities.Snake
 
         public void OnTailSizeChanged(int size)
         {
-            var newTail = Instantiate(_snakeTailView);
-            newTail.transform.position = transform.position;
-            _tails.Add(newTail);
+            var diff = size - _tails.Count;
+            if (diff > 0)
+            {
+                for (int i = 0; i < diff; i++)
+                {
+                    var newTail = Instantiate(_snakeTailView);
+                    newTail.transform.position = transform.position;
+                    _tails.Add(newTail);
+                }
+            }
         }
 
         public void OnGridPosUpdated(Vector2Int newPos)

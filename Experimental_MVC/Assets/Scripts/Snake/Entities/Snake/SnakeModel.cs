@@ -3,14 +3,25 @@ using R3;
 using SnakeExample.Config;
 using SnakeExample.Grid;
 using System;
+using System.Collections.Generic;
 using SnakeExample.Tick;
 using UnityEngine;
 using Zenject;
 
 namespace SnakeExample.Entities.Snake
 {
+    public class SnakeTailModel : IGridObject
+    {
+        public Vector2Int GridPos { get; set; }
+        public bool IsOnGrid { get; set; }
+        public GridObjectType ObjectType => GridObjectType.SnakeTail;
+        public void OnRemovedFromGrid()
+        {
+        }
+    }
     public class SnakeModel : IModel, IGridObject
     {
+        private List<SnakeTailModel> _tails = new();
         [Inject] private GameData _gameData;
         [Inject] private IGridModelHelper _gridModel;
         private readonly ReactiveProperty<Vector2Int> _gridPos = new ReactiveProperty<Vector2Int>();
@@ -68,18 +79,16 @@ namespace SnakeExample.Entities.Snake
                     isFoodEaten = true;
                     _gridModel.Grid.TryRemoveElement(element.GridPos.x, element.GridPos.y);  //triggers food eaten callback
                 }
+                // else if (element.ObjectType == GridObjectType.SnakeTail)
+                // {
+                //     StopMovement();
+                // }
             }
             
-            
-            _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
-            var isSet = _gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this);
-            
-            if (!isSet)
+            var moveResult = MoveInternal(nextPos);
+            if (!moveResult)
             {
-                Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
-                SpeedAdditionOnEat = 0;
-                Direction = Vector2Int.zero;
-                OnStop?.Invoke();
+                StopMovement();
             }
             else if (isFoodEaten)
             {
@@ -87,11 +96,41 @@ namespace SnakeExample.Entities.Snake
             }
         }
 
+        private bool MoveInternal(Vector2Int nextPos)
+        {
+            Vector2Int previousPosition = GridPos;
+            _gridModel.Grid.TryRemoveElement(GridPos.x, GridPos.y);
+            var isSet = _gridModel.Grid.TrySetElement(nextPos.x, nextPos.y, this);
+            
+            for (int i = 0; i < _tails.Count; i++)
+            {
+                var tail = _tails[i];
+                Vector2Int temp = tail.GridPos;
+                _gridModel.Grid.TryRemoveElement(temp.x, temp.y);
+                _gridModel.Grid.TrySetElement(previousPosition.x, previousPosition.y, tail);
+                previousPosition = temp;
+            }
+
+            return isSet;
+        }
+
+        private void StopMovement()
+        {
+            Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
+            SpeedAdditionOnEat = 0;
+            Direction = Vector2Int.zero;
+            OnStop?.Invoke();
+        }
+
         private void ProcessFood()
         {
             _tailSize.Value++;
+            var newTail = new SnakeTailModel();
+            _tails.Add(newTail);
             _gameData.TickSpeedDivider += SpeedAdditionOnEat;
         }
+        
+        
 
         internal void OnMoveDirAction(Vector2Int dir)
         {

@@ -7,7 +7,8 @@ namespace SnakeExample.Grid
         None = 0,
         Snake = 1,
         Obstacle = 2,
-        Food = 3
+        Food = 3,
+        SnakeTail = 4,
     }
     public interface IGridObject
     {
