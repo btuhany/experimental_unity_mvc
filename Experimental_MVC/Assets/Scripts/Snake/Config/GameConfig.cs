@@ -19,5 +19,6 @@ namespace SnakeExample.Config
         public float SnakeSpeedAddition = 0.2f;
         public int FoodCount = 5;
 
+        public int RestartWaitTime = 3;
     }
 }

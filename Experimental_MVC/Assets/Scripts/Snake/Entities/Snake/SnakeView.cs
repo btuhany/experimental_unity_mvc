@@ -40,5 +40,14 @@ namespace SnakeExample.Entities.Snake
                 previousPosition = temp;
             }
         }
+
+        public void OnRestart()
+        {
+            foreach (var view in _tails)
+            {
+                Destroy(view.gameObject);
+            }
+            _tails.Clear();
+        }
     }
 }

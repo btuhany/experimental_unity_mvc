@@ -8,5 +8,10 @@ namespace SnakeExample.Tick
         {
             TickSpeedDivider = 1.0f;
         }
+
+        public void Restart()
+        {
+            TickSpeedDivider = 1.0f;
+        }
     }
 }

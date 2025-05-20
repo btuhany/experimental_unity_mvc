@@ -3,10 +3,15 @@ using Batuhan.MVC.Core;
 using R3;
 using SnakeExample.Events;
 using System;
+using Cysharp.Threading.Tasks;
+using SnakeExample.Config;
+using Zenject;
+
 namespace SnakeExample.Entities.GameManager 
 {
     public class GameManagerController : BaseControllerWithModelAndContext<IGameManagerModel, IGameManagerContext>, ISceneLifeCycleManaged
     {
+        [Inject] private GameConfigDataSO _configData;
         public GameManagerController(IGameManagerModel model, IGameManagerContext context) : base(model, context)
         {
             _model.GameState.Subscribe(OnGameStateChanged);
@@ -28,6 +33,7 @@ namespace SnakeExample.Entities.GameManager
         private void OnSnakeStopped(SnakeStoppedEvent @event)
         {
             _model.ChangeGameState(GameState.GameOver);
+            RestartAsync().Forget();
         }
 
         public void OnDestroyCallback()
@@ -46,6 +52,15 @@ namespace SnakeExample.Entities.GameManager
         private void OnGameStateChanged(GameState state)
         {
             _context.EventGameBus.Publish(new GameStateChanged() { NewState = state});
+        }
+
+        private async UniTaskVoid RestartAsync()
+        {
+            var restartDelay = _configData.RestartWaitTime;
+            await UniTask.WaitForSeconds((int)restartDelay / 2f);
+            _model.ChangeGameState(GameState.RestartDelay);
+            await UniTask.WaitForSeconds((int)restartDelay / 2f);
+            _model.ChangeGameState(GameState.PressAny);
         }
     }
 }

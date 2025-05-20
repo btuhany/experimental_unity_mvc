@@ -1,6 +1,7 @@
 using Batuhan.MVC.Base;
 using Batuhan.MVC.Core;
 using R3;
+using SnakeExample.Entities.GameManager;
 using SnakeExample.Events;
 using UnityEngine;
 
@@ -19,11 +20,23 @@ namespace SnakeExample.Entities.Snake
             _context.InputEventSource.OnMoveDirAction += _model.OnMoveDirAction;
             _context.EventBus.Subscribe<TickEvent>(OnTick);
             _context.EventBus.Subscribe<SceneInitializationEvent>(OnSceneInitializationComplete);
+            _context.EventBus.Subscribe<GameStateChanged>(OnGameStateChanged);
         }
+
+        private void OnGameStateChanged(GameStateChanged obj)
+        {
+            if (obj.NewState == GameState.RestartDelay)
+            {
+                _model.OnRestart();
+                _view.OnRestart();
+            }
+        }
+
         public void OnDestroyCallback()
         {
             _context.EventBus.Unsubscribe<SceneInitializationEvent>(OnSceneInitializationComplete);
             _context.EventBus.Unsubscribe<TickEvent>(OnTick);
+            _context.EventBus.Unsubscribe<GameStateChanged>(OnGameStateChanged);
             _context.InputEventSource.OnMoveDirAction -= _model.OnMoveDirAction;
             _disposableBag.Dispose();
         }

@@ -19,6 +19,7 @@ namespace SnakeExample.Events
         public int CategoryID => (int) EventCategory.Game;
         public GameState NewState;
     }
+    
     public struct TickEvent : IEvent
     {
         public int CategoryID => (int)EventCategory.Game;

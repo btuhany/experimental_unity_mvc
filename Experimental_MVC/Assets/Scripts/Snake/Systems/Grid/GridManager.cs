@@ -54,6 +54,11 @@ namespace SnakeExample.Grid
 
             return false;
         }
+
+        public void RemoveElement(int x, int y)
+        {
+            base.TryRemoveElement(x, y);
+        }
     }
     internal class GridManager : IController, ISceneLifeCycleManaged, IGridViewHelper, IGridModelHelper
     {

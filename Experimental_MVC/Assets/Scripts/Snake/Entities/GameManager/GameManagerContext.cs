@@ -13,6 +13,7 @@ namespace SnakeExample.Entities.GameManager
     }
     public class GameManagerContext : IGameManagerContext
     {
+        
         [Inject] public IEventBus<GameEvent> EventGameBus { get; }
         [Inject] public IGlobalInputActionEventSource InputSource { get; }
         

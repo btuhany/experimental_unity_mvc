@@ -6,7 +6,8 @@ namespace SnakeExample.Entities.GameManager
     {
         PressAny,
         Started,
-        GameOver
+        GameOver,
+        RestartDelay,
     }
     public interface IGameManagerModel : IModel
     {

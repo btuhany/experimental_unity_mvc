@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Batuhan.EventBus;
 using Batuhan.MVC.Core;
 using SnakeExample.Config;
+using SnakeExample.Entities.GameManager;
 using SnakeExample.Events;
 using SnakeExample.Grid;
 using UnityEngine;
@@ -40,21 +42,28 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
         public void OnAwakeCallback()
         {
             _foodDict = new Dictionary<FoodModel, FoodView>();
-            _eventBus.Subscribe<SceneInitializationEvent>(OnSceneInitialization);
+            _eventBus.Subscribe<GameStateChanged>(OnGameStateChanged);
         }
         public void OnDestroyCallback()
         {
-            _eventBus.Unsubscribe<SceneInitializationEvent>(OnSceneInitialization);
-        }
-        private void OnSceneInitialization(SceneInitializationEvent obj)
-        {
-            var foodCount = _configDataSO.FoodCount;
-            for (int i = 0; i < foodCount; i++)
-            {
-                GenerateFood();
-            }
+            _eventBus.Unsubscribe<GameStateChanged>(OnGameStateChanged);
         }
 
+        private void OnGameStateChanged(GameStateChanged obj)
+        {
+            if (obj.NewState == GameState.RestartDelay)
+            {
+                OnRestart();
+            }
+            else if (obj.NewState == GameState.Started)
+            {
+                var foodCount = _configDataSO.FoodCount;
+                for (int i = 0; i < foodCount; i++)
+                {
+                    GenerateFood();
+                }
+            }
+        }
         private void GenerateFood()
         {
             var width = _gridModel.Grid.Width;
@@ -93,6 +102,19 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
             _foodDict.Remove(model);
 
             GenerateFood();
+        }
+
+        public void OnRestart()
+        {
+            foreach (var item in _foodDict)
+            {
+                var model = item.Key;
+                var view = item.Value;
+                _gridModel.Grid.RemoveElement(model.GridPos.x, model.GridPos.y);
+                model.RemoveEatenCallback(OnFoodModelEaten);
+                Object.Destroy(view.gameObject);
+            }
+            _foodDict.Clear();
         }
 
     }

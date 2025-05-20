@@ -27,6 +27,7 @@ namespace SnakeExample.Entities.Snake
         private readonly ReactiveProperty<Vector2Int> _gridPos = new ReactiveProperty<Vector2Int>();
         private readonly ReactiveProperty<int> _tailSize  = new ReactiveProperty<int>();
         public Vector2Int Direction { get; private set; }
+        public Vector2Int StartPos { get; private set; }
         public float SpeedAdditionOnEat { get; private set; }
         public Action OnStop;
         public Vector2Int GridPos
@@ -50,7 +51,7 @@ namespace SnakeExample.Entities.Snake
         {
             Direction = configDataSO.SnakeStartDir;
             SpeedAdditionOnEat = configDataSO.SnakeSpeedAddition;
-            GridPos = configDataSO.SnakeStartPos;
+            StartPos = GridPos = configDataSO.SnakeStartPos;
             GridPosReactive = _gridPos.ToReadOnlyReactiveProperty();
 
             _tailSize.Value = 0;
@@ -129,12 +130,21 @@ namespace SnakeExample.Entities.Snake
             _tails.Add(newTail);
             _gameData.TickSpeedDivider += SpeedAdditionOnEat;
         }
-        
-        
-
         internal void OnMoveDirAction(Vector2Int dir)
         {
             Direction = dir;
+        }
+
+        internal void OnRestart()
+        {
+            for (int i = 0; i < _tails.Count; i++)
+            {
+                _gridModel.Grid.TryRemoveElement(_tails[i].GridPos.x, _tails[i].GridPos.y);
+            }
+            _tails.Clear();
+            _tailSize.Value = 0;
+            _gameData.Restart();
+            GridPos = StartPos;
         }
     }
 }
