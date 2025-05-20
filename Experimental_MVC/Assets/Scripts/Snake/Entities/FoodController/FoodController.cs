@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Batuhan.EventBus;
 using Batuhan.MVC.Core;
+using SnakeExample.Config;
 using SnakeExample.Events;
 using SnakeExample.Grid;
 using UnityEngine;
@@ -35,6 +36,7 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
         [Inject] private IEventBus<GameEvent> _eventBus;
         [Inject] private IGridModelHelper _gridModel;
         [Inject] private FoodView _foodViewPrefab;
+        [Inject] private GameConfigDataSO _configDataSO;
         public void OnAwakeCallback()
         {
             _foodDict = new Dictionary<FoodModel, FoodView>();
@@ -46,7 +48,11 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
         }
         private void OnSceneInitialization(SceneInitializationEvent obj)
         {
-            GenerateFood();
+            var foodCount = _configDataSO.FoodCount;
+            for (int i = 0; i < foodCount; i++)
+            {
+                GenerateFood();
+            }
         }
 
         private void GenerateFood()
@@ -86,11 +92,7 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
             
             _foodDict.Remove(model);
 
-            if (_foodDict.Count == 0)
-            {
-                GenerateFood();
-                GenerateFood();
-            }
+            GenerateFood();
         }
 
     }
