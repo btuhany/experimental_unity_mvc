@@ -34,7 +34,6 @@ namespace SnakeExample.Grid
                     return true;
                 }
             }
-            Debug.LogError("Can't set element");
             return false;
         }
 

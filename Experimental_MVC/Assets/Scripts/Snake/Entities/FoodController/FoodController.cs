@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 
 namespace ExperimentalMVC.SnakeExample.Entities.FoodController
 {
-    public class FoodModel : IGridObject
+    public class FoodModel : IGridObject, IModel
     {
         public Action<FoodModel> OnEaten;
         public Vector2Int GridPos { get; set; }
@@ -30,6 +30,11 @@ namespace ExperimentalMVC.SnakeExample.Entities.FoodController
         public void RemoveEatenCallback(Action<FoodModel> callback)
         {
             OnEaten -= callback;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
     public class FoodController : ISceneLifeCycleManaged

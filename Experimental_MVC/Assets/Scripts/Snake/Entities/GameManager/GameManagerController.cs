@@ -27,7 +27,6 @@ namespace SnakeExample.Entities.GameManager
 
             _context.EventGameBus.Subscribe<SnakeStoppedEvent>(OnSnakeStopped);
             _context.InputSource.OnPressAnyAction += OnInput;
-            UnityEngine.Debug.Log("Game manager controller awake!");
         }
 
         private void OnSnakeStopped(SnakeStoppedEvent @event)
@@ -46,7 +45,6 @@ namespace SnakeExample.Entities.GameManager
             if (_model.GameState.CurrentValue == GameState.PressAny)
             {
                 _model.ChangeGameState(GameState.Started);
-                UnityEngine.Debug.Log("STATE CHANGED!");
             }
         }
         private void OnGameStateChanged(GameState state)

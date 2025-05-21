@@ -10,13 +10,18 @@ using Zenject;
 
 namespace SnakeExample.Entities.Snake
 {
-    public class SnakeTailModel : IGridObject
+    public class SnakeTailModel : IGridObject, IModel
     {
         public Vector2Int GridPos { get; set; }
         public bool IsOnGrid { get; set; }
         public GridObjectType ObjectType => GridObjectType.SnakeTail;
         public void OnRemovedFromGrid()
         {
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
     public class SnakeModel : IModel, IGridObject
@@ -117,7 +122,6 @@ namespace SnakeExample.Entities.Snake
 
         private void StopMovement()
         {
-            Debug.LogError($"SnakeModel.TryUpdateGridPos: Failed to set element at {GridPos}");
             SpeedAdditionOnEat = 0;
             Direction = Vector2Int.zero;
             OnStop?.Invoke();
