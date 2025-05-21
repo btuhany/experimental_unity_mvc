@@ -1,5 +1,7 @@
 # Experimental Unity MVC
 
+Video: https://www.youtube.com/watch?v=Q0M85VoMDrQ
+
 This repository is my attempt to bring MVC/MVVM architecture patterns into Unity. It mainly uses Zenject for dependency injection.
 
 My main goal was to integrate only the view layer with Unity and keep the controller and model parts in Mono/C# layers. 
