@@ -2,13 +2,19 @@
 
 This repository is my attempt to bring MVC/MVVM architecture patterns into Unity. It mainly uses Zenject for dependency injection.
 
+My main goal was to integrate only the view layer with Unity and keep the controller and model parts in Mono/C# layers. 
 There are several experimental (for me) ideas inside. I used both a command/event bus system and UniRx for reactive programming to connect the Model and View layers. Most communication between controllers, views, and models is done through an event bus or a command manager. However, some parts of the code are now hard to follow. Using a shared Context class which exist in the project could be a better way to manage communication.
 
-One experimental idea I now regret is making each MVC entity’s installer a ScriptableObject. I thought it would help avoid Git conflicts in team projects, but trying to solve a problem that didn’t really exist just made the system more complicated.
+The structure is built on top of Zenject. I use ISceneLifeCycleManaged interfaces to connect classes and listen to Unity callbacks. In this system, non-MonoBehaviour class instances are managed inside the scene through a SceneLifeCycleManager.
+Of course, you can also use MonoBehaviours to create model and controllers if you prefer.
 
-I also created a small tool for memory tracking on the Mono/C# side.
+One experimental idea I now regret is making each MVC entity’s installer a ScriptableObject. For the objects I call "MVC entities", I’m using ScriptableObject-based installers to load them in zenject step. However, it’s also totally possible to load everything from a single installer. 
+I thought it would help avoid Git conflicts in team projects, but trying to solve a problem that didn’t really exist just made the system more complicated.
 
-Right now, the project includes a simple counter that starts on scene load and an unfinished snake game. I plan to finish the snake game later, but the MVC framework is mostly complete and ready to use.
+Also, each scene needs a SceneLifeCycleManager (for keeping the instances alive). I created a small tool to validate that.
+I also created a small tool for memory tracking on the Mono/C# side, to inspect which objects are still alive in the scene and app layer.
+
+For demonstration, I made a simple time counter and snake game to test the MVC flow, I kept these in the same project to test scene transitions.
 
 ## Memory Tracking Tools
 
