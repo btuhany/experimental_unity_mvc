@@ -12,7 +12,7 @@ namespace Batuhan.MVC.Editor
         [MenuItem("Batuhan/MVC/SceneLifeCycleManagerValidator")]
         public static void ShowWindow()
         {
-            GetWindow<SceneValidator>("Scene LifeCycle Manager Validator");
+            GetWindow<SceneValidator>("SceneLifeCycleManager Validator");
         }
 
         private void OnGUI()
